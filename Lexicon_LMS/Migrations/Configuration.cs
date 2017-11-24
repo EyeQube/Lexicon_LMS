@@ -19,7 +19,7 @@ namespace Lexicon_LMS.Migrations
             var roleStore = new RoleStore<IdentityRole>(context);
             var roleManager = new RoleManager<IdentityRole>(roleStore);
 
-            var roleNames = new[] { "Teacher", "Student" };
+            var roleNames = new[] { Role.Teacher, Role.Student };
             foreach (var roleName in roleNames)
             {
                 if (context.Roles.Any(r => r.Name == roleName)) continue;
