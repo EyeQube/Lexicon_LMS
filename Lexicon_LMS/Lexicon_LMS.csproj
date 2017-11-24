@@ -203,6 +203,10 @@
     <Compile Include="Migrations\201711241036512_AddFirstAndLastNameToApplicationUser.Designer.cs">
       <DependentUpon>201711241036512_AddFirstAndLastNameToApplicationUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711241212596_addNanvprop.cs" />
+    <Compile Include="Migrations\201711241212596_addNanvprop.Designer.cs">
+      <DependentUpon>201711241212596_addNanvprop.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -292,6 +296,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711241036512_AddFirstAndLastNameToApplicationUser.resx">
       <DependentUpon>201711241036512_AddFirstAndLastNameToApplicationUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711241212596_addNanvprop.resx">
+      <DependentUpon>201711241212596_addNanvprop.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
