@@ -215,6 +215,14 @@
     <Compile Include="Migrations\201711241250255_addNanvprop2.Designer.cs">
       <DependentUpon>201711241250255_addNanvprop2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711241456356_addRole.cs" />
+    <Compile Include="Migrations\201711241456356_addRole.Designer.cs">
+      <DependentUpon>201711241456356_addRole.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711241505533_removeRoleApplicutionUser.cs" />
+    <Compile Include="Migrations\201711241505533_removeRoleApplicutionUser.Designer.cs">
+      <DependentUpon>201711241505533_removeRoleApplicutionUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -314,6 +322,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711241250255_addNanvprop2.resx">
       <DependentUpon>201711241250255_addNanvprop2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711241456356_addRole.resx">
+      <DependentUpon>201711241456356_addRole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711241505533_removeRoleApplicutionUser.resx">
+      <DependentUpon>201711241505533_removeRoleApplicutionUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

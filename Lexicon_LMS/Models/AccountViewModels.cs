@@ -65,6 +65,9 @@ namespace Lexicon_LMS.Models
     public class RegisterViewModel
     {
         [Required]
+        public string Role { get; set; }
+
+        [Required]
         [StringLength(100)]
         [Display(Name = "Förnamn")]
         public string FirstName { get; set; }
