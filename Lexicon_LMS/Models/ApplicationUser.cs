@@ -19,8 +19,6 @@ namespace Lexicon_LMS.Models
 
         public string FullName => $"{FirstName} {LastName}";
 
-        public int CourseId { get; set; }
-
         public virtual Course Course { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)

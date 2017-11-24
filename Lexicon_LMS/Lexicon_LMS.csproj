@@ -207,6 +207,14 @@
     <Compile Include="Migrations\201711241212596_addNanvprop.Designer.cs">
       <DependentUpon>201711241212596_addNanvprop.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711241248029_addNanvprop1.cs" />
+    <Compile Include="Migrations\201711241248029_addNanvprop1.Designer.cs">
+      <DependentUpon>201711241248029_addNanvprop1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711241250255_addNanvprop2.cs" />
+    <Compile Include="Migrations\201711241250255_addNanvprop2.Designer.cs">
+      <DependentUpon>201711241250255_addNanvprop2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -299,6 +307,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711241212596_addNanvprop.resx">
       <DependentUpon>201711241212596_addNanvprop.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711241248029_addNanvprop1.resx">
+      <DependentUpon>201711241248029_addNanvprop1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711241250255_addNanvprop2.resx">
+      <DependentUpon>201711241250255_addNanvprop2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
