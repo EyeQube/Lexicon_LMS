@@ -1,8 +1,8 @@
-﻿using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Lexicon_LMS.Models
 {
@@ -16,6 +16,8 @@ namespace Lexicon_LMS.Models
         [Required]
         [StringLength(100)]
         public string LastName { get; set; }
+
+        public string FullName => $"{FirstName} {LastName}";
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
