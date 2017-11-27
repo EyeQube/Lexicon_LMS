@@ -7,8 +7,13 @@ namespace Lexicon_LMS.Controllers
 {
     public class HomeController : Controller
     {
-        ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db;
 
+        public HomeController()
+        {
+            db = new ApplicationDbContext();
+        }
+        
         public ActionResult Course(int Id)
         {
             var course = db.Courses.FirstOrDefault(x => x.Id == Id);
@@ -19,6 +24,56 @@ namespace Lexicon_LMS.Controllers
             else
                 return HttpNotFound();
         }
+
+        [Authorize(Roles = Role.Teacher)]
+        public ActionResult Register(string option)
+        {
+
+            if (option == "course")
+            {
+                var Course = new Course();
+
+                return View("RegisterCourse", Course);
+            }
+
+            if (option == "role")
+            {
+                var viewModel = new RegisterViewModel
+                {
+                    Roles = Role.Student
+                };
+
+                //var rolen = _context.Roles.Select(s => s.Name).ToList();  
+                return View("Register", viewModel);
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        //
+        // POST: /Home/SaveCourse
+        [HttpPost]
+        public ActionResult SaveCourse(Course course)
+        {
+
+            if (course.Id == 0)
+            {
+                db.Courses.Add(course);
+            }
+            else
+            {
+                var courseInDb = db.Courses.Single(c => c.Id == course.Id);
+                courseInDb.Name = course.Name;
+                courseInDb.StartDate = course.StartDate;
+                courseInDb.EndDate = course.EndDate;
+            }
+
+            db.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
+        }
+
+
 
         public ActionResult Index()
         {

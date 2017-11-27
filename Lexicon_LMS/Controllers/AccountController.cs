@@ -20,8 +20,7 @@ namespace Lexicon_LMS.Controllers
         {
             _context = new ApplicationDbContext();
         }
-
-      
+ 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             _context = new ApplicationDbContext();
@@ -133,55 +132,6 @@ namespace Lexicon_LMS.Controllers
                     ModelState.AddModelError("", "Invalid code.");
                     return View(model);
             }
-        }
-
-        [Authorize(Roles = Role.Teacher)]
-        public ActionResult Register(string option)
-        {
-
-            if(option == "course")
-            {
-                var Course = new Course();
-
-                return View("RegisterCourse", Course);
-            }
-
-            if(option == "role")
-            {
-                var viewModel = new RegisterViewModel
-                {
-                    Roles = Role.Student
-                };
-
-                //var rolen = _context.Roles.Select(s => s.Name).ToList();  
-                return View(viewModel);
-            }
-
-            return RedirectToAction("Index", "Home");
-        }
-
-
-        //
-        // POST: /Account/SaveCourse
-        [HttpPost]
-        public ActionResult SaveCourse(Course course)
-        {
-
-            if (course.Id == 0)
-            {
-                _context.Courses.Add(course);
-            }
-            else
-            {
-                var courseInDb = _context.Courses.Single(c => c.Id == course.Id);
-                courseInDb.Name = course.Name;
-                courseInDb.StartDate = courseInDb.StartDate;
-                courseInDb.EndDate = courseInDb.EndDate;
-            }
-
-            _context.SaveChanges();
-
-            return RedirectToAction("Index", "Home");
         }
 
 
