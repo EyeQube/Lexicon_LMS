@@ -1,0 +1,64 @@
+﻿@model Lexicon_LMS.Models.Course
+
+@{
+    ViewBag.Title = "Course";
+}
+
+<h2>"Kurshemsida"</h2>
+
+<div>
+    <h4>@Html.DisplayFor(model => model.Name)</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+
+    </dl>
+</div>
+
+<hr />
+
+<div>
+    <h4>Kursdeltagare</h4>
+
+    <div class="contaier-fluid">
+        <div class="row">
+
+            @foreach (var student in Model.Users.ToList())
+            {
+                <div class="col-sm-6 col-md-4">
+                    <p><strong>@student.FullName</strong> <a href="@student.Email">@student.Email</a></p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
