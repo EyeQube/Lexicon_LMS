@@ -1,4 +1,5 @@
 ﻿using Lexicon_LMS.Models;
+using Microsoft.AspNet.Identity;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -20,6 +21,20 @@ namespace Lexicon_LMS.Controllers
 
         public ActionResult Index()
         {
+
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = db.Users.Find(User.Identity.GetUserId());
+                var courseid = user?.Course?.Id ?? 0;
+
+                if (courseid != 0)
+                    return RedirectToAction("Course", new { Id = courseid });
+                else
+                    return View();
+            }
+
+
+
             return View();
         }
 
