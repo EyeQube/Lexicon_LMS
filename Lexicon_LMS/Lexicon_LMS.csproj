@@ -195,33 +195,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201711240957462_InitialModel.cs" />
-    <Compile Include="Migrations\201711240957462_InitialModel.Designer.cs">
-      <DependentUpon>201711240957462_InitialModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711241036512_AddFirstAndLastNameToApplicationUser.cs" />
-    <Compile Include="Migrations\201711241036512_AddFirstAndLastNameToApplicationUser.Designer.cs">
-      <DependentUpon>201711241036512_AddFirstAndLastNameToApplicationUser.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711241212596_addNanvprop.cs" />
-    <Compile Include="Migrations\201711241212596_addNanvprop.Designer.cs">
-      <DependentUpon>201711241212596_addNanvprop.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711241248029_addNanvprop1.cs" />
-    <Compile Include="Migrations\201711241248029_addNanvprop1.Designer.cs">
-      <DependentUpon>201711241248029_addNanvprop1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711241250255_addNanvprop2.cs" />
-    <Compile Include="Migrations\201711241250255_addNanvprop2.Designer.cs">
-      <DependentUpon>201711241250255_addNanvprop2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711241456356_addRole.cs" />
-    <Compile Include="Migrations\201711241456356_addRole.Designer.cs">
-      <DependentUpon>201711241456356_addRole.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711241505533_removeRoleApplicutionUser.cs" />
-    <Compile Include="Migrations\201711241505533_removeRoleApplicutionUser.Designer.cs">
-      <DependentUpon>201711241505533_removeRoleApplicutionUser.cs</DependentUpon>
+    <Compile Include="Migrations\201711271516406_init.cs" />
+    <Compile Include="Migrations\201711271516406_init.Designer.cs">
+      <DependentUpon>201711271516406_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -309,26 +285,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201711240957462_InitialModel.resx">
-      <DependentUpon>201711240957462_InitialModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711241036512_AddFirstAndLastNameToApplicationUser.resx">
-      <DependentUpon>201711241036512_AddFirstAndLastNameToApplicationUser.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711241212596_addNanvprop.resx">
-      <DependentUpon>201711241212596_addNanvprop.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711241248029_addNanvprop1.resx">
-      <DependentUpon>201711241248029_addNanvprop1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711241250255_addNanvprop2.resx">
-      <DependentUpon>201711241250255_addNanvprop2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711241456356_addRole.resx">
-      <DependentUpon>201711241456356_addRole.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711241505533_removeRoleApplicutionUser.resx">
-      <DependentUpon>201711241505533_removeRoleApplicutionUser.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201711271516406_init.resx">
+      <DependentUpon>201711271516406_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

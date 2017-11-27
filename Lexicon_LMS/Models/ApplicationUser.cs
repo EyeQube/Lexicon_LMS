@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -19,7 +20,8 @@ namespace Lexicon_LMS.Models
 
         public string FullName => $"{FirstName} {LastName}";
 
-        public int? Course_Id { get; set; }
+        public int? CourseId { get; set; }
+        [ForeignKey("CourseId")]
         public virtual Course Course { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
