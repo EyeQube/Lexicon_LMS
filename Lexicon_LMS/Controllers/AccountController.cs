@@ -12,6 +12,7 @@ namespace Lexicon_LMS.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        private ApplicationDbContext _context;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -21,6 +22,7 @@ namespace Lexicon_LMS.Controllers
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
+            _context = new ApplicationDbContext();
             UserManager = userManager;
             SignInManager = signInManager;
         }
@@ -134,7 +136,13 @@ namespace Lexicon_LMS.Controllers
         [Authorize(Roles = Role.Teacher)]
         public ActionResult Register()
         {
-            return View();
+            var viewModel = new RegisterViewModel
+            {
+                Roles = Role.Student
+            };
+
+            //var rolen = _context.Roles.Select(s => s.Name).ToList();
+            return View(viewModel);
         }
 
         //
@@ -144,6 +152,7 @@ namespace Lexicon_LMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel viewModel)
         {
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = viewModel.Email, Email = viewModel.Email, FirstName = viewModel.FirstName, LastName = viewModel.LastName };
@@ -151,7 +160,7 @@ namespace Lexicon_LMS.Controllers
 
                 if (result.Succeeded)
                 {
-                    UserManager.AddToRole(user.Id, Role.Student);
+                    UserManager.AddToRole(user.Id, viewModel.Roles);
 
                     return RedirectToAction("Index", "Home");
                 }
