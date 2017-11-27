@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Security;
 
 namespace Lexicon_LMS.Models
 {
@@ -65,7 +66,7 @@ namespace Lexicon_LMS.Models
     public class RegisterViewModel
     {
         [Required]
-        public string Role { get; set; }
+        public string Roles { get; set; }
 
         [Required]
         [StringLength(100)]
