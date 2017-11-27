@@ -223,6 +223,10 @@
     <Compile Include="Migrations\201711241505533_removeRoleApplicutionUser.Designer.cs">
       <DependentUpon>201711241505533_removeRoleApplicutionUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711271400226_addCourseId.cs" />
+    <Compile Include="Migrations\201711271400226_addCourseId.Designer.cs">
+      <DependentUpon>201711271400226_addCourseId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -329,6 +333,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711241505533_removeRoleApplicutionUser.resx">
       <DependentUpon>201711241505533_removeRoleApplicutionUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711271400226_addCourseId.resx">
+      <DependentUpon>201711271400226_addCourseId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

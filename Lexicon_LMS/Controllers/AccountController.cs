@@ -12,7 +12,7 @@ namespace Lexicon_LMS.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private ApplicationDbContext _context;
+        private ApplicationDbContext _context = new ApplicationDbContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -22,7 +22,6 @@ namespace Lexicon_LMS.Controllers
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
-            _context = new ApplicationDbContext();
             UserManager = userManager;
             SignInManager = signInManager;
         }
@@ -136,9 +135,13 @@ namespace Lexicon_LMS.Controllers
         [Authorize(Roles = Role.Teacher)]
         public ActionResult Register()
         {
+            var courses = _context.Courses;
+
             var viewModel = new RegisterViewModel
             {
-                Roles = Role.Student
+                Roles = Role.Student,
+                Courses = _context.Courses
+
             };
 
             //var rolen = _context.Roles.Select(s => s.Name).ToList();
@@ -155,7 +158,9 @@ namespace Lexicon_LMS.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = viewModel.Email, Email = viewModel.Email, FirstName = viewModel.FirstName, LastName = viewModel.LastName };
+                //var course = _context.Courses.First(x => x.Id == viewModel.CourseId);
+
+                var user = new ApplicationUser { UserName = viewModel.Email, Email = viewModel.Email, FirstName = viewModel.FirstName, LastName = viewModel.LastName, Course_Id = viewModel.CourseId };
                 var result = await UserManager.CreateAsync(user, viewModel.Password);
 
                 if (result.Succeeded)
