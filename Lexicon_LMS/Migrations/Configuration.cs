@@ -16,6 +16,18 @@ namespace Lexicon_LMS.Migrations
 
         protected override void Seed(ApplicationDbContext context)
         {
+            // Create courses
+            Course[] courses = new[]
+            {
+                new Course{ Name = "DNMVC17", StartDate = new DateTime(2017,11,27), EndDate = new DateTime(2017,12,15) ,Description = "Fusce mattis maximus maximus. Ut eu facilisis ipsum. Phasellus tincidunt ut diam non malesuada. Vestibulum facilisis pharetra purus. Cras viverra posuere mattis. Vestibulum dui purus, rhoncus ut consectetur non, rhoncus at justo. Quisque id maximus est, et ornare risus. Donec nec justo sed ex euismod commodo. Quisque tempus, est laoreet commodo dictum, ipsum nulla egestas lorem, id tempor elit nisl non nisl. Donec vel urna vitae felis consectetur laoreet." },
+                new Course{ Name = "DJANGO17", StartDate = new DateTime(2017,11,27), EndDate = new DateTime(2017,12,29) ,Description = "Maecenas non convallis est. Quisque varius interdum tempor. Phasellus at erat ornare, sagittis ligula eu, cursus nibh. Mauris ac quam ut est interdum facilisis. Aliquam eget fermentum diam. Nam orci augue, fringilla quis maximus at, eleifend at urna. Aliquam erat volutpat. Nam quis mauris et nisi ornare consectetur. Duis ac urna vitae odio gravida venenatis. Aenean sed elit luctus, dictum turpis sit amet, tristique enim. Nunc ac augue accumsan, mollis orci at, molestie dui. Praesent dapibus dictum velit, id mattis diam tempor nec." },
+            };
+            context.Courses.AddOrUpdate(x => x.Name, courses);
+            context.SaveChanges();
+
+            //
+
+            // Create user roles
             var roleStore = new RoleStore<IdentityRole>(context);
             var roleManager = new RoleManager<IdentityRole>(roleStore);
 
@@ -24,43 +36,40 @@ namespace Lexicon_LMS.Migrations
             {
                 if (context.Roles.Any(r => r.Name == roleName)) continue;
 
-                //Create role
-                var role = new IdentityRole { Name = roleName };
-                var result = roleManager.Create(role);
+                var result = roleManager.Create(new IdentityRole { Name = roleName });
 
                 if (!result.Succeeded)
-                {
                     throw new Exception(string.Join("\n", result.Errors));
-                }
             }
 
+            // Create users
             var userStore = new UserStore<ApplicationUser>(context);
             var userManager = new UserManager<ApplicationUser>(userStore);
 
-            //var emails = new[] { "Teacher@lexicon.se", "Student1@lexicon.se", "Student2@lexicon.se", "Student3@lexicon.se" };
-
-            var users = new[] { new {email="foo@bar.com", first="foo", last="bar"},
-                                new {email="bar@foo.com", first="bar", last="foo"}};
+            var users = new[] { new {email="foo@bar.com", first="foo", last="bar", role = Role.Teacher, course = (string) null}, //TODO check how to declare null strings
+                                new {email="student1@foo.com", first="Adam", last="Adamsson", role = Role.Student, course = "DNMVC17"},
+                                new {email="student2@foo.com", first="Bert", last="Bertsson", role = Role.Student, course = "DNMVC17"},
+                                new {email="student3@foo.com", first="Fredrik", last="Fredriksson", role = Role.Student, course = "DNMVC17"},
+                                new {email="student4@foo.com", first="Gustav", last="Gustavsson", role = Role.Student, course = "DJANGO17"}};
 
             foreach (var user in users)
             {
                 if (context.Users.Any(u => u.UserName == user.email)) continue;
 
-                //Create user
-                var userUser = new ApplicationUser { UserName = user.email, Email = user.email, FirstName = user.first, LastName = user.last };
-                var result = userManager.Create(userUser, "foobar");
+                var newUser = new ApplicationUser { UserName = user.email, Email = user.email, FirstName = user.first, LastName = user.last };
+                var result = userManager.Create(newUser, "foobar");
 
                 if (!result.Succeeded)
-                {
                     throw new Exception(string.Join("\n", result.Errors));
-                }
             }
 
-            var teacherUser = userManager.FindByName("foo@bar.com");
-            userManager.AddToRole(teacherUser.Id, "Teacher");
-
-            var studentUser = userManager.FindByName("bar@foo.com");
-            userManager.AddToRole(studentUser.Id, "Student");
+            // Add references to users
+            foreach (var user in users)
+            {
+                if (user.course != null)
+                    userManager.FindByName(user.email).Course = context.Courses.First(x => x.Name == user.course);
+                userManager.AddToRole(userManager.FindByName(user.email).Id, user.role);
+            }
         }
     }
 }
