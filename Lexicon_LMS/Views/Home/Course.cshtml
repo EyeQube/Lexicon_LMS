@@ -48,6 +48,25 @@
 <hr />
 
 <div>
+    <h4>Kursmoduler</h4>
+
+    @foreach (var module in Model.Modules.OrderBy(x => x.StartDate))
+    {
+        <div>
+            <h5><strong>@module.Name</strong> ( @Html.DisplayFor(m => module.StartDate) - @Html.DisplayFor(m => module.EndDate) )</h5>
+            <p>@module.Description</p>
+        </div>
+    }
+    @if (!Model.Modules.Any())
+    {
+        <p>Inga moduler registrerade för denna kurs</p>
+    }
+
+</div>
+
+<hr />
+
+<div>
     <h4>Kursdeltagare</h4>
 
     <div class="contaier-fluid">
