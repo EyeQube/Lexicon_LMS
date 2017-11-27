@@ -18,8 +18,10 @@ namespace Lexicon_LMS.Controllers
 
         public AccountController()
         {
+            _context = new ApplicationDbContext();
         }
 
+      
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
@@ -133,20 +135,56 @@ namespace Lexicon_LMS.Controllers
         }
 
         [Authorize(Roles = Role.Teacher)]
-        public ActionResult Register()
+        public ActionResult Register(string option)
         {
-            var courses = _context.Courses;
 
-            var viewModel = new RegisterViewModel
+            if(option == "course")
             {
-                Roles = Role.Student,
-                Courses = _context.Courses
+                var Course = new Course();
 
-            };
+                return View("RegisterCourse", Course);
+            }
 
-            //var rolen = _context.Roles.Select(s => s.Name).ToList();
-            return View(viewModel);
+            if(option == "role")
+            {
+                var courses = _context.Courses;
+                var viewModel = new RegisterViewModel
+                {
+                    Roles = Role.Student,
+                    Courses = _context.Courses
+                };
+
+                //var rolen = _context.Roles.Select(s => s.Name).ToList();  
+                return View(viewModel);
+            }
+
+            return RedirectToAction("Index", "Home");
         }
+
+
+        //
+        // POST: /Account/SaveCourse
+        [HttpPost]
+        public ActionResult SaveCourse(Course course)
+        {
+
+            if (course.Id == 0)
+            {
+                _context.Courses.Add(course);
+            }
+            else
+            {
+                var courseInDb = _context.Courses.Single(c => c.Id == course.Id);
+                courseInDb.Name = course.Name;
+                courseInDb.StartDate = courseInDb.StartDate;
+                courseInDb.EndDate = courseInDb.EndDate;
+            }
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
+        }
+
 
         //
         // POST: /Account/Register

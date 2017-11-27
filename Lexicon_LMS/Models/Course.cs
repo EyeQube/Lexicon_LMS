@@ -19,12 +19,18 @@ namespace Lexicon_LMS.Models
         [StringLength(1200)]
         public string Description { get; set; }
 
-        public virtual ICollection<ApplicationUser> Users { get; set; }   
+        public virtual ICollection<ApplicationUser> Users { get; set; }
 
         [Required]
+        [Display(Name = "Start Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:YYYY-MM-dd}")]
         public DateTime StartDate { get; set; }
 
         [Required]
+        [Display(Name = "Ending Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:YYYY-MM-dd}")]
         public DateTime EndDate { get; set; }
 
 
