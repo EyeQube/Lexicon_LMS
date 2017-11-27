@@ -12,6 +12,7 @@ namespace Lexicon_LMS.Controllers
         {
             var course = db.Courses.FirstOrDefault(x => x.Id == Id);
 
+            var u = course.Users.ToList();
             if (course != null)
                 return View(course);
             else
