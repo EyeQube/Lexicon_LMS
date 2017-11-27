@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Web.Security;
 
 namespace Lexicon_LMS.Models
 {
@@ -93,6 +92,11 @@ namespace Lexicon_LMS.Models
         [Display(Name = "Bekräfta lösenord")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        public int CourseId { get; set; }
+
+        public IEnumerable<Course> Courses { get; set; }
     }
 
     public class ResetPasswordViewModel
