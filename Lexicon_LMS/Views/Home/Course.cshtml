@@ -7,15 +7,12 @@
     ViewBag.CourseId = Model.Id;
 }
 
-<h2>"Kurshemsida"</h2>
 
-<hr />
-@Html.ActionLink("Register new student in course", "Register", "Account", routeValues: new { role = Role.Student, courseid = Model.Id }, htmlAttributes: new { @class = "btn btn-default" })
-<hr />
+<h2 style="color:darkred;"><b>@Model.Name</b></h2>  
 
 
 <div>
-    <h4>@Html.DisplayFor(model => model.Name)</h4>
+    @*<h4>@Html.DisplayFor(model => model.Name)</h4>*@
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -56,7 +53,7 @@
 <hr />
 
 <div>
-    <h4>Kursmoduler</h4>
+    <h3 style="color:darkred;"><b>Course modules</b></h3>
 
     @foreach (var module in Model.Modules.OrderBy(x => x.StartDate))
     {
@@ -73,9 +70,8 @@
 </div>
 
 <hr />
-
 <div>
-    <h4>Kursdeltagare</h4>
+    <h3 style="color:darkred;"><b>Course members</b></h3>
 
     <div class="contaier-fluid">
         <div class="row">
@@ -88,4 +84,9 @@
             }
         </div>
     </div>
+
+    <hr />
+    @Html.ActionLink("Add new student", "Register", "Account", routeValues: new { role = Role.Student, courseid = Model.Id }, htmlAttributes: new { @class = "btn btn-default" })
+   
+
 </div>
