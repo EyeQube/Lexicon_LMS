@@ -25,6 +25,17 @@ namespace Lexicon_LMS.Migrations
             context.Courses.AddOrUpdate(x => x.Name, courses);
             context.SaveChanges();
 
+            // Create modules 
+            var dnCourseId = context.Courses.First(x => x.Name == "DNMVC17").Id;
+            Module[] dnModules = new[]
+            {
+                new Module{ CourseId = dnCourseId, Name = "C# grundkurs", StartDate = new DateTime(2017,11,27), EndDate = new DateTime(2017,12,5), Description = "todo: module descritpion for C# module"},
+                new Module{ CourseId = dnCourseId, Name = "C# OO", StartDate = new DateTime(2017,12,6), EndDate = new DateTime(2017,12,10), Description = "todo: module descritpion for C# OO"},
+                new Module{ CourseId = dnCourseId, Name = "C# LINQ", StartDate = new DateTime(2017,12,10), EndDate = new DateTime(2017,12,15), Description = "todo: module descritpion for C# LINQ"},
+            };
+            context.Modules.AddOrUpdate(x => x.Name, dnModules);
+            context.SaveChanges();
+
             //
 
             // Create user roles

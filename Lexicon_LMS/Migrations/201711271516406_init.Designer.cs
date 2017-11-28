@@ -7,13 +7,13 @@ namespace Lexicon_LMS.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class addNanvprop : IMigrationMetadata
+    public sealed partial class init : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(addNanvprop));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(init));
         
         string IMigrationMetadata.Id
         {
-            get { return "201711241212596_addNanvprop"; }
+            get { return "201711271516406_init"; }
         }
         
         string IMigrationMetadata.Source

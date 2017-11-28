@@ -161,7 +161,9 @@ namespace Lexicon_LMS.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = viewModel.Email, Email = viewModel.Email, FirstName = viewModel.FirstName, LastName = viewModel.LastName };
+                //var course = _context.Courses.First(x => x.Id == viewModel.CourseId);
+
+                var user = new ApplicationUser { UserName = viewModel.Email, Email = viewModel.Email, FirstName = viewModel.FirstName, LastName = viewModel.LastName, CourseId = viewModel.CourseId };
                 var result = await UserManager.CreateAsync(user, viewModel.Password);
 
                 if (result.Succeeded)

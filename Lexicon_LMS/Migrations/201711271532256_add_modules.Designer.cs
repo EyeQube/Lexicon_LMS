@@ -7,13 +7,13 @@ namespace Lexicon_LMS.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class addRole : IMigrationMetadata
+    public sealed partial class add_modules : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(addRole));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(add_modules));
         
         string IMigrationMetadata.Id
         {
-            get { return "201711241456356_addRole"; }
+            get { return "201711271532256_add_modules"; }
         }
         
         string IMigrationMetadata.Source

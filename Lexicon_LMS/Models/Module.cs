@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Lexicon_LMS.Models
 {
-    public class Course
+    public class Module
     {
-
         public int Id { get; set; }
 
         [Required]
@@ -31,8 +31,11 @@ namespace Lexicon_LMS.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime EndDate { get; set; }
 
+        [Required]
+        [Display(Name = "Parent course")]
+        public int CourseId { get; set; }
+        [ForeignKey("CourseId")]
+        public virtual Course Course { get; set; }
 
-        public virtual ICollection<Module> Modules { get; set; }
     }
-
 }
