@@ -71,6 +71,9 @@ namespace Lexicon_LMS.Controllers
 
             if (User.Identity.IsAuthenticated)
             {
+                if (User.IsInRole(Role.Teacher))
+                    return RedirectToAction("ListCourses");
+
                 var user = db.Users.Find(User.Identity.GetUserId());
                 var courseid = user?.Course?.Id ?? 0;
 
