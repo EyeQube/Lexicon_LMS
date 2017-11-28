@@ -20,7 +20,7 @@ namespace Lexicon_LMS.Controllers
         {
             _context = new ApplicationDbContext();
         }
- 
+
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             _context = new ApplicationDbContext();
@@ -143,10 +143,10 @@ namespace Lexicon_LMS.Controllers
 
                 Roles = Role.Student,
                 Courses = _context.Courses
-                };
+            };
 
-                //var rolen = _context.Roles.Select(s => s.Name).ToList();  
-                return View("Register", viewModel);          
+            //var rolen = _context.Roles.Select(s => s.Name).ToList();  
+            return View("Register", viewModel);
         }
 
 
