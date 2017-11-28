@@ -88,13 +88,7 @@ namespace Lexicon_LMS.Models
         [Display(Name = "Lösenord")]
         public string Password { get; set; }
 
-        [DataType(DataType.Password)]
-        [Display(Name = "Bekräfta lösenord")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-        public string ConfirmPassword { get; set; }
-
-        [Required]
-        public int CourseId { get; set; }
+        public int? CourseId { get; set; }
 
         public IEnumerable<Course> Courses { get; set; }
     }

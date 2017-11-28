@@ -135,12 +135,12 @@ namespace Lexicon_LMS.Controllers
         }
 
         [Authorize(Roles = Role.Teacher)]
-        public ActionResult Register()
+        public ActionResult Register(string role)
         {
             var viewModel = new RegisterViewModel
             {
 
-                Roles = Role.Student,
+                Roles = role ?? Role.Student,
                 Courses = _context.Courses
             };
 

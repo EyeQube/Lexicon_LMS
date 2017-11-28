@@ -8,7 +8,8 @@
             <h2>Teacher admin panel:</h2>
 
             <div>
-                @Html.ActionLink("Register teacher/student", "Register", "Account", null, htmlAttributes: new { @class = "btn btn-primary" })
+                @Html.ActionLink("Register teacher", "Register", "Account", routeValues: new { role = Role.Teacher }, htmlAttributes: new { @class = "btn btn-primary" })
+                @Html.ActionLink("Register student", "Register", "Account", routeValues: new { role = Role.Student }, htmlAttributes: new { @class = "btn btn-primary" })
                 @Html.ActionLink("Register Course", "Register", "Home", null, htmlAttributes: new { @class = "btn btn-primary" })
             </div>
             <hr />
