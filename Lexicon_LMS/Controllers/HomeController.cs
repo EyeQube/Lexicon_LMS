@@ -68,22 +68,14 @@ namespace Lexicon_LMS.Controllers
         [Authorize]
         public ActionResult Index()
         {
+            if (User.IsInRole(Role.Teacher))
+                return RedirectToAction("ListCourses");
 
-            if (User.Identity.IsAuthenticated)
-            {
-                if (User.IsInRole(Role.Teacher))
-                    return RedirectToAction("ListCourses");
+            var user = db.Users.Find(User.Identity.GetUserId());
+            var courseid = user?.Course?.Id;
 
-                var user = db.Users.Find(User.Identity.GetUserId());
-                var courseid = user?.Course?.Id ?? 0;
-
-                if (courseid != 0)
-                    return RedirectToAction("Course", new { Id = courseid });
-                else
-                    return View();
-            }
-
-
+            if (courseid != null)
+                return RedirectToAction("Course", new { Id = courseid });
 
             return View();
         }
