@@ -69,25 +69,26 @@ namespace Lexicon_LMS.Models
 
         [Required]
         [StringLength(100)]
-        [Display(Name = "Förnamn")]
+        [Display(Name = "First name")]
         public string FirstName { get; set; }
 
         [Required]
         [StringLength(100)]
-        [Display(Name = "Efternamn")]
+        [Display(Name = "Last name")]
         public string LastName { get; set; }
 
         [Required]
         [EmailAddress]
-        [Display(Name = "E-post")]
+        [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Lösenord")]
+        [Display(Name = "Password")]
         public string Password { get; set; }
 
+        [Display(Name = "Course")]
         public int? CourseId { get; set; }
 
         public IEnumerable<Course> Courses { get; set; }
