@@ -19,10 +19,19 @@ namespace Lexicon_LMS.Controllers
         {
             var course = db.Courses.FirstOrDefault(x => x.Id == id);
 
-            if (course != null)
-                return View(course);
-            else
+            if (course == null)
                 return HttpNotFound();
+
+            if (User.IsInRole(Role.Student))
+            {
+                var user = db.Users.Find(User.Identity.GetUserId());
+                if (user.CourseId != course.Id)
+                {
+                    ViewBag.ErrorMessage = $"You have no access to course ({course.Name})";
+                    return View("Error");
+                }
+            }
+            return View(course);
         }
 
         [Authorize(Roles = Role.Teacher)]
@@ -68,19 +77,14 @@ namespace Lexicon_LMS.Controllers
         [Authorize]
         public ActionResult Index()
         {
+            if (User.IsInRole(Role.Teacher))
+                return RedirectToAction("ListCourses");
 
-            if (User.Identity.IsAuthenticated)
-            {
-                var user = db.Users.Find(User.Identity.GetUserId());
-                var courseid = user?.Course?.Id ?? 0;
+            var user = db.Users.Find(User.Identity.GetUserId());
+            var courseid = user?.Course?.Id;
 
-                if (courseid != 0)
-                    return RedirectToAction("Course", new { Id = courseid });
-                else
-                    return View();
-            }
-
-
+            if (courseid != null)
+                return RedirectToAction("Course", new { Id = courseid });
 
             return View();
         }

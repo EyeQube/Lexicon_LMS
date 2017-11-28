@@ -139,11 +139,9 @@ namespace Lexicon_LMS.Controllers
         {
             var viewModel = new RegisterViewModel
             {
-
                 Roles = role ?? Role.Student,
                 Courses = _context.Courses,
                 CourseId = courseid
-
             };
 
             //var rolen = _context.Roles.Select(s => s.Name).ToList();  
@@ -177,6 +175,7 @@ namespace Lexicon_LMS.Controllers
 
             }
 
+            viewModel.Courses = _context.Courses;
             return View(viewModel);
         }
 
