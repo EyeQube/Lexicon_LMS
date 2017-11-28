@@ -26,28 +26,11 @@ namespace Lexicon_LMS.Controllers
         }
 
         [Authorize(Roles = Role.Teacher)]
-        public ActionResult Register(string option)
-        {
-
-            if (option == "course")
-            {
+        public ActionResult Register()
+        {        
                 var Course = new Course();
 
-                return View("RegisterCourse", Course);
-            }
-
-            if (option == "role")
-            {
-                var viewModel = new RegisterViewModel
-                {
-                    Roles = Role.Student
-                };
-
-                //var rolen = _context.Roles.Select(s => s.Name).ToList();  
-                return View("Register", viewModel);
-            }
-
-            return RedirectToAction("Index", "Home");
+                return View("RegisterCourse", Course);                 
         }
 
         //

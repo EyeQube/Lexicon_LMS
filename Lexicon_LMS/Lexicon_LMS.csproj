@@ -223,6 +223,10 @@
     <Compile Include="Migrations\201711241505533_removeRoleApplicutionUser.Designer.cs">
       <DependentUpon>201711241505533_removeRoleApplicutionUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711280849559_ChangedApplicationDbContext.cs" />
+    <Compile Include="Migrations\201711280849559_ChangedApplicationDbContext.Designer.cs">
+      <DependentUpon>201711280849559_ChangedApplicationDbContext.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -276,7 +280,7 @@
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Shared\Register.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
@@ -329,6 +333,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711241505533_removeRoleApplicutionUser.resx">
       <DependentUpon>201711241505533_removeRoleApplicutionUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711280849559_ChangedApplicationDbContext.resx">
+      <DependentUpon>201711280849559_ChangedApplicationDbContext.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -134,6 +134,22 @@ namespace Lexicon_LMS.Controllers
             }
         }
 
+        [Authorize(Roles = Role.Teacher)]
+        public ActionResult Register()
+        {
+
+            var viewModel = new RegisterViewModel
+            {
+
+                Roles = Role.Student,
+                Courses = _context.Courses
+                };
+
+                //var rolen = _context.Roles.Select(s => s.Name).ToList();  
+                return View("Register", viewModel);          
+        }
+
+
 
         //
         // POST: /Account/Register
