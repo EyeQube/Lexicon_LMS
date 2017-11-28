@@ -13,12 +13,12 @@ namespace Lexicon_LMS.Controllers
         {
             db = new ApplicationDbContext();
         }
-        
-        public ActionResult Course(int id)
+
+        [Authorize]
+        public ActionResult Course(int Id)
         {
             var course = db.Courses.FirstOrDefault(x => x.Id == id);
 
-            var u = course.Users.ToList();
             if (course != null)
                 return View(course);
             else
@@ -27,16 +27,17 @@ namespace Lexicon_LMS.Controllers
 
         [Authorize(Roles = Role.Teacher)]
         public ActionResult Register()
-        {        
-                var Course = new Course();
+        {
+            var Course = new Course();
 
-                return View("RegisterCourse", Course);                 
+            return View("RegisterCourse", Course);
         }
 
         //
         // POST: /Home/SaveCourse
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Role.Teacher)]
         public ActionResult SaveCourse(Course course)
         {
 
@@ -64,7 +65,7 @@ namespace Lexicon_LMS.Controllers
             return View(Courses);
         }
 
-
+        [Authorize]
         public ActionResult Index()
         {
 

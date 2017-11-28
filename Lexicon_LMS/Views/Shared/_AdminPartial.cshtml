@@ -1,0 +1,26 @@
+﻿@using Lexicon_LMS.Models
+@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated && User.IsInRole(Role.Teacher))
+{
+    <div class="container">
+        <div class="row">
+
+            <h2>Teacher admin panel:</h2>
+
+            <div>
+                @Html.ActionLink("Register teacher", "Register", "Account", routeValues: new { role = Role.Teacher }, htmlAttributes: new { @class = "btn btn-primary" })
+
+                @*NOTE: send courseid to controller action ...*@
+                @Html.ActionLink("Register student", "Register", "Account", routeValues: new { role = Role.Student, courseid = ViewBag.CourseId }, htmlAttributes: new { @class = "btn btn-primary" })
+
+                @Html.ActionLink("Register Course", "Register", "Home", null, htmlAttributes: new { @class = "btn btn-primary" })
+
+            </div>
+            <hr />
+        </div>
+    </div>
+}
+else
+{
+    // Show nothing for now ?
+}
