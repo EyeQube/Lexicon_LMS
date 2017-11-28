@@ -15,7 +15,7 @@ namespace Lexicon_LMS.Controllers
         }
 
         [Authorize]
-        public ActionResult Course(int Id)
+        public ActionResult Course(int id)
         {
             var course = db.Courses.FirstOrDefault(x => x.Id == id);
 
