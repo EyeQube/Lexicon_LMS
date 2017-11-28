@@ -144,7 +144,6 @@ namespace Lexicon_LMS.Controllers
                 CourseId = courseid
             };
 
-            //var rolen = _context.Roles.Select(s => s.Name).ToList();  
             return View("Register", viewModel);
         }
 
@@ -160,7 +159,7 @@ namespace Lexicon_LMS.Controllers
 
             if (ModelState.IsValid)
             {
-                //var course = _context.Courses.First(x => x.Id == viewModel.CourseId);
+                //TODO: Validate courseId and Role
 
                 var user = new ApplicationUser { UserName = viewModel.Email, Email = viewModel.Email, FirstName = viewModel.FirstName, LastName = viewModel.LastName, CourseId = viewModel.CourseId };
                 var result = await UserManager.CreateAsync(user, viewModel.Password);
