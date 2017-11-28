@@ -1,15 +1,7 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Index";
 }
 
-@*<li>@Html.ActionLink("Register teacher/student", "Register", "Home", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>*@
 
-<h2>Options</h2>
+<h2>@ViewBag.Title</h2>
 
-<p>
-    @Html.ActionLink("Register teacher/student", "Register", "Account",  null , htmlAttributes: new { @class = "btn btn-primary" })
-</p>
-
-<p>
-    @Html.ActionLink("Register Course", "Register", "Home", null, htmlAttributes: new { @class = "btn btn-primary" })
-</p>

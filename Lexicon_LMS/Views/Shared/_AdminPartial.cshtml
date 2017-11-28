@@ -1,0 +1,23 @@
+﻿@using Lexicon_LMS.Models
+@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated && User.IsInRole(Role.Teacher))
+{
+    <div class="container">
+        <div class="row">
+
+            <h2>Teacher admin panel:</h2>
+
+            <p>
+                @Html.ActionLink("Register teacher/student", "Register", "Account", null, htmlAttributes: new { @class = "btn btn-primary" })
+            </p>
+            <p>
+                @Html.ActionLink("Register Course", "Register", "Home", null, htmlAttributes: new { @class = "btn btn-primary" })
+            </p>
+            <hr />
+        </div>
+    </div>
+}
+else
+{
+    // Show nothing for now ?
+}

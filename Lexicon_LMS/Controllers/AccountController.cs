@@ -137,7 +137,6 @@ namespace Lexicon_LMS.Controllers
         [Authorize(Roles = Role.Teacher)]
         public ActionResult Register()
         {
-
             var viewModel = new RegisterViewModel
             {
 
