@@ -14,9 +14,9 @@ namespace Lexicon_LMS.Controllers
             db = new ApplicationDbContext();
         }
         
-        public ActionResult Course(int Id)
+        public ActionResult Course(int id)
         {
-            var course = db.Courses.FirstOrDefault(x => x.Id == Id);
+            var course = db.Courses.FirstOrDefault(x => x.Id == id);
 
             var u = course.Users.ToList();
             if (course != null)
@@ -36,6 +36,7 @@ namespace Lexicon_LMS.Controllers
         //
         // POST: /Home/SaveCourse
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult SaveCourse(Course course)
         {
 
@@ -56,6 +57,12 @@ namespace Lexicon_LMS.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public ActionResult ListCourses()
+        {
+            var Courses = db.Courses.ToList();
+
+            return View(Courses);
+        }
 
 
         public ActionResult Index()
