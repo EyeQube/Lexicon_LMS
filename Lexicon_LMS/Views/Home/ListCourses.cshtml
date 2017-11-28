@@ -9,13 +9,13 @@
 
 @if (!Model.Any())
 {
-    <p>There are no courses.</p>
+    <p>There are no courses at the moment</p>
 }
 
 else
 {
  <div class="dl-horizontal">    
-        <table class="table table-hover table-responsive dl-horizontal table-striped table-bordered">
+        <table class="table table-responsive dl-horizontal table-striped table-bordered">
             <thead>
                 <tr>
                     <th>Course</th>
@@ -32,15 +32,17 @@ else
                 <tr>       
                     <td>@Html.ActionLink(course.Name, "Course", "Home", new { id = course.Id }, null)</td>
                     @*<td>@course.Description</td>*@
-                    <td>@course.StartDate</td>
-                    <td>@course.EndDate</td>
+                    <td> @Html.DisplayFor(m => course.StartDate)</td>  @*@course.StartDate.ToShortDateString()</td>*@
+                    <td>@Html.DisplayFor(m => course.EndDate)</td>  @*@course.EndDate.ToShortDateString()</td>*@
                 </tr>
              }
 
             </tbody>
-     
+
+
         </table>
-    
+
+
   </div>
 }
 
