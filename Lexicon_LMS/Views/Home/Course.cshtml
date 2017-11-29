@@ -1,4 +1,6 @@
 ﻿@using Lexicon_LMS.Models
+@using Microsoft.AspNet.Identity
+
 @model Lexicon_LMS.Models.Course
 
 @{
@@ -86,7 +88,12 @@
     </div>
 
     <hr />
+
+
+@*@if (Request.IsAuthenticated && User.IsInRole(Role.Teacher))*@
+@if (User.IsInRole(Role.Teacher))
+{
     @Html.ActionLink("Add new student", "Register", "Account", routeValues: new { role = Role.Student, courseid = Model.Id }, htmlAttributes: new { @class = "btn btn-default" })
-   
+}
 
 </div>
