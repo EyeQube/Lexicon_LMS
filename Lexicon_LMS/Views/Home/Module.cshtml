@@ -1,0 +1,56 @@
+﻿@model Lexicon_LMS.Models.Module 
+@{
+    ViewBag.Title = "Module";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>@ViewBag.Title.</h2>
+
+
+@using (Html.BeginForm("SaveModule", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Add a new module</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+
+        @*<div class="col-md-10">
+                @Html.DropDownListFor(m => m.Users, new SelectList(Model.Users, "userIdentity", "Members"), "", new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.Roles, new SelectList(db-model, id-field-name, stringdescription-field-name), "Roll", new { @class = "form-control" })
+            </div> *@
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Description)
+        @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.StartDate)
+        @Html.TextBoxFor(m => m.StartDate, "{0:YYYY-MM-DD}", new { @class = "form-control" })
+
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.EndDate)
+        @Html.TextBoxFor(m => m.EndDate, "{0:YYYY-MM-DD}", new { @class = "form-control" })
+
+    </div>
+
+
+    @Html.HiddenFor(m => m.Id)
+    <div class="form-group">
+        <input type="submit" class="btn btn-default" value="Register" />
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+

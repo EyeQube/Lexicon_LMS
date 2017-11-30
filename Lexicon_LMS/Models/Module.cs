@@ -17,7 +17,7 @@ namespace Lexicon_LMS.Models
         [StringLength(1200)]
         public string Description { get; set; }
 
-        public virtual ICollection<ApplicationUser> Users { get; set; }
+        //public virtual ICollection<ApplicationUser> Users { get; set; }
 
         [Required]
         [Display(Name = "Start Date")]

@@ -1,7 +1,10 @@
 ﻿using Lexicon_LMS.Models;
+using Lexicon_LMS.ViewModels;
 using Microsoft.AspNet.Identity;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+
 
 namespace Lexicon_LMS.Controllers
 {
@@ -13,6 +16,75 @@ namespace Lexicon_LMS.Controllers
         {
             db = new ApplicationDbContext();
         }
+
+
+        [Authorize] 
+        public ActionResult Module(int id)
+        {
+            Module module = new Module()
+            {
+                CourseId = id
+            };
+
+            return View(module);
+        }
+
+
+        [Authorize]
+        public ActionResult SaveModule(Module module)  
+        {
+
+            var dbmodule = db.Modules.FirstOrDefault(x => x.Id == module.Id);
+                
+            if (dbmodule == null)
+                return HttpNotFound();
+
+            /* if (User.IsInRole(Role.Student))
+             {
+                 var user = db.Users.Find(User.Identity.GetUserId());
+
+                 if (user.CourseId != course.Id)
+                 {
+                     ViewBag.ErrorMessage = $"You have no access to course ({course.Name})";
+                     return View("Error");
+                 }
+             } */
+
+            if (module.Id == 0)
+             {
+                Course course = new Course{
+                    course.Modules.Add(dbmodule);
+             }
+            }
+            else
+            {
+                var courseInDb = db.Courses.Single(c => c.Id == course.Id);
+                courseInDb.Name = course.Name;
+                courseInDb.StartDate = course.StartDate;
+                courseInDb.EndDate = course.EndDate;
+            }
+
+            db.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
+
+            // ////////////////////////////////////////////////////////////////////
+
+            var viewModel = new ModuleFormViewModel
+            {
+                Course = course
+            };
+
+            foreach (var modules in course.Modules)
+            {
+                viewModel.Modules.Add(modules);
+            }
+
+            return View("Register", viewModel);
+        } 
+
+
+
 
         [Authorize]
         public ActionResult Course(int id)
