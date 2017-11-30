@@ -1,5 +1,6 @@
 ﻿using Lexicon_LMS.Models;
 using Microsoft.AspNet.Identity;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -105,6 +106,7 @@ namespace Lexicon_LMS.Controllers
         }
 
         // GET: 
+        [Authorize(Roles = Role.Teacher)]
         public ActionResult CreateModule(int? courseId)
         {
             if (courseId == null)
@@ -128,6 +130,7 @@ namespace Lexicon_LMS.Controllers
             return View(module);
         }
 
+        [Authorize(Roles = Role.Teacher)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateModule(Module module)
@@ -142,6 +145,8 @@ namespace Lexicon_LMS.Controllers
             return View(module);
         }
 
+
+        [Authorize(Roles = Role.Teacher)]
         public ActionResult EditModule(int? id)
         {
             if (id == null)
@@ -151,6 +156,21 @@ namespace Lexicon_LMS.Controllers
             if (module == null)
                 return HttpNotFound();
 
+            return View(module);
+        }
+
+        [Authorize(Roles = Role.Teacher)]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditModule([Bind(Include = "Id,Name,Description,StartDate,EndDate,CourseId")] Module module)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(module).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
             return View(module);
         }
 

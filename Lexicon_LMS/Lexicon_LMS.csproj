@@ -271,6 +271,7 @@
     <Content Include="Views\Home\ListCourses.cshtml" />
     <Content Include="Views\Shared\_AdminPartial.cshtml" />
     <Content Include="Views\Home\CreateModule.cshtml" />
+    <Content Include="Views\Home\EditModule.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
