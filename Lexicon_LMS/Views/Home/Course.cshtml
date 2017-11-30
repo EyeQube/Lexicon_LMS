@@ -69,6 +69,11 @@
         <p>Inga moduler registrerade för denna kurs</p>
     }
 
+    @if (User.IsInRole(Role.Teacher))
+    {
+        @Html.ActionLink("Add new module", "CreateModule", "Home", routeValues: new { courseId = Model.Id }, htmlAttributes: new { @class = "btn btn-default" })
+    }
+
 </div>
 
 <hr />

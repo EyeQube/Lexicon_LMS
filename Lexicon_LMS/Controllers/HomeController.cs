@@ -1,6 +1,7 @@
 ﻿using Lexicon_LMS.Models;
 using Microsoft.AspNet.Identity;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 
 namespace Lexicon_LMS.Controllers
@@ -102,5 +103,58 @@ namespace Lexicon_LMS.Controllers
 
             return View();
         }
+
+        // GET: 
+        public ActionResult CreateModule(int? courseId)
+        {
+            if (courseId == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            // get latest end-date from module list OR the course start-date
+            var startDate = db.Courses.FirstOrDefault(c => c.Id == courseId)
+                .Modules.Select(m => m.EndDate)
+                .Concat(
+                    db.Courses.Where(c => c.Id == courseId)
+                    .Select(c => c.StartDate))
+                .Max();
+
+            var module = new Module
+            {
+                CourseId = (int)courseId,
+                StartDate = startDate,
+                EndDate = startDate
+            };
+
+            return View(module);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateModule(Module module)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Modules.Add(module);
+                db.SaveChanges();
+                return RedirectToAction("Index"); //TODO implement nextURL query string
+            }
+
+            return View(module);
+        }
+
+        public ActionResult EditModule(int? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            Module module = db.Modules.Find(id);
+            if (module == null)
+                return HttpNotFound();
+
+            return View(module);
+        }
+
+
+
     }
 }
