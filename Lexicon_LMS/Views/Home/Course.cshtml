@@ -1,21 +1,28 @@
-﻿@model Lexicon_LMS.Models.Course
+﻿@using Lexicon_LMS.Models
+@using Microsoft.AspNet.Identity
+
+@model Lexicon_LMS.Models.Course
 
 @{
     ViewBag.Title = "Course";
+
+    ViewBag.CourseId = Model.Id;
 }
 
-<h2>"Kurshemsida"</h2>
+
+<h2 style="color:darkred;"><b>@Model.Name</b></h2>  
+
 
 <div>
-    <h4>@Html.DisplayFor(model => model.Name)</h4>
+    @*<h4>@Html.DisplayFor(model => model.Name)</h4>*@
     <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
+        <dd style="color:darkred;">
+            <b>@Html.DisplayFor(model => model.Name)</b>
         </dd>
 
         <dt>
@@ -48,7 +55,7 @@
 <hr />
 
 <div>
-    <h4>Kursmoduler</h4>
+    <h3 style="color:darkred;"><b>Course modules</b></h3>
 
     @foreach (var module in Model.Modules.OrderBy(x => x.StartDate))
     {
@@ -65,9 +72,8 @@
 </div>
 
 <hr />
-
 <div>
-    <h4>Kursdeltagare</h4>
+    <h3 style="color:darkred;"><b>Course members</b></h3>
 
     <div class="contaier-fluid">
         <div class="row">
@@ -80,4 +86,14 @@
             }
         </div>
     </div>
+
+    <hr />
+
+
+@*@if (Request.IsAuthenticated && User.IsInRole(Role.Teacher))*@
+@if (User.IsInRole(Role.Teacher))
+{
+    @Html.ActionLink("Add new student", "Register", "Account", routeValues: new { role = Role.Student, courseid = Model.Id }, htmlAttributes: new { @class = "btn btn-default" })
+}
+
 </div>

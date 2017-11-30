@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Lexicon_LMS.Models.Course>
+
+@{
+    ViewBag.Title = "ListCourses";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Courses</h2>
+
+@if (!Model.Any())
+{
+    <p>There are no courses at the moment</p>
+}
+
+else
+{
+ <div class="dl-horizontal">    
+        <table class="table table-responsive dl-horizontal table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    @*<th>Description</th>*@
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                </tr>
+            </thead>
+      
+            <tbody>
+            
+                @foreach (var course in Model)
+             {
+                <tr>       
+                    <td>@Html.ActionLink(course.Name, "Course", "Home", new { id = course.Id }, null)</td>
+                    @*<td>@course.Description</td>*@
+                    <td> @Html.DisplayFor(m => course.StartDate)</td>  @*@course.StartDate.ToShortDateString()</td>*@
+                    <td>@Html.DisplayFor(m => course.EndDate)</td>  @*@course.EndDate.ToShortDateString()</td>*@
+                </tr>
+             }
+
+            </tbody>
+
+
+        </table>
+
+
+  </div>
+}
+
+@*<thead>
+        <tr>
+            <th>Course</th>
+            <th>Description</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+        </tr>
+    </thead> *@

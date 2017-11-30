@@ -135,18 +135,15 @@ namespace Lexicon_LMS.Controllers
         }
 
         [Authorize(Roles = Role.Teacher)]
-        public ActionResult Register()
+        public ActionResult Register(string role, int? courseid)
         {
-
-
             var viewModel = new RegisterViewModel
             {
-
-                Roles = _context.Roles.Select(x => x.Name).ToList(),
-                Courses = _context.Courses
+                Roles = role ?? Role.Student,
+                Courses = _context.Courses,
+                CourseId = courseid
             };
 
-            //var rolen = _context.Roles.Select(s => s.Name).ToList();  
             return View("Register", viewModel);
         }
 
@@ -162,14 +159,14 @@ namespace Lexicon_LMS.Controllers
 
             if (ModelState.IsValid)
             {
-                //var course = _context.Courses.First(x => x.Id == viewModel.CourseId);
+                //TODO: Validate courseId and Role
 
                 var user = new ApplicationUser { UserName = viewModel.Email, Email = viewModel.Email, FirstName = viewModel.FirstName, LastName = viewModel.LastName, CourseId = viewModel.CourseId };
                 var result = await UserManager.CreateAsync(user, viewModel.Password);
 
                 if (result.Succeeded)
                 {
-                    UserManager.AddToRole(user.Id, viewModel.Role);
+                    UserManager.AddToRole(user.Id, viewModel.Roles);
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -177,6 +174,7 @@ namespace Lexicon_LMS.Controllers
 
             }
 
+            viewModel.Courses = _context.Courses;
             return View(viewModel);
         }
 
