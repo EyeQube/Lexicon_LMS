@@ -107,7 +107,7 @@ namespace Lexicon_LMS.Controllers
 
         // GET: 
         [Authorize(Roles = Role.Teacher)]
-        public ActionResult CreateModule(int? courseId)
+        public ActionResult CreateModule(int? courseId, string returnUrl = "/")
         {
             if (courseId == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -127,19 +127,20 @@ namespace Lexicon_LMS.Controllers
                 EndDate = startDate
             };
 
+            ViewBag.returnUrl = returnUrl;
             return View(module);
         }
 
         [Authorize(Roles = Role.Teacher)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateModule(Module module)
+        public ActionResult CreateModule(Module module, string returnUrl)
         {
             if (ModelState.IsValid)
             {
                 db.Modules.Add(module);
                 db.SaveChanges();
-                return RedirectToAction("Index"); //TODO implement nextURL query string
+                return RedirectToLocal(returnUrl);
             }
 
             return View(module);
@@ -147,7 +148,7 @@ namespace Lexicon_LMS.Controllers
 
 
         [Authorize(Roles = Role.Teacher)]
-        public ActionResult EditModule(int? id)
+        public ActionResult EditModule(int? id, string returnUrl = "/")
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -156,22 +157,33 @@ namespace Lexicon_LMS.Controllers
             if (module == null)
                 return HttpNotFound();
 
+            ViewBag.returnUrl = returnUrl;
             return View(module);
         }
 
         [Authorize(Roles = Role.Teacher)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditModule([Bind(Include = "Id,Name,Description,StartDate,EndDate,CourseId")] Module module)
+        public ActionResult EditModule([Bind(Include = "Id,Name,Description,StartDate,EndDate,CourseId")] Module module, string returnUrl)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(module).State = EntityState.Modified;
                 db.SaveChanges();
 
-                return RedirectToAction("Index");
+                return RedirectToLocal(returnUrl);
             }
             return View(module);
+        }
+
+        //TODO copy from accountcontroller ... move to common utility class
+        private ActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            return RedirectToAction("Index", "Home");
         }
 
 

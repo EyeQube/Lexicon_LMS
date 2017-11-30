@@ -1,17 +1,16 @@
 ﻿@model Lexicon_LMS.Models.Module
 
 @{
-    ViewBag.Title = "EditModule";
+    ViewBag.Title = "Edit Module";
 }
 
-<h2>EditModule</h2>
+<h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(routeValues: new { returnUrl = ViewBag.ReturnUrl }))
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Module</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
@@ -51,12 +50,12 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-primary" />
+
+                <a href="@ViewBag.ReturnUrl" class="btn btn-default">Cancel</a>
+
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

@@ -59,7 +59,7 @@
 
     @if (User.IsInRole(Role.Teacher))
     {
-        @Html.ActionLink("Add new module", "CreateModule", "Home", routeValues: new { courseId = Model.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
+        @Html.ActionLink("Add new module", "CreateModule", "Home", routeValues: new { courseId = Model.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
     }
 
     @foreach (var module in Model.Modules.OrderBy(x => x.StartDate))
@@ -71,7 +71,7 @@
         if (User.IsInRole(Role.Teacher))
         {
             <div>
-                @Html.ActionLink("edit module", "EditModule", "Home", routeValues: new { id = module.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
+                @Html.ActionLink("edit module", "EditModule", "Home", routeValues: new { id = module.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
             </div>
         }
 
