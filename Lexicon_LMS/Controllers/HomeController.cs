@@ -13,7 +13,7 @@ namespace Lexicon_LMS.Controllers
         {
             db = new ApplicationDbContext();
         }
-        
+
         public ActionResult Course(int Id)
         {
             var course = db.Courses.FirstOrDefault(x => x.Id == Id);
@@ -27,10 +27,10 @@ namespace Lexicon_LMS.Controllers
 
         [Authorize(Roles = Role.Teacher)]
         public ActionResult Register()
-        {        
-                var Course = new Course();
+        {
+            var Course = new Course();
 
-                return View("RegisterCourse", Course);                 
+            return View("RegisterCourse", Course);
         }
 
         //

@@ -138,10 +138,11 @@ namespace Lexicon_LMS.Controllers
         public ActionResult Register()
         {
 
+
             var viewModel = new RegisterViewModel
             {
 
-                Roles = Role.Student,
+                Roles = _context.Roles.Select(x => x.Name).ToList(),
                 Courses = _context.Courses
             };
 
@@ -168,7 +169,7 @@ namespace Lexicon_LMS.Controllers
 
                 if (result.Succeeded)
                 {
-                    UserManager.AddToRole(user.Id, viewModel.Roles);
+                    UserManager.AddToRole(user.Id, viewModel.Role);
 
                     return RedirectToAction("Index", "Home");
                 }
