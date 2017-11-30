@@ -67,8 +67,6 @@ namespace Lexicon_LMS.Models
         [Required]
         public string Role { get; set; }
 
-        public List<string> Roles { get; set; }
-
         [Required]
         [StringLength(100)]
         [Display(Name = "First name")]
