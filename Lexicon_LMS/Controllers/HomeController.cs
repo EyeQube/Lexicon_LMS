@@ -176,6 +176,23 @@ namespace Lexicon_LMS.Controllers
             return View(module);
         }
 
+        [Authorize(Roles = Role.Teacher)]
+        public ActionResult DeleteModule(int? id, string returnUrl = "/")
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            Module module = db.Modules.Find(id);
+
+            if (module == null)
+                return HttpNotFound();
+
+            db.Modules.Remove(module);
+            db.SaveChanges();
+
+            return RedirectToLocal(returnUrl);
+        }
+
         //TODO copy from accountcontroller ... move to common utility class
         private ActionResult RedirectToLocal(string returnUrl)
         {

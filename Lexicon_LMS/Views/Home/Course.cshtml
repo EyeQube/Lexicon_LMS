@@ -72,6 +72,7 @@
         {
             <div>
                 @Html.ActionLink("edit module", "EditModule", "Home", routeValues: new { id = module.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
+                @Html.ActionLink("delete module", "DeleteModule", "Home", routeValues: new { id = module.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "btn btn-danger btn-sm" })
             </div>
         }
 
