@@ -4,16 +4,17 @@ using System.Web.Http;
 
 namespace Lexicon_LMS.Controllers.Api
 {
-    public class AccountController : ApiController
+    public class AccountApiController : ApiController
     {
         private ApplicationDbContext _context;
 
-        public AccountController()
+        public AccountApiController()
         {
             _context = new ApplicationDbContext();
         }
 
         [HttpDelete]
+        [Route("Api/Account/{id}")]
         public IHttpActionResult Delete(string id)
         {
             //var userId = User.Identity.GetUserId();
