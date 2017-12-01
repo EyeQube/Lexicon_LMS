@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Lexicon_LMS.Models.Activity>
+
+@{
+    ViewBag.Title = "ListActivity";
+}
+
+<h2>Module</h2>
+<div>
+    @Html.ActionLink("Add new activity", "CreateActivity", "Home", htmlAttributes: new { @class = "btn btn-default btn-sm newActivityBtn" })
+</div>
+<table class="table table-responsive dl-horizontal table-striped table-bordered">
+    <tr>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.Module.Activity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ActivityType)
+        </th>
+
+    </tr>
+
+@foreach (var item in Model) {
+   
+    <tr>
+      
+        <td>
+            @Html.DisplayFor(modelItem => item.Module.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ActivityType.Name)
+        </td>
+   
+    </tr>
+}
+
+</table>
