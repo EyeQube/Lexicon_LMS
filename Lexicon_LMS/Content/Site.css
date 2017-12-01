@@ -22,6 +22,70 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.btn-primary {
+    color: #ffffff;
+    background-color: #DC143C;
+    border-color: #800000 !important;
+}
+
+.btn {
+    color: #ffffff;
+    background-color: #DC143C !important;
+    border-color: #800000 !important;
+    touch-action: pan-y;
+}
+
+.navbar-inverse .navbar-brand {
+    color: #DC143C;
+    font-style:normal;
+    font-weight:700;
+}
+
+.navbar-brand {
+    font-style: normal;
+    font-weight: 700;
+    color: brown;
+    /*background-image: url("blue-290314_640.jpg"); */
+}
+
+.navbar-inverse{
+    color:brown !important;
+    border-color:brown;
+}
+
+.navbar-header {
+    font-style: normal;
+    font-weight: 100;
+}
+
+body {
+    background-image: url("1024px-Sea_and_sky_light.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;   
+}
+
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #DC143C;
+    font-weight: 700;
+}
+
+/*.navbar-inverse .navbar-nav > li {
+    color: #DC143C;
+    font-weight: 500;
+}*/
+
+a {
+    color: #DC143C;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+HelloSpace{
+
+    padding-right:10px;
+}
 #datetimepicker{
     width:300px;
 }
