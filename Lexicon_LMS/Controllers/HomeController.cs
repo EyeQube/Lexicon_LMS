@@ -2,8 +2,9 @@
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
-
+using System;
 
 namespace Lexicon_LMS.Controllers
 {
@@ -25,28 +26,53 @@ namespace Lexicon_LMS.Controllers
             // get latest end-date from module list OR the course start-date
 
             var startDate = db.Courses.FirstOrDefault(c => c.Id == id)
-                .Modules.Select(m => m.StartDate)
-                .Concat(
-                    db.Modules.Where(c => c.Id == id)
-                    .Select(c => c.EndDate))
-                .Max();
-
-            var endDate = db.Courses.FirstOrDefault(c => c.Id == id)
                 .Modules.Select(m => m.EndDate)
                 .Concat(
-                    db.Courses.Where(c => c.Id == id)
-                    .Select(c => c.StartDate))
-                .Max();         
+                    db.Modules.Where(c => c.CourseId == id)
+                    .Select(c => c.EndDate))
+                .Max().AddDays(1);
+
+            // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            if (startDate == null)
+            {
+               var _startDate = db.Courses.FirstOrDefault(c => c.Id == id);
+               startDate = _startDate.StartDate;
+            }
+
+            var endDate = db.Courses.FirstOrDefault(c => c.Id == id); 
+    
 
             Module module = new Module()
             {
                 CourseId = dbCourse.Id,
                 StartDate = startDate,
-                EndDate = endDate
+                EndDate = endDate.EndDate
             };
 
 
             return View(module);
+        }
+
+        [Authorize(Roles = Role.Teacher)]
+        public ActionResult DeleteModuleOld(int? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            Module module = db.Modules.Find(id);
+
+            if (module == null)
+                return HttpNotFound();
+
+            db.Modules.Remove(module);
+            db.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        private ActionResult RedirectToLocal(string returnUrl)
+        {
+            throw new NotImplementedException();
         }
 
         [HttpPost]

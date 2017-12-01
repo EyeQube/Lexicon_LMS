@@ -61,7 +61,15 @@
             <h5><strong>@module.Name</strong> ( @Html.DisplayFor(m => module.StartDate) - @Html.DisplayFor(m => module.EndDate) )</h5>
             <p>@module.Description</p>
         </div>
+
+
+       
+            
+                @Html.ActionLink("Delete module", "DeleteModuleOld", "Home", routeValues: new { id = module.Id }, htmlAttributes: new { @class = "btn btn-primary" })
+            
+        
     }
+
     @if (!Model.Modules.Any())
     {
         <p>Inga moduler registrerade för denna kurs</p>
@@ -69,7 +77,8 @@
 
 </div>
 
-@Html.ActionLink("Add new module", "Module", "Home", routeValues: new { role = Role.Teacher, id = Model.Id}, htmlAttributes: new { @class = "btn btn-primary" })
+
+@Html.ActionLink("Add/Update Module", "Module", "Home", routeValues: new { role = Role.Teacher, id = Model.Id}, htmlAttributes: new { @class = "btn btn-primary" })
 
 
 <hr />
