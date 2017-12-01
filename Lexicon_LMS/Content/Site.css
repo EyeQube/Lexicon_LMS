@@ -86,3 +86,13 @@ HelloSpace{
 
     padding-right:10px;
 }
+#datetimepicker{
+    width:300px;
+}
+.right{
+    float:right;
+}
+
+.glyphicon-trash{
+    color:black;
+}

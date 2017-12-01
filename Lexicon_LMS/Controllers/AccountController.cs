@@ -139,15 +139,13 @@ namespace Lexicon_LMS.Controllers
         {
             var viewModel = new RegisterViewModel
             {
-                Roles = role ?? Role.Student,
+                Role = role ?? Role.Student,
                 Courses = _context.Courses,
                 CourseId = courseid
             };
 
             return View("Register", viewModel);
         }
-
-
 
         //
         // POST: /Account/Register
@@ -166,7 +164,7 @@ namespace Lexicon_LMS.Controllers
 
                 if (result.Succeeded)
                 {
-                    UserManager.AddToRole(user.Id, viewModel.Roles);
+                    UserManager.AddToRole(user.Id, viewModel.Role);
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -176,6 +174,13 @@ namespace Lexicon_LMS.Controllers
 
             viewModel.Courses = _context.Courses;
             return View(viewModel);
+        }
+
+        public ActionResult ListUsers()
+        {
+            var Users = _context.Users.ToList();
+
+            return View(Users);
         }
 
         //
