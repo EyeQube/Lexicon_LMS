@@ -65,7 +65,7 @@
 
             @foreach (var module in Model.Modules.OrderBy(x => x.StartDate))
             {
-                <div>
+                <div class="user-module">
                     <h5>
                         <strong>
                             @Ajax.ActionLink(module.Name, "ListActivity", "Home", new { id = module.Id }, new AjaxOptions
@@ -80,18 +80,19 @@
                         )
 
 
-                    </strong> ( @Html.DisplayFor(m => module.StartDate) - @Html.DisplayFor(m => module.EndDate) )
-                </h5>
-                <p>@module.Description</p>
-            </div>
-                if (User.IsInRole(Role.Teacher))
-                {
+                        </strong> ( @Html.DisplayFor(m => module.StartDate) - @Html.DisplayFor(m => module.EndDate) )
+                    </h5>
+                    <p>@module.Description</p>
+
+                    @if (User.IsInRole(Role.Teacher))
+                    {
                     <div>
                         @Html.ActionLink("edit", "EditModule", "Home", routeValues: new { id = module.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
-                        @Html.ActionLink("delete", "DeleteModule", "Home", routeValues: new { id = module.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "btn btn-danger btn-sm" })
+                        <a href="#" class="js-delete-entity btn btn-danger btn-sm" data-user-api="/HomeApi/DeleteModule/" data-user-id="@module.Id" data-user-remove=".user-module" data-user-message="Delete module @Html.DisplayFor(m => module.Name)">DELETE</a>
                     </div>
-                }
+                    }
 
+                </div>
             }
             @if (!Model.Modules.Any())
             {
