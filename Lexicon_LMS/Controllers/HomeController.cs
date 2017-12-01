@@ -20,12 +20,23 @@ namespace Lexicon_LMS.Controllers
         [Authorize] 
         public ActionResult Module(int id)
         {
-            var dbCourse = db.Courses.Single(x => x.Id == id);
+            var dbCourse = db.Courses.Single(c => c.Id == id);
+
+            // get latest end-date from module list OR the course start-date
+            
+            var startDate = db.Courses.FirstOrDefault(c => c.Id == id)
+                .Modules.Select(m => m.EndDate)
+                .Concat(
+                    db.Courses.Where(c => c.Id == id)
+                    .Select(c => c.StartDate))
+                .Max();
 
 
             Module module = new Module()
             {
                 CourseId = dbCourse.Id,
+                StartDate = startDate,
+                EndDate = startDate
             };
 
             return View(module);
