@@ -75,8 +75,7 @@
             {
                 <div>
                     @Html.ActionLink("edit module", "EditModule", "Home", routeValues: new { id = module.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
-                    <a href="#" class="js-delete-module btn btn-danger btn-sm" data-user-id="@module.Id">Delete</a>
-
+                    <a href="#" class="js-delete-entity btn btn-danger btn-sm" data-user-api="/HomeApi/DeleteModule/" data-user-id="@module.Id" data-user-remove=".CourseModule" data-user-message="Remove module">Delete Better</a>
                 </div>
             }
         </div>
