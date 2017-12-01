@@ -12,31 +12,29 @@
 
 else
 {
-<table class="table table-responsive dl-horizontal table-striped table-bordered">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.FullName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Email)
-                </th>
-               
+    <table class="table table-responsive dl-horizontal table-striped table-bordered">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr class="user-row">
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                    <span class="right"><a href="#" class="js-delete-entity glyphicon glyphicon-trash" data-user-api="/api/Account/" data-user-id="@item.Id" data-user-remove=".user-row" data-user-message="Delete user @Html.DisplayFor(modelItem => item.FullName)"></a></span>
+                </td>
             </tr>
+        }
 
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FullName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                        <span class="right"><a href="#" class="js-delete-user glyphicon glyphicon-trash" data-user-id="@item.Id"></a></span>
-                    </td>
-                    
-                </tr>
-            }
-
-</table>
+    </table>
 }
 
