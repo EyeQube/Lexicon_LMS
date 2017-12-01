@@ -30,7 +30,7 @@ else
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Email)
-                    <span class="right"><a href="#" class="js-delete-entity glyphicon glyphicon-trash" data-user-api="/api/Account/" data-user-id="@item.Id" data-user-remove=".user-row" data-user-message="Delete user @Html.DisplayFor(modelItem => item.FullName)"></a></span>
+                    <span class="right"><a href="#" class="js-delete-entity glyphicon glyphicon-trash" data-user-api="/AccountApi/DeleteUser/" data-user-id="@item.Id" data-user-remove=".user-row" data-user-message="Delete user @Html.DisplayFor(modelItem => item.FullName)"></a></span>
                 </td>
             </tr>
         }

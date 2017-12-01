@@ -14,8 +14,8 @@ namespace Lexicon_LMS.Controllers.Api
         }
 
         [HttpDelete]
-        [Route("Api/Account/{id}")]
-        public IHttpActionResult Delete(string id)
+        [Route("AccountApi/DeleteUser/{id}")]
+        public IHttpActionResult DeleteUser(string id)
         {
             //var userId = User.Identity.GetUserId();
             var user = _context.Users.Single(a => a.Id == id);
