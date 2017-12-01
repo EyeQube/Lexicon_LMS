@@ -17,7 +17,7 @@ namespace Lexicon_LMS.Controllers
             db = new ApplicationDbContext();
         }
 
-
+/*
         [Authorize] 
         public ActionResult Module(int id)
         {
@@ -29,7 +29,7 @@ namespace Lexicon_LMS.Controllers
             return View(module);
         }
 
-
+/*
         [Authorize]
         public ActionResult SaveModule(Module module)  
         {
@@ -48,7 +48,7 @@ namespace Lexicon_LMS.Controllers
                      ViewBag.ErrorMessage = $"You have no access to course ({course.Name})";
                      return View("Error");
                  }
-             } */
+             } 
 
             if (module.Id == 0)
              {
@@ -81,7 +81,8 @@ namespace Lexicon_LMS.Controllers
             }
 
             return View("Register", viewModel);
-        } 
+        }  
+           */
 
 
 
