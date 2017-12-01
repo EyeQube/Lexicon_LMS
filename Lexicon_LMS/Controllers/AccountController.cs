@@ -147,8 +147,6 @@ namespace Lexicon_LMS.Controllers
             return View("Register", viewModel);
         }
 
-
-
         //
         // POST: /Account/Register
         [HttpPost]
@@ -176,6 +174,13 @@ namespace Lexicon_LMS.Controllers
 
             viewModel.Courses = _context.Courses;
             return View(viewModel);
+        }
+
+        public ActionResult ListUsers()
+        {
+            var Users = _context.Users.ToList();
+
+            return View(Users);
         }
 
         //

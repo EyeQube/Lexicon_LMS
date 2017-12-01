@@ -32,8 +32,8 @@ else
                 <tr>       
                     <td>@Html.ActionLink(course.Name, "Course", "Home", new { id = course.Id }, null)</td>
                     @*<td>@course.Description</td>*@
-                    <td> @Html.DisplayFor(m => course.StartDate)</td>  @*@course.StartDate.ToShortDateString()</td>*@
-                    <td>@Html.DisplayFor(m => course.EndDate)</td>  @*@course.EndDate.ToShortDateString()</td>*@
+                    <td> @Html.DisplayFor(m => course.StartDate, "{0:yyyy-MM-dd}")</td>  @*@course.StartDate.ToShortDateString()</td>*@
+                    <td>@Html.DisplayFor(m => course.EndDate, "{0:yyyy-MM-dd}")</td>  @*@course.EndDate.ToShortDateString()</td>*@
                 </tr>
              }
 

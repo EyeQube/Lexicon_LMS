@@ -25,3 +25,10 @@ textarea {
 #datetimepicker{
     width:300px;
 }
+.right{
+    float:right;
+}
+
+.glyphicon-trash{
+    color:black;
+}

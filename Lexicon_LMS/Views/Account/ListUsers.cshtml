@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Lexicon_LMS.Models.ApplicationUser>
+@{
+    ViewBag.Title = "ListUsers";
+}
+
+<h2>ListUsers</h2>
+
+@if (!Model.Any())
+{
+    <p>There are no register users at the moment</p>
+}
+
+else
+{
+<table class="table table-responsive dl-horizontal table-striped table-bordered">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FullName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+               
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                        <span class="right"><a href="#" class="js-delete-user glyphicon glyphicon-trash" data-user-id="@item.Id"></a></span>
+                    </td>
+                    
+                </tr>
+            }
+
+</table>
+}
+

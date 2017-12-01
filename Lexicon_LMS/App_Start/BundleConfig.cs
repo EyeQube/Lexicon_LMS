@@ -23,6 +23,7 @@ namespace Lexicon_LMS
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js",
                       "~/Scripts/site.js",
+                      "~/Scripts/bootbox.min.js",
                       "~/Scripts/bootstrap-datepicker.js",
                       "~/Scripts/locales/bootstrap-datepicker.*"));
 
