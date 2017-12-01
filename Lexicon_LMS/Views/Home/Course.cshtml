@@ -10,7 +10,7 @@
 }
 
 
-<h2 style="color:darkred;"><b>@Model.Name</b></h2>  
+<h2 style="color:darkred;"><b>@Model.Name</b></h2>
 
 
 <div>
@@ -57,17 +57,31 @@
 <div>
     <h3 style="color:darkred;"><b>Course modules</b></h3>
 
+    @if (User.IsInRole(Role.Teacher))
+    {
+        @Html.ActionLink("Add new module", "CreateModule", "Home", routeValues: new { courseId = Model.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
+    }
+
     @foreach (var module in Model.Modules.OrderBy(x => x.StartDate))
     {
         <div>
             <h5><strong>@module.Name</strong> ( @Html.DisplayFor(m => module.StartDate) - @Html.DisplayFor(m => module.EndDate) )</h5>
             <p>@module.Description</p>
         </div>
+        if (User.IsInRole(Role.Teacher))
+        {
+            <div>
+                @Html.ActionLink("edit module", "EditModule", "Home", routeValues: new { id = module.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
+                @Html.ActionLink("delete module", "DeleteModule", "Home", routeValues: new { id = module.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "btn btn-danger btn-sm" })
+            </div>
+        }
+
     }
     @if (!Model.Modules.Any())
     {
         <p>Inga moduler registrerade för denna kurs</p>
     }
+
 
 </div>
 
@@ -90,10 +104,10 @@
     <hr />
 
 
-@*@if (Request.IsAuthenticated && User.IsInRole(Role.Teacher))*@
-@if (User.IsInRole(Role.Teacher))
-{
-    @Html.ActionLink("Add new student", "Register", "Account", routeValues: new { role = Role.Student, courseid = Model.Id }, htmlAttributes: new { @class = "btn btn-default" })
-}
+    @*@if (Request.IsAuthenticated && User.IsInRole(Role.Teacher))*@
+    @if (User.IsInRole(Role.Teacher))
+    {
+        @Html.ActionLink("Add new student", "Register", "Account", routeValues: new { role = Role.Student, courseid = Model.Id }, htmlAttributes: new { @class = "btn btn-default" })
+    }
 
 </div>
