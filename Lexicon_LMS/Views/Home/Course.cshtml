@@ -53,61 +53,87 @@
 </div>
 
 <hr />
-
-<div>
-    <h3 style="color:darkred;"><b>Course modules</b></h3>
-
-    @if (User.IsInRole(Role.Teacher))
-    {
-        @Html.ActionLink("Add new module", "CreateModule", "Home", routeValues: new { courseId = Model.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
-    }
-
-    @foreach (var module in Model.Modules.OrderBy(x => x.StartDate))
-    {
-        <div>
-            <h5><strong>@module.Name</strong> ( @Html.DisplayFor(m => module.StartDate) - @Html.DisplayFor(m => module.EndDate) )</h5>
-            <p>@module.Description</p>
-        </div>
-        if (User.IsInRole(Role.Teacher))
-        {
-            <div>
-                @Html.ActionLink("edit module", "EditModule", "Home", routeValues: new { id = module.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
-                @Html.ActionLink("delete module", "DeleteModule", "Home", routeValues: new { id = module.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "btn btn-danger btn-sm" })
-            </div>
-        }
-
-    }
-    @if (!Model.Modules.Any())
-    {
-        <p>Inga moduler registrerade för denna kurs</p>
-    }
-
-
-</div>
-
-<hr />
-<div>
-    <h3 style="color:darkred;"><b>Course members</b></h3>
-
-    <div class="contaier-fluid">
+<div class="container">
+    <div class="col-lg-4">
         <div class="row">
+            <h3 style="color:darkred;"><b>Course modules</b></h3>
 
-            @foreach (var student in Model.Users.ToList())
+            @if (User.IsInRole(Role.Teacher))
             {
-                <div class="col-sm-6 col-md-4">
-                    <p><strong>@student.FullName</strong> <a href="@student.Email">@student.Email</a></p>
-                </div>
+                @Html.ActionLink("Add new module", "CreateModule", "Home", routeValues: new { courseId = Model.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
             }
+
+            @foreach (var module in Model.Modules.OrderBy(x => x.StartDate))
+            {
+                <div>
+                    <h5>
+                        <strong>
+                            @Ajax.ActionLink(module.Name, "ListActivity", "Home", new { id = module.Id }, new AjaxOptions
+                       {
+                           UpdateTargetId = "UpdateContentDiv", // <-- DOM element ID to update
+                           InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
+                           HttpMethod = "GET", // <-- HTTP method
+
+
+                       },
+                            new { @class = "btn btn-link" } //-- Class
+                        )
+
+
+                    </strong> ( @Html.DisplayFor(m => module.StartDate) - @Html.DisplayFor(m => module.EndDate) )
+                </h5>
+                <p>@module.Description</p>
+            </div>
+                if (User.IsInRole(Role.Teacher))
+                {
+                    <div>
+                        @Html.ActionLink("edit", "EditModule", "Home", routeValues: new { id = module.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
+                        @Html.ActionLink("delete", "DeleteModule", "Home", routeValues: new { id = module.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "btn btn-danger btn-sm" })
+                    </div>
+                }
+
+            }
+            @if (!Model.Modules.Any())
+            {
+                <p>Inga moduler registrerade för denna kurs</p>
+            }
+
+
+        </div>
+    </div>
+    <div class="col-lg-8">
+
+        <div id="UpdateContentDiv">
+
         </div>
     </div>
 
-    <hr />
+</div>
+<hr />
+<div class="container">
+    <div class="col-md-6">
+        <h3 style="color:darkred;"><b>Course members</b></h3>
 
+        <div class="contaier-fluid">
+            <div class="row">
 
+                @foreach (var student in Model.Users.ToList())
+                {
+                    <div class="col-sm-6 col-md-4">
+                        <p><strong>@student.FullName</strong> <a href="@student.Email">@student.Email</a></p>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <hr />
+    </div>
+</div>
+<div class="container">
     @*@if (Request.IsAuthenticated && User.IsInRole(Role.Teacher))*@
     @if (User.IsInRole(Role.Teacher))
-    {
+            {
         @Html.ActionLink("Add new student", "Register", "Account", routeValues: new { role = Role.Student, courseid = Model.Id }, htmlAttributes: new { @class = "btn btn-default" })
     }
-
 </div>
+
