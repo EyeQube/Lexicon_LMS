@@ -3,12 +3,10 @@ namespace Lexicon_LMS.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class addActivityAndActivityTypeModel : DbMigration
+    public partial class add_activity : DbMigration
     {
         public override void Up()
         {
-            DropForeignKey("dbo.AspNetUsers", "Module_Id", "dbo.Modules");
-            DropIndex("dbo.AspNetUsers", new[] { "Module_Id" });
             CreateTable(
                 "dbo.Activities",
                 c => new
@@ -36,20 +34,16 @@ namespace Lexicon_LMS.Migrations
                     })
                 .PrimaryKey(t => t.Id);
             
-            DropColumn("dbo.AspNetUsers", "Module_Id");
         }
         
         public override void Down()
         {
-            AddColumn("dbo.AspNetUsers", "Module_Id", c => c.Int());
             DropForeignKey("dbo.Activities", "ModuleId", "dbo.Modules");
             DropForeignKey("dbo.Activities", "ActivityTypeId", "dbo.ActivityTypes");
             DropIndex("dbo.Activities", new[] { "ActivityTypeId" });
             DropIndex("dbo.Activities", new[] { "ModuleId" });
             DropTable("dbo.ActivityTypes");
             DropTable("dbo.Activities");
-            CreateIndex("dbo.AspNetUsers", "Module_Id");
-            AddForeignKey("dbo.AspNetUsers", "Module_Id", "dbo.Modules", "Id");
         }
     }
 }
