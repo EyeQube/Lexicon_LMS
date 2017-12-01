@@ -38,4 +38,43 @@
         });
 
     });
+
+    $('.js-delete-module').click(function (e) {
+        var link = $(e.target);
+
+        bootbox.dialog({
+            title: 'Confirm',
+            message: "Are you sure you want to delete this module?",
+            buttons: {
+                no: {
+                    label: "No",
+                    className: 'btn-default',
+                    callback: function () {
+                        bootbox.hideAll();
+                    }
+                },
+                yes: {
+                    label: "Yes",
+                    className: 'btn-danger',
+                    callback: function () {
+                        $.ajax({
+                            url: "/api/Home/" + link.attr("data-user-id"),
+                            method: "DELETE"
+                        })
+                            .done(function () {
+                                link.closest(".CourseModule").fadeOut(function () {
+                                    $(this).remove();
+                                });
+                            })
+                            .fail(function () {
+                                alert("Something failed!!");
+                            });
+
+                    }
+                }
+            }
+        });
+
+    });
+
 });

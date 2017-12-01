@@ -177,7 +177,7 @@ namespace Lexicon_LMS.Controllers
         }
 
         [Authorize(Roles = Role.Teacher)]
-        public ActionResult DeleteModule(int? id, string returnUrl = "/")
+        public ActionResult DeleteModuleOld(int? id, string returnUrl = "/")
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

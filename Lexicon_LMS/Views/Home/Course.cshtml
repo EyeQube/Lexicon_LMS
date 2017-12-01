@@ -64,17 +64,22 @@
 
     @foreach (var module in Model.Modules.OrderBy(x => x.StartDate))
     {
-        <div>
-            <h5><strong>@module.Name</strong> ( @Html.DisplayFor(m => module.StartDate) - @Html.DisplayFor(m => module.EndDate) )</h5>
-            <p>@module.Description</p>
-        </div>
-        if (User.IsInRole(Role.Teacher))
-        {
+        <div class="CourseModule">
+
             <div>
-                @Html.ActionLink("edit module", "EditModule", "Home", routeValues: new { id = module.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
-                @Html.ActionLink("delete module", "DeleteModule", "Home", routeValues: new { id = module.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "btn btn-danger btn-sm" })
+                <h5><strong>@module.Name</strong> ( @Html.DisplayFor(m => module.StartDate) - @Html.DisplayFor(m => module.EndDate) )</h5>
+                <p>@module.Description</p>
             </div>
-        }
+
+            @if (User.IsInRole(Role.Teacher))
+            {
+                <div>
+                    @Html.ActionLink("edit module", "EditModule", "Home", routeValues: new { id = module.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
+                    <a href="#" class="js-delete-module btn btn-danger btn-sm" data-user-id="@module.Id">Delete</a>
+
+                </div>
+            }
+        </div>
 
     }
     @if (!Model.Modules.Any())
