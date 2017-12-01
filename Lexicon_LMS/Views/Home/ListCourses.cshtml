@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Courses</h2>
+<h2><b>Courses</b></h2>
 
 @if (!Model.Any())
 {
@@ -14,14 +14,14 @@
 
 else
 {
- <div class="dl-horizontal">    
-        <table class="table table-responsive dl-horizontal table-striped table-bordered">
+ <div class="dl-horizontal" style="background-color:snow">    
+        <table class="table table-responsive dl-horizontal table-bordered" >
             <thead>
                 <tr>
-                    <th>Course</th>
+                    <th><b>Course</b></th>
                     @*<th>Description</th>*@
-                    <th>Start Date</th>
-                    <th>End Date</th>
+                    <th><b>Start Date</b></th>
+                    <th><b>End Date</b></th>
                 </tr>
             </thead>
       

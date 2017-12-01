@@ -3,7 +3,7 @@ namespace Lexicon_LMS.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class init : DbMigration
+    public partial class InitialModel : DbMigration
     {
         public override void Up()
         {
@@ -53,14 +53,11 @@ namespace Lexicon_LMS.Migrations
                         LockoutEnabled = c.Boolean(nullable: false),
                         AccessFailedCount = c.Int(nullable: false),
                         UserName = c.String(nullable: false, maxLength: 256),
-                        Module_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Courses", t => t.CourseId)
-                .ForeignKey("dbo.Modules", t => t.Module_Id)
                 .Index(t => t.CourseId)
-                .Index(t => t.UserName, unique: true, name: "UserNameIndex")
-                .Index(t => t.Module_Id);
+                .Index(t => t.UserName, unique: true, name: "UserNameIndex");
             
             CreateTable(
                 "dbo.AspNetUserClaims",
@@ -115,7 +112,6 @@ namespace Lexicon_LMS.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropForeignKey("dbo.AspNetUsers", "Module_Id", "dbo.Modules");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUsers", "CourseId", "dbo.Courses");
@@ -126,7 +122,6 @@ namespace Lexicon_LMS.Migrations
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
-            DropIndex("dbo.AspNetUsers", new[] { "Module_Id" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.AspNetUsers", new[] { "CourseId" });
             DropIndex("dbo.Modules", new[] { "CourseId" });
