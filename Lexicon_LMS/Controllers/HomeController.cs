@@ -23,21 +23,28 @@ namespace Lexicon_LMS.Controllers
             var dbCourse = db.Courses.Single(c => c.Id == id);
 
             // get latest end-date from module list OR the course start-date
-            
+
             var startDate = db.Courses.FirstOrDefault(c => c.Id == id)
+                .Modules.Select(m => m.StartDate)
+                .Concat(
+                    db.Modules.Where(c => c.Id == id)
+                    .Select(c => c.EndDate))
+                .Max();
+
+            var endDate = db.Courses.FirstOrDefault(c => c.Id == id)
                 .Modules.Select(m => m.EndDate)
                 .Concat(
                     db.Courses.Where(c => c.Id == id)
                     .Select(c => c.StartDate))
-                .Max();
-
+                .Max();         
 
             Module module = new Module()
             {
                 CourseId = dbCourse.Id,
                 StartDate = startDate,
-                EndDate = startDate
+                EndDate = endDate
             };
+
 
             return View(module);
         }
@@ -47,14 +54,25 @@ namespace Lexicon_LMS.Controllers
         [Authorize(Roles = Role.Teacher)]
         public ActionResult SaveModule(Module module)  
         {
+            bool bol = false;
+            //var moduleInDb = db.Modules.FirstOrDefault(m => m.Id == module.Id);
 
-            if (module.Id == 0)
+            foreach (var modules in db.Modules)
+            {
+                if(modules.Name == module.Name)
+                {
+                    bol = true;
+                    break;
+                }
+            }
+
+            if (bol == false)
             {
                 db.Modules.Add(module);
             }
-            else
+             else
             {
-                var moduleInDb = db.Modules.Single(m => m.Id == module.Id);
+                var moduleInDb = db.Modules.FirstOrDefault(m => m.Name == module.Name);
                 moduleInDb.Name = module.Name;
                 moduleInDb.Description = module.Description;
                 moduleInDb.StartDate = module.StartDate;
