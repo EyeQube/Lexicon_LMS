@@ -21,10 +21,28 @@ namespace Lexicon_LMS.Controllers
         [Authorize] 
         public ActionResult Module(int id)
         {
-            var dbCourse = db.Courses.Single(c => c.Id == id);
 
             // get latest end-date from module list OR the course start-date
 
+            var dbCourse = db.Courses.Single(c => c.Id == id);
+
+            Module module = new Module();
+
+            if (dbCourse.Modules.Count() == 0)
+            {
+                module.CourseId = dbCourse.Id;
+                module.StartDate = dbCourse.StartDate;
+                module.EndDate = dbCourse.EndDate;
+
+                /*var _startDate = db.Courses.FirstOrDefault(c => c.Id == id);
+                startDate = _startDate.StartDate; */
+
+                return View(module);
+
+                //return RedirectToAction("Index", "Home");
+            }
+
+           
             var startDate = db.Courses.FirstOrDefault(c => c.Id == id)
                 .Modules.Select(m => m.EndDate)
                 .Concat(
@@ -32,26 +50,27 @@ namespace Lexicon_LMS.Controllers
                     .Select(c => c.EndDate))
                 .Max().AddDays(1);
 
+
             // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
             if (startDate == null)
             {
-               var _startDate = db.Courses.FirstOrDefault(c => c.Id == id);
-               startDate = _startDate.StartDate;
+                var _startDate = db.Courses.FirstOrDefault(c => c.Id == id);
+                startDate = _startDate.StartDate;
             }
 
-            var endDate = db.Courses.FirstOrDefault(c => c.Id == id); 
-    
 
-            Module module = new Module()
-            {
-                CourseId = dbCourse.Id,
-                StartDate = startDate,
-                EndDate = endDate.EndDate
-            };
+            var endDate = db.Courses.FirstOrDefault(c => c.Id == id);
+
+            module.CourseId = dbCourse.Id;
+            module.StartDate = startDate;
+            module.EndDate = endDate.EndDate;     
 
 
             return View(module);
         }
+
+
 
         [Authorize(Roles = Role.Teacher)]
         public ActionResult DeleteModuleOld(int? id)
