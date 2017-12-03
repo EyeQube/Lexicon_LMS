@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using System;
+using System.Collections;
 
 namespace Lexicon_LMS.Controllers
 {
@@ -70,6 +71,33 @@ namespace Lexicon_LMS.Controllers
             return View(module);
         }
 
+
+        [Authorize(Roles = Role.Teacher)]
+        public ActionResult DeleteCourse(int id)
+        {
+
+            var course = db.Courses.Single(i => i.Id == id);
+
+
+            if(course.Modules.Count() == 0 && course.Users.Count() == 0)
+            {
+                db.Courses.Remove(course);
+                db.SaveChanges();
+                return RedirectToAction("Index", "Home");
+            }
+
+                if (course.Modules.Count() > 0 && course.Users.Count() > 0)
+                ViewBag.ErrorMessage = $"{course.Name} has {course.Modules.Count()} modules, and {course.Users.Count()} students enrolled.  You must delete all modules and remove all students from the course, before you can delete the actual course.";
+
+                if(course.Modules.Count() > 0 && course.Users.Count() == 0)
+                ViewBag.ErrorMessage = $"{course.Name} has {course.Modules.Count()} modules. You must delete all modules, before you can delete the actual course.";
+
+                if (course.Users.Count() > 0 && course.Modules.Count() == 0)
+                ViewBag.ErrorMessage = $"{course.Name} has {course.Users.Count()} students enrolled. You must remove all students from the course, before you can delete the actual course.";
+
+
+            return View("Error");
+        }
 
 
         [Authorize(Roles = Role.Teacher)]

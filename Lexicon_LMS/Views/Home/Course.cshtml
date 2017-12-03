@@ -9,7 +9,7 @@
 
 
 <h2 style="color:darkred;"><b>@Model.Name</b></h2>  
-
+@Html.ActionLink("Delete Course", "DeleteCourse", "Home", routeValues: new {Role = Role.Teacher, id = Model.Id }, htmlAttributes: new { @class = "btn btn-primary" })
 
 <div>
     @*<h4>@Html.DisplayFor(model => model.Name)</h4>*@
@@ -65,7 +65,7 @@
 
        
             
-                @Html.ActionLink("Delete module", "DeleteModuleOld", "Home", routeValues: new { id = module.Id }, htmlAttributes: new { @class = "btn btn-primary" })
+                @Html.ActionLink("Delete module", "DeleteModuleOld", "Home", routeValues: new { Role.Teacher, id = module.Id }, htmlAttributes: new { @class = "btn btn-primary" })
             
         
     }
