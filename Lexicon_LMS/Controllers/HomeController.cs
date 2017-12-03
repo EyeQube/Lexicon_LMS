@@ -94,6 +94,8 @@ namespace Lexicon_LMS.Controllers
             throw new NotImplementedException();
         }
 
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Role.Teacher)]
@@ -111,9 +113,17 @@ namespace Lexicon_LMS.Controllers
                 }
             }
 
+            
+
             if (bol == false)
             {
                 db.Modules.Add(module);
+
+                //var mods = db.Modules.Single(m => m.CourseId == 0);
+
+                db.SaveChanges();
+
+                return RedirectToAction("Course", "Home");
             }
              else
             {
@@ -122,17 +132,33 @@ namespace Lexicon_LMS.Controllers
                 moduleInDb.Description = module.Description;
                 moduleInDb.StartDate = module.StartDate;
                 moduleInDb.EndDate = module.EndDate;
+                moduleInDb.CourseId = module.CourseId;
+                db.SaveChanges();
             }
 
-            db.SaveChanges();
+            
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Course", "Home");
         }  
            
+        /*[Authorize]
+        public ActionResult Course()
+        {
+            var mods = db.Modules.Single(m => m.CourseId == 0);
+            return View();
+        }*/
+
 
         [Authorize]
         public ActionResult Course(int id)
         {
+
+            /*if(id == 0)
+            {
+                //Course _course = new Course();
+                return View();
+            }*/
+
             var course = db.Courses.FirstOrDefault(x => x.Id == id);
 
             if (course == null)
