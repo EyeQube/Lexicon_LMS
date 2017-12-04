@@ -297,6 +297,20 @@ namespace Lexicon_LMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateModule(Module module, string returnUrl)
         {
+            var course = db.Courses.Find(module.CourseId);
+            if (course == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "course id not found");
+
+            if (module.StartDate < course.StartDate ||
+                module.StartDate > course.EndDate ||
+                module.EndDate > course.EndDate)
+            {
+                ModelState.AddModelError("", $"Dates must be within course time span.\n Start: {course.StartDate.ToShortDateString()} End: {course.EndDate.ToShortDateString()}");
+            }
+            if (module.StartDate > module.EndDate)
+                ModelState.AddModelError("", $"Dates must be in sequence");
+
+
             if (ModelState.IsValid)
             {
                 db.Modules.Add(module);
