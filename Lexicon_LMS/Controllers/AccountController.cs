@@ -169,6 +169,7 @@ namespace Lexicon_LMS.Controllers
                     if (button == "SaveNew")
                     {
                         viewModel.Courses = _context.Courses;
+                        ViewBag.Message = $"Successfully added user \"{user.Email}\"";
                         return View(viewModel);
                     }
 
