@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Lexicon_LMS.Models
 {
-    public class Module
+    public class Activity
     {
         public int Id { get; set; }
 
@@ -30,12 +28,13 @@ namespace Lexicon_LMS.Models
         public DateTime EndDate { get; set; }
 
         [Required]
-        [Display(Name = "Parent course")]
-        public int CourseId { get; set; }
-        [ForeignKey("CourseId")]
-        public virtual Course Course { get; set; }
+        public int ModuleId { get; set; }
 
-        public virtual ICollection<Activity> Activity { get; set; }
+        public virtual Module Module { get; set; }
 
+        [Required]
+        public int ActivityTypeId { get; set; }
+
+        public virtual ActivityType ActivityType { get; set; }
     }
 }

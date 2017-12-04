@@ -36,6 +36,27 @@ namespace Lexicon_LMS.Migrations
             context.Modules.AddOrUpdate(x => x.Name, dnModules);
             context.SaveChanges();
 
+            //Create ActivityType
+            ActivityType[] activityTypes = new[]
+            {
+                new ActivityType{ Name = "Föreläsning"},
+                new ActivityType{ Name= "E-learning"},
+                new ActivityType{ Name= "Övningstillfälle"}
+            };
+            context.ActivityTypes.AddOrUpdate(x => x.Name, activityTypes);
+            context.SaveChanges();
+
+            //Create Activity
+            var dnModuleId = context.Modules.First(x => x.Name == "C# grundkurs").Id;
+            Activity[] dnActivity = new[]
+            {
+                new Activity { ModuleId = dnModuleId, Name= "El-1.1 to 1.9", StartDate = new DateTime(2017,11,27,08,00,00), EndDate = new DateTime(2017,11,27,12,00,00), Description = "Scott Allan Basic C#", ActivityTypeId = 2 },
+                new Activity { ModuleId = dnModuleId, Name= "Övning 1", StartDate = new DateTime(2017,11,27,13,00,00), EndDate = new DateTime(2017,11,27,17,00,00), Description = "Göra en for loop", ActivityTypeId = 3 },
+                new Activity { ModuleId = dnModuleId, Name= "Frl C# Grund", StartDate = new DateTime(2017,11,28,08,00,00), EndDate = new DateTime(2017,11,28,17,00,00), Description = "Gå igenom grunderna i C#", ActivityTypeId = 1 }
+            };
+            context.Activities.AddOrUpdate(x => x.Name, dnActivity);
+            context.SaveChanges();
+
             //
 
             // Create user roles

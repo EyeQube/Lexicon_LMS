@@ -287,7 +287,7 @@ namespace Lexicon_LMS.Controllers
                 .Concat(
                     db.Courses.Where(c => c.Id == courseId)
                     .Select(c => c.StartDate))
-                .Max();
+                .Max().AddDays(1);
 
             var module = new Module
             {
@@ -346,7 +346,7 @@ namespace Lexicon_LMS.Controllers
         }
 
         [Authorize(Roles = Role.Teacher)]
-        public ActionResult DeleteModule(int? id, string returnUrl = "/")
+        public ActionResult DeleteModuleOld(int? id, string returnUrl = "/")
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -361,6 +361,54 @@ namespace Lexicon_LMS.Controllers
 
             return RedirectToLocal(returnUrl);
         }
+
+        public ActionResult ListActivity(int id)
+        {
+            var activity = db.Activities.Where(m => m.ModuleId == id).ToList();
+
+            return PartialView(activity);
+        }
+        // GET: 
+        [Authorize(Roles = Role.Teacher)]
+        public ActionResult CreateActivity(int? moduleId, string returnUrl = "/")
+        {
+            if (moduleId == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            // get latest end-date from module list OR the course start-date
+            var startDate = db.Modules.FirstOrDefault(c => c.Id == moduleId)
+                .Activity.Select(m => m.EndDate)
+                .Concat(
+                    db.Modules.Where(c => c.Id == moduleId)
+                    .Select(c => c.StartDate))
+                .Max().AddDays(1);
+
+            var activity = new Activity
+            {
+                ModuleId = (int)moduleId,
+                StartDate = startDate,
+                EndDate = startDate
+            };
+
+            ViewBag.returnUrl = returnUrl;
+            return View(activity);
+        }
+
+        [Authorize(Roles = Role.Teacher)]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateActivity(Activity activity, string returnUrl)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Activities.Add(activity);
+                db.SaveChanges();
+                return RedirectToLocal(returnUrl);
+            }
+
+            return View(activity);
+        }
+
 
         //TODO copy from accountcontroller ... move to common utility class
         private ActionResult RedirectToLocal(string returnUrl)
