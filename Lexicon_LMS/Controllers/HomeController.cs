@@ -96,7 +96,7 @@ namespace Lexicon_LMS.Controllers
                 ViewBag.ErrorMessage = $"{course.Name} has {course.Users.Count()} students enrolled. You must remove all students from the course, before you can delete the actual course.";
 
 
-            return View("Error");
+                return View("Error");
         }
 
 
