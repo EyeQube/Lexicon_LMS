@@ -10,8 +10,8 @@
 }
 
 
-<h2 style="color:darkred;"><b>@Model.Name</b></h2>
-
+<h2 style="color:darkred;"><b>@Model.Name</b></h2>  
+@Html.ActionLink("Delete Course", "DeleteCourse", "Home", routeValues: new {Role = Role.Teacher, id = Model.Id }, htmlAttributes: new { @class = "btn btn-primary" })
 
 <div>
     @*<h4>@Html.DisplayFor(model => model.Name)</h4>*@
@@ -77,6 +77,7 @@
         }
 
     }
+
     @if (!Model.Modules.Any())
     {
         <p>Inga moduler registrerade för denna kurs</p>
@@ -85,7 +86,8 @@
 
 </div>
 
-@Html.ActionLink("Add new module", "Module", "Home", routeValues: new { role = Role.Teacher, id = Model.Id}, htmlAttributes: new { @class = "btn btn-primary" })
+
+@Html.ActionLink("Add/Update Module", "Module", "Home", routeValues: new { role = Role.Teacher, id = Model.Id}, htmlAttributes: new { @class = "btn btn-primary" })
 
 
 <hr />
