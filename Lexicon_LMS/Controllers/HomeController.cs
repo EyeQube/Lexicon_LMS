@@ -4,8 +4,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using System;
-using System.Collections;
 
 namespace Lexicon_LMS.Controllers
 {
@@ -19,7 +17,7 @@ namespace Lexicon_LMS.Controllers
         }
 
 
-        [Authorize] 
+        [Authorize]
         public ActionResult Module(int id)
         {
 
@@ -43,7 +41,7 @@ namespace Lexicon_LMS.Controllers
                 //return RedirectToAction("Index", "Home");
             }
 
-           
+
             var startDate = db.Courses.FirstOrDefault(c => c.Id == id)
                 .Modules.Select(m => m.EndDate)
                 .Concat(
@@ -65,7 +63,7 @@ namespace Lexicon_LMS.Controllers
 
             module.CourseId = dbCourse.Id;
             module.StartDate = startDate;
-            module.EndDate = endDate.EndDate;     
+            module.EndDate = endDate.EndDate;
 
 
             return View(module);
@@ -79,24 +77,24 @@ namespace Lexicon_LMS.Controllers
             var course = db.Courses.Single(i => i.Id == id);
 
 
-            if(course.Modules.Count() == 0 && course.Users.Count() == 0)
+            if (course.Modules.Count() == 0 && course.Users.Count() == 0)
             {
                 db.Courses.Remove(course);
                 db.SaveChanges();
                 return RedirectToAction("Index", "Home");
             }
 
-                if (course.Modules.Count() > 0 && course.Users.Count() > 0)
+            if (course.Modules.Count() > 0 && course.Users.Count() > 0)
                 ViewBag.ErrorMessage = $"{course.Name} has {course.Modules.Count()} modules, and {course.Users.Count()} students enrolled.  You must delete all modules and remove all students from the course, before you can delete the actual course.";
 
-                if(course.Modules.Count() > 0 && course.Users.Count() == 0)
+            if (course.Modules.Count() > 0 && course.Users.Count() == 0)
                 ViewBag.ErrorMessage = $"{course.Name} has {course.Modules.Count()} modules. You must delete all modules, before you can delete the actual course.";
 
-                if (course.Users.Count() > 0 && course.Modules.Count() == 0)
+            if (course.Users.Count() > 0 && course.Modules.Count() == 0)
                 ViewBag.ErrorMessage = $"{course.Name} has {course.Users.Count()} students enrolled. You must remove all students from the course, before you can delete the actual course.";
 
 
-                return View("Error");
+            return View("Error");
         }
 
 
@@ -117,31 +115,25 @@ namespace Lexicon_LMS.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        private ActionResult RedirectToLocal(string returnUrl)
-        {
-            throw new NotImplementedException();
-        }
-
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Role.Teacher)]
-        public ActionResult SaveModule(Module module)  
+        public ActionResult SaveModule(Module module)
         {
             bool bol = false;
             //var moduleInDb = db.Modules.FirstOrDefault(m => m.Id == module.Id);
 
             foreach (var modules in db.Modules)
             {
-                if(modules.Name == module.Name)
+                if (modules.Name == module.Name)
                 {
                     bol = true;
                     break;
                 }
             }
 
-            
+
 
             if (bol == false)
             {
@@ -153,7 +145,7 @@ namespace Lexicon_LMS.Controllers
 
                 return RedirectToAction("Course", "Home");
             }
-             else
+            else
             {
                 var moduleInDb = db.Modules.FirstOrDefault(m => m.Name == module.Name);
                 moduleInDb.Name = module.Name;
@@ -164,11 +156,11 @@ namespace Lexicon_LMS.Controllers
                 db.SaveChanges();
             }
 
-            
+
 
             return RedirectToAction("Course", "Home");
-        }  
-           
+        }
+
         /*[Authorize]
         public ActionResult Course()
         {
