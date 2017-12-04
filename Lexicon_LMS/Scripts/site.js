@@ -36,7 +36,7 @@
                                 });
                             })
                             .fail(function (xhr) {
-                                alert(xhr.responseText);
+                                bootbox.alert(xhr.responseText);
                             });
 
                     }
