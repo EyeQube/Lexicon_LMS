@@ -13,7 +13,12 @@
    will truncate terms that are too long to fit in the left column 
 */
 .dl-horizontal dt {
-    white-space: normal;
+    white-space:normal;
+    width: auto;
+}
+
+.dl-horizontal dd {
+    margin-left: 83px;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
@@ -123,3 +128,4 @@ HelloSpace{
     margin-right:10px;
     margin-left:10px;
 }
+
