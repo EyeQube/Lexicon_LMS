@@ -363,6 +363,7 @@
     <Content Include="Views\Home\EditModule.cshtml" />
     <Content Include="Views\Home\CreateActivity.cshtml" />
     <Content Include="Views\Home\ListActivity.cshtml" />
+    <Content Include="Views\Account\EditUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
