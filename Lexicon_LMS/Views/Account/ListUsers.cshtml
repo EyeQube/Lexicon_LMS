@@ -20,6 +20,10 @@ else
             <th>
                 @Html.DisplayNameFor(model => model.Email)
             </th>
+            <th>
+                Role
+            </th>
+            <th></th>
         </tr>
 
         @foreach (var item in Model)
@@ -30,6 +34,11 @@ else
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @(ViewBag.RolesLookup.ContainsKey(item.Roles.First().RoleId)? ViewBag.RolesLookup[item.Roles.First().RoleId] : "none")
+                </td>
+                <td>
                     <span class="right"> @Html.ActionLink("Edit ", "EditUser", new { userId = item.Id })</span>
                     <span class="right"><a href="#" class="js-delete-entity glyphicon glyphicon-trash" data-user-api="/AccountApi/DeleteUser/" data-user-id="@item.Id" data-user-remove=".user-row" data-user-message="Delete user @Html.DisplayFor(modelItem => item.FullName)"></a></span>
                 </td>
