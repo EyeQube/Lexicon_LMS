@@ -211,11 +211,13 @@ namespace Lexicon_LMS.Controllers
             var viewModel = new RegisterViewModel
             {
                 Id = User.Id,
-                Role = User.Roles.ToString(),
+                Role = _context.Roles.Find(User.Roles.First().RoleId).Name,
                 FirstName = User.FirstName,
                 LastName = User.LastName,
                 Email = User.Email,
-                Password = User.PasswordHash
+                Password = User.PasswordHash,
+                CourseId = User.CourseId,
+                Courses = _context.Courses
             };
 
             return View("EditUser", viewModel);
@@ -253,6 +255,7 @@ namespace Lexicon_LMS.Controllers
                 User.FirstName = viewModel.FirstName;
                 User.LastName = viewModel.LastName;
                 User.Email = viewModel.Email;
+                User.CourseId = viewModel.CourseId;
                 var result = _context.SaveChanges();
                 return RedirectToAction("ListUsers");
             }
