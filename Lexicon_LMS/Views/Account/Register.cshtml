@@ -26,25 +26,25 @@
 
     <div class="form-group">
         @Html.LabelFor(m => m.FirstName)
-        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", placeholder = "Skriv in förnamn på elev/lärare" })
+        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", placeholder = "enter first name" })
         @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
     </div>
    
     <div class="form-group">
         @Html.LabelFor(m => m.LastName)
-        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", placeholder = "Skriv in efternamn på elev/lärare" })
+        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", placeholder = "enter last name" })
         @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.Email)
-        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Skriv in en e-post för elev/lärare" })
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "enter email" })
         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.Password)
-        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Skapa ett lösenord till elev/läraren" })
+        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "enter password" })
         @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
     </div>
 
