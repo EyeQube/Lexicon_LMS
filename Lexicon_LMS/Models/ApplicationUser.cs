@@ -17,6 +17,7 @@ namespace Lexicon_LMS.Models
         [StringLength(100)]
         public string LastName { get; set; }
 
+        [Display(Name = "Name")]
         public string FullName => $"{FirstName} {LastName}";
 
         public int? CourseId { get; set; }
