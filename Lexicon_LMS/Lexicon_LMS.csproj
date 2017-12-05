@@ -210,13 +210,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201712011136136_InitialModel.cs" />
-    <Compile Include="Migrations\201712011136136_InitialModel.Designer.cs">
-      <DependentUpon>201712011136136_InitialModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712011545136_add_activity.cs" />
-    <Compile Include="Migrations\201712011545136_add_activity.Designer.cs">
-      <DependentUpon>201712011545136_add_activity.cs</DependentUpon>
+    <Compile Include="Migrations\201712041008048_init.cs" />
+    <Compile Include="Migrations\201712041008048_init.Designer.cs">
+      <DependentUpon>201712041008048_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -232,6 +228,8 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\472586846.jpg" />
+    <Content Include="Content\bootstrap-lumen.css" />
     <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap-datepicker3.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -373,11 +371,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201712011136136_InitialModel.resx">
-      <DependentUpon>201712011136136_InitialModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712011545136_add_activity.resx">
-      <DependentUpon>201712011545136_add_activity.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201712041008048_init.resx">
+      <DependentUpon>201712041008048_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

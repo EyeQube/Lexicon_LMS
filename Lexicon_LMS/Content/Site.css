@@ -29,12 +29,12 @@ textarea {
     border-color: #800000 !important;
 }
 
-.btn {
+/*.btn {
     color: #ffffff;
     background-color: #DC143C !important;
     border-color: #800000 !important;
     touch-action: pan-y;
-}
+}*/
 
 .navbar-inverse .navbar-brand {
     color: #DC143C;
@@ -60,9 +60,9 @@ textarea {
 }
 
 body {
-    background-image: url("1024px-Sea_and_sky_light.jpg");
+    background-image: url(472586846.jpg);
     background-repeat: no-repeat;
-    background-size: cover;   
+    background-size: cover;
 }
 
 
