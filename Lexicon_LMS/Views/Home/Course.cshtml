@@ -112,7 +112,7 @@
 </div>
 <hr />
 <div class="container">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <h3 style="color:darkred;"><b>Course members</b></h3>
 
         <div class="contaier-fluid">
@@ -120,7 +120,7 @@
 
                 @foreach (var student in Model.Users.ToList())
                 {
-                    <div class="col-sm-6 col-md-4">
+                    <div class="col-sm-4 col-md-4">
                         <p><strong>@student.FullName</strong> <a href="@student.Email">@student.Email</a></p>
                     </div>
                 }

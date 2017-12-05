@@ -1,40 +1,40 @@
-﻿@model IEnumerable<Lexicon_LMS.Models.Activity>
+﻿@model Lexicon_LMS.Models.Module
 
 @{
     ViewBag.Title = "ListActivity";
 }
 
-<h2>Module</h2>
-<div>
-    @Html.ActionLink("Add new activity", "CreateActivity", "Home", htmlAttributes: new { @class = "btn btn-default btn-sm newActivityBtn" })
-</div>
+<h2></h2>
+
+    @Html.ActionLink("Add new activity", "CreateActivity", "Home", new { id = Model.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm newActivityBtn" })
+
 <table class="table table-responsive dl-horizontal table-striped table-bordered">
     <tr>
         
         <th>
-            @Html.DisplayNameFor(model => model.Module.Activity)
+          Name
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+           Description
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.StartDate)
+           Start Date
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.EndDate)
+            End Date
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ActivityType)
+          ActivityType
         </th>
 
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.Activity) {
    
-    <tr>
+    <tr class="user-tr">
       
         <td>
-            @Html.DisplayFor(modelItem => item.Module.Name)
+            @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Description)
@@ -47,6 +47,7 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ActivityType.Name)
+            <span class="right"><a href="#" class="js-delete-entity glyphicon glyphicon-trash" data-user-api="/HomeApi/DeleteActivity/" data-user-id="@item.Id" data-user-remove=".user-tr" data-user-message="Delete activity @Html.DisplayFor(modelItem => item.Name)"></a></span>
         </td>
    
     </tr>

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Lexicon_LMS.Models
 {
@@ -36,5 +38,8 @@ namespace Lexicon_LMS.Models
         public int ActivityTypeId { get; set; }
 
         public virtual ActivityType ActivityType { get; set; }
+
+        [NotMapped]
+        public IEnumerable<ActivityType> ActivityTypes { get; set; }
     }
 }

@@ -142,7 +142,7 @@ namespace Lexicon_LMS.Controllers
                 db.SaveChanges();
                 return RedirectToLocal(returnUrl);
             }
-
+            ViewBag.returnUrl = returnUrl;
             return View(module);
         }
 
@@ -176,47 +176,33 @@ namespace Lexicon_LMS.Controllers
             return View(module);
         }
 
-        [Authorize(Roles = Role.Teacher)]
-        public ActionResult DeleteModuleOld(int? id, string returnUrl = "/")
-        {
-            if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
-            Module module = db.Modules.Find(id);
-
-            if (module == null)
-                return HttpNotFound();
-
-            db.Modules.Remove(module);
-            db.SaveChanges();
-
-            return RedirectToLocal(returnUrl);
-        }
-
         public ActionResult ListActivity(int id)
         {
             var activity = db.Activities.Where(m => m.ModuleId == id).ToList();
 
-            return PartialView(activity);
+            var module = db.Modules.Find(id);
+
+            return PartialView(module);
         }
         // GET: 
         [Authorize(Roles = Role.Teacher)]
-        public ActionResult CreateActivity(int? moduleId, string returnUrl = "/")
+        public ActionResult CreateActivity(int? id, string returnUrl = "/")
         {
-            if (moduleId == null)
+            if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             // get latest end-date from module list OR the course start-date
-            var startDate = db.Modules.FirstOrDefault(c => c.Id == moduleId)
+            var startDate = db.Modules.FirstOrDefault(c => c.Id == id)
                 .Activity.Select(m => m.EndDate)
                 .Concat(
-                    db.Modules.Where(c => c.Id == moduleId)
+                    db.Modules.Where(c => c.Id == id)
                     .Select(c => c.StartDate))
                 .Max().AddDays(1);
 
             var activity = new Activity
             {
-                ModuleId = (int)moduleId,
+                ModuleId = (int)id,
+                ActivityTypes = db.ActivityTypes.ToList(),
                 StartDate = startDate,
                 EndDate = startDate
             };
@@ -236,6 +222,8 @@ namespace Lexicon_LMS.Controllers
                 db.SaveChanges();
                 return RedirectToLocal(returnUrl);
             }
+            ViewBag.returnUrl = returnUrl;
+            activity.ActivityTypes = db.ActivityTypes.ToList();
 
             return View(activity);
         }
