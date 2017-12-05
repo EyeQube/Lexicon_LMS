@@ -263,6 +263,10 @@ namespace Lexicon_LMS.Controllers
         {
             var Users = _context.Users.ToList();
 
+            // Generate lookup table for roles to use in list view
+            var rolesLookup = _context.Roles.ToDictionary(x => x.Id, x => x.Name);
+            ViewBag.RolesLookup = rolesLookup;
+
             return View(Users);
         }
 
