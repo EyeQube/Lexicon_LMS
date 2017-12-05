@@ -11,7 +11,7 @@
 
 
 <h2 style="color:darkred;"><b>@Model.Name</b></h2>  
-@Html.ActionLink("Delete Course", "DeleteCourse", "Home", routeValues: new {Role = Role.Teacher, id = Model.Id }, htmlAttributes: new { @class = "btn btn-primary" })
+@Html.ActionLink("Delete Course", "DeleteCourse", "Home", routeValues: new { Role = Role.Teacher, id = Model.Id }, htmlAttributes: new { @class = "btn btn-primary", onclick = "return confirm('Are you sure you want to delete this course?');" })
 
 <div>
     @*<h4>@Html.DisplayFor(model => model.Name)</h4>*@

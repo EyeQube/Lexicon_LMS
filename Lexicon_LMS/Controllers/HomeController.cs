@@ -41,7 +41,6 @@ namespace Lexicon_LMS.Controllers
                 //return RedirectToAction("Index", "Home");
             }
 
-
             var startDate = db.Courses.FirstOrDefault(c => c.Id == id)
                 .Modules.Select(m => m.EndDate)
                 .Concat(
@@ -49,8 +48,6 @@ namespace Lexicon_LMS.Controllers
                     .Select(c => c.EndDate))
                 .Max().AddDays(1);
 
-
-            // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             if (startDate == null)
             {
@@ -68,6 +65,11 @@ namespace Lexicon_LMS.Controllers
 
             return View(module);
         }
+
+
+
+
+
 
 
         [Authorize(Roles = Role.Teacher)]
@@ -98,6 +100,11 @@ namespace Lexicon_LMS.Controllers
         }
 
 
+
+
+
+
+
         [Authorize(Roles = Role.Teacher)]
         public ActionResult DeleteModuleOld(int? id)
         {
@@ -116,6 +123,11 @@ namespace Lexicon_LMS.Controllers
         }
 
 
+
+
+
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Role.Teacher)]
@@ -132,8 +144,6 @@ namespace Lexicon_LMS.Controllers
                     break;
                 }
             }
-
-
 
             if (bol == false)
             {
@@ -156,8 +166,6 @@ namespace Lexicon_LMS.Controllers
                 db.SaveChanges();
             }
 
-
-
             return RedirectToAction("Course", "Home");
         }
 
@@ -167,6 +175,10 @@ namespace Lexicon_LMS.Controllers
             var mods = db.Modules.Single(m => m.CourseId == 0);
             return View();
         }*/
+
+
+
+
 
 
         [Authorize]
@@ -196,6 +208,11 @@ namespace Lexicon_LMS.Controllers
             return View(course);
         }
 
+
+
+
+
+
         [Authorize(Roles = Role.Teacher)]
         public ActionResult Register()
         {
@@ -203,6 +220,11 @@ namespace Lexicon_LMS.Controllers
 
             return View("RegisterCourse", Course);
         }
+
+
+
+
+
 
         //
         // POST: /Home/SaveCourse
@@ -230,6 +252,12 @@ namespace Lexicon_LMS.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+
+
+
+
+
+
         public ActionResult ListCourses()
         {
             var Courses = db.Courses.ToList();
@@ -237,11 +265,20 @@ namespace Lexicon_LMS.Controllers
             return View(Courses);
         }
 
+
+
+
+
+
         [Authorize]
         public ActionResult Index()
         {
             if (User.IsInRole(Role.Teacher))
+            {
+               // ViewBag.Status = status;
                 return RedirectToAction("ListCourses");
+            }
+                
 
             var user = db.Users.Find(User.Identity.GetUserId());
             var courseid = user?.Course?.Id;
@@ -252,6 +289,11 @@ namespace Lexicon_LMS.Controllers
             return View();
         }
 
+
+
+
+
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -259,12 +301,22 @@ namespace Lexicon_LMS.Controllers
             return View();
         }
 
+
+
+
+
+
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
 
             return View();
         }
+
+
+
+
+
 
         // GET: 
         [Authorize(Roles = Role.Teacher)]
@@ -292,6 +344,12 @@ namespace Lexicon_LMS.Controllers
             return View(module);
         }
 
+
+
+
+
+
+
         [Authorize(Roles = Role.Teacher)]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -308,6 +366,11 @@ namespace Lexicon_LMS.Controllers
         }
 
 
+
+
+
+
+
         [Authorize(Roles = Role.Teacher)]
         public ActionResult EditModule(int? id, string returnUrl = "/")
         {
@@ -321,6 +384,12 @@ namespace Lexicon_LMS.Controllers
             ViewBag.returnUrl = returnUrl;
             return View(module);
         }
+
+
+
+
+
+
 
         [Authorize(Roles = Role.Teacher)]
         [HttpPost]
@@ -336,6 +405,12 @@ namespace Lexicon_LMS.Controllers
             }
             return View(module);
         }
+
+
+
+
+
+
 
         [Authorize(Roles = Role.Teacher)]
         public ActionResult DeleteModuleOld(int? id, string returnUrl = "/")
@@ -354,12 +429,23 @@ namespace Lexicon_LMS.Controllers
             return RedirectToLocal(returnUrl);
         }
 
+
+
+
+
+
+
         public ActionResult ListActivity(int id)
         {
             var activity = db.Activities.Where(m => m.ModuleId == id).ToList();
 
             return PartialView(activity);
         }
+
+
+
+
+
         // GET: 
         [Authorize(Roles = Role.Teacher)]
         public ActionResult CreateActivity(int? moduleId, string returnUrl = "/")
@@ -386,6 +472,11 @@ namespace Lexicon_LMS.Controllers
             return View(activity);
         }
 
+
+
+
+
+
         [Authorize(Roles = Role.Teacher)]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -400,6 +491,11 @@ namespace Lexicon_LMS.Controllers
 
             return View(activity);
         }
+
+
+
+
+
 
 
         //TODO copy from accountcontroller ... move to common utility class
