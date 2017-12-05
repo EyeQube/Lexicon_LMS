@@ -102,6 +102,28 @@ namespace Lexicon_LMS.Controllers
 
 
 
+        [Authorize(Roles = Role.Teacher)]
+        public ActionResult EditCourse(int id)
+        {
+            var course = db.Courses.Single(c => c.Id == id);
+
+            return View("EditCourse", course);
+        }
+
+
+       /* public ActionResult EditCourse(Course course)
+        {
+            var dbCourse = db.Courses.Single(c => c.Id == course.Id);
+
+            dbCourse.Name = course.Name;
+            dbCourse.Description = course.Description;
+            dbCourse.StartDate = course.StartDate;
+            dbCourse.EndDate = course.EndDate;
+
+            db.SaveChanges();
+
+            return RedirectToAction("Course", "Home");
+        }*/
 
 
 
