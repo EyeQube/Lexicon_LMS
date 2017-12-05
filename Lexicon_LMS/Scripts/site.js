@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    $('.datepickerDate').datepicker({ format: 'yyyy/mm/dd', autoclose: true, locale: 'sw' });
+    $('.datepickerDate').datepicker({ format: 'yyyy/mm/dd', autoclose: true });
     
     // General function for removing stuff in database and DOM.
     // Uses the following html data attributes:
@@ -8,7 +8,8 @@
     //    data-user-remove: DOM element to remove on success (ie. a css class descriptor)
     //    data-user-message:Text to show in confirmation box
     //
-    $('.js-delete-entity').click(function (e) {
+    //$('.js-delete-entity').click(function (e) {
+    $(document).on('click', '.js-delete-entity', function (e) {
         var link = $(e.target);
 
         bootbox.dialog({

@@ -87,7 +87,7 @@ HelloSpace{
     padding-right:10px;
 }
 #datetimepicker{
-    width:300px;
+    width:280px;
 }
 .right{
     float:right;
@@ -97,6 +97,29 @@ HelloSpace{
     color:black;
 }
 
+.glyphicon {
+    color: black;
+    text-decoration: none !important;
+}
+
 .newActivityBtn {
     margin-bottom: 20px;
+}
+.activity-table{
+    padding-top:33px;
+}
+.btn-gly{
+    color:black;
+    margin-right:10px;
+    margin-left:20px;
+}
+
+.btn-link {
+    padding: 0;
+    color: black;
+}
+
+.btn-gly-trash{
+    margin-right:10px;
+    margin-left:10px;
 }

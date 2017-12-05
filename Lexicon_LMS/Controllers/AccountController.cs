@@ -135,7 +135,7 @@ namespace Lexicon_LMS.Controllers
         }
 
         [Authorize(Roles = Role.Teacher)]
-        public ActionResult Register(string role, int? courseid)
+        public ActionResult Register(string role, int? courseid, string message)
         {
             var viewModel = new RegisterViewModel
             {
@@ -143,7 +143,8 @@ namespace Lexicon_LMS.Controllers
                 Courses = _context.Courses,
                 CourseId = courseid
             };
-
+            if (message != null)
+                ViewBag.Message = message;
             return View("Register", viewModel);
         }
 
@@ -170,8 +171,9 @@ namespace Lexicon_LMS.Controllers
                     if (button == "SaveNew")
                     {
                         viewModel.Courses = _context.Courses;
-                        ViewBag.Message = $"Successfully added user \"{user.Email}\"";
-                        return View(viewModel);
+                        var message = $"Successfully added user \"{user.Email}\"";
+                        return RedirectToAction("Register", "Account", new { role = viewModel.Role, courseid = viewModel.CourseId, message = message });
+
                     }
 
                     return RedirectToAction("Index", "Home");
@@ -209,11 +211,13 @@ namespace Lexicon_LMS.Controllers
             var viewModel = new RegisterViewModel
             {
                 Id = User.Id,
-                Role = User.Roles.ToString(),
+                Role = _context.Roles.Find(User.Roles.First().RoleId).Name,
                 FirstName = User.FirstName,
                 LastName = User.LastName,
                 Email = User.Email,
-                Password = User.PasswordHash
+                Password = User.PasswordHash,
+                CourseId = User.CourseId,
+                Courses = _context.Courses
             };
 
             return View("EditUser", viewModel);
@@ -251,6 +255,7 @@ namespace Lexicon_LMS.Controllers
                 User.FirstName = viewModel.FirstName;
                 User.LastName = viewModel.LastName;
                 User.Email = viewModel.Email;
+                User.CourseId = viewModel.CourseId;
                 var result = _context.SaveChanges();
                 return RedirectToAction("ListUsers");
             }
@@ -261,6 +266,10 @@ namespace Lexicon_LMS.Controllers
         {
             ViewBag.Bool = true;
             var Users = _context.Users.ToList();
+
+            // Generate lookup table for roles to use in list view
+            var rolesLookup = _context.Roles.ToDictionary(x => x.Id, x => x.Name);
+            ViewBag.RolesLookup = rolesLookup;
 
             return View(Users);
         }
