@@ -7,19 +7,28 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
+
+
 namespace Lexicon_LMS.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
+
         private ApplicationDbContext _context;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+
+
+
 
         public AccountController()
         {
             _context = new ApplicationDbContext();
         }
+
+
+
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
@@ -27,6 +36,10 @@ namespace Lexicon_LMS.Controllers
             UserManager = userManager;
             SignInManager = signInManager;
         }
+
+
+
+
 
         public ApplicationSignInManager SignInManager
         {
@@ -40,6 +53,9 @@ namespace Lexicon_LMS.Controllers
             }
         }
 
+
+
+
         public ApplicationUserManager UserManager
         {
             get
@@ -52,6 +68,9 @@ namespace Lexicon_LMS.Controllers
             }
         }
 
+
+
+
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -60,6 +79,9 @@ namespace Lexicon_LMS.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
+
+
+
 
         //
         // POST: /Account/Login
@@ -91,6 +113,9 @@ namespace Lexicon_LMS.Controllers
             }
         }
 
+
+
+
         //
         // GET: /Account/VerifyCode
         [AllowAnonymous]
@@ -103,6 +128,10 @@ namespace Lexicon_LMS.Controllers
             }
             return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
+
+
+
+
 
         //
         // POST: /Account/VerifyCode
@@ -134,6 +163,10 @@ namespace Lexicon_LMS.Controllers
             }
         }
 
+
+
+
+
         [Authorize(Roles = Role.Teacher)]
         public ActionResult Register(string role, int? courseid, string message)
         {
@@ -147,6 +180,8 @@ namespace Lexicon_LMS.Controllers
                 ViewBag.Message = message;
             return View("Register", viewModel);
         }
+
+
 
 
         //
@@ -204,6 +239,9 @@ namespace Lexicon_LMS.Controllers
         //    return View("EditUser", viewModel);
         //}
 
+
+
+
         [Authorize(Roles = Role.Teacher)]
         public ActionResult EditUser(string userId)
         {
@@ -222,6 +260,9 @@ namespace Lexicon_LMS.Controllers
 
             return View("EditUser", viewModel);
         }
+
+
+
 
 
         // POST: /Account/Register
@@ -261,6 +302,9 @@ namespace Lexicon_LMS.Controllers
             }
             return RedirectToAction("Home");
         }
+
+
+
 
         public ActionResult ListUsers()
         {
@@ -327,15 +371,13 @@ namespace Lexicon_LMS.Controllers
                 }
             }
 
-
             ViewBag.Bool = boll == true ? false : true;
-
-            //ViewBag.FirstBool = true;
-            //ViewBag.Bool = boll;
-
 
             return View("ListUsers", users.ToList());
         }
+
+
+
 
 
         //
@@ -351,6 +393,10 @@ namespace Lexicon_LMS.Controllers
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
+
+
+
+
         //
         // GET: /Account/ForgotPassword
         [AllowAnonymous]
@@ -358,6 +404,11 @@ namespace Lexicon_LMS.Controllers
         {
             return View();
         }
+
+
+
+
+
 
         //
         // POST: /Account/ForgotPassword
@@ -387,6 +438,10 @@ namespace Lexicon_LMS.Controllers
             return View(model);
         }
 
+
+
+
+
         //
         // GET: /Account/ForgotPasswordConfirmation
         [AllowAnonymous]
@@ -395,6 +450,10 @@ namespace Lexicon_LMS.Controllers
             return View();
         }
 
+
+
+
+
         //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
@@ -402,6 +461,10 @@ namespace Lexicon_LMS.Controllers
         {
             return code == null ? View("Error") : View();
         }
+
+
+
+
 
         //
         // POST: /Account/ResetPassword
@@ -429,6 +492,9 @@ namespace Lexicon_LMS.Controllers
             return View();
         }
 
+
+
+
         //
         // GET: /Account/ResetPasswordConfirmation
         [AllowAnonymous]
@@ -436,6 +502,9 @@ namespace Lexicon_LMS.Controllers
         {
             return View();
         }
+
+
+
 
         //
         // POST: /Account/ExternalLogin
@@ -447,6 +516,9 @@ namespace Lexicon_LMS.Controllers
             // Request a redirect to the external login provider
             return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
         }
+
+
+
 
         //
         // GET: /Account/SendCode
@@ -462,6 +534,9 @@ namespace Lexicon_LMS.Controllers
             var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
             return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
+
+
+
 
         //
         // POST: /Account/SendCode
@@ -482,6 +557,9 @@ namespace Lexicon_LMS.Controllers
             }
             return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
         }
+
+
+
 
         //
         // GET: /Account/ExternalLoginCallback
@@ -512,6 +590,9 @@ namespace Lexicon_LMS.Controllers
                     return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
             }
         }
+
+
+
 
         //
         // POST: /Account/ExternalLoginConfirmation
@@ -551,6 +632,9 @@ namespace Lexicon_LMS.Controllers
             return View(model);
         }
 
+
+
+
         //
         // POST: /Account/LogOff
         [HttpPost]
@@ -560,6 +644,9 @@ namespace Lexicon_LMS.Controllers
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }
+
+
+
 
         //
         // GET: /Account/ExternalLoginFailure
