@@ -361,6 +361,7 @@
     <Content Include="Views\Home\EditModule.cshtml" />
     <Content Include="Views\Home\CreateActivity.cshtml" />
     <Content Include="Views\Home\ListActivity.cshtml" />
+    <Content Include="Views\Account\EditUser.cshtml" />
     <Content Include="Views\Home\EditCourse.cshtml" />
   </ItemGroup>
   <ItemGroup>

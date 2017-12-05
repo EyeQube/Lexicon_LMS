@@ -62,8 +62,31 @@ namespace Lexicon_LMS.Models
         public bool RememberMe { get; set; }
     }
 
+    //public class EditUserViewModel
+    //{
+    //    // [Required]
+    //    // public string Role { get; set; }
+
+    //    [Required]
+    //    [StringLength(100)]
+    //    [Display(Name = "First name")]
+    //    public string FirstName { get; set; }
+
+    //    [Required]
+    //    [StringLength(100)]
+    //    [Display(Name = "Last name")]
+    //    public string LastName { get; set; }
+
+    //    [Required]
+    //    [EmailAddress]
+    //    [Display(Name = "Email")]
+    //    public string Email { get; set; }
+    //}
+
     public class RegisterViewModel
     {
+        public string Id { get; set; }
+
         [Required]
         public string Role { get; set; }
 
