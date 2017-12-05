@@ -152,7 +152,7 @@ namespace Lexicon_LMS.Controllers
         [HttpPost]
         [Authorize(Roles = Role.Teacher)]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel viewModel)
+        public async Task<ActionResult> Register(RegisterViewModel viewModel, string button)
         {
 
             if (ModelState.IsValid)
@@ -165,6 +165,13 @@ namespace Lexicon_LMS.Controllers
                 if (result.Succeeded)
                 {
                     UserManager.AddToRole(user.Id, viewModel.Role);
+
+                    if (button == "SaveNew")
+                    {
+                        viewModel.Courses = _context.Courses;
+                        ViewBag.Message = $"Successfully added user \"{user.Email}\"";
+                        return View(viewModel);
+                    }
 
                     return RedirectToAction("Index", "Home");
                 }
