@@ -1,5 +1,6 @@
 ﻿using Lexicon_LMS.Models;
 using Microsoft.AspNet.Identity;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -9,19 +10,12 @@ namespace Lexicon_LMS.Controllers
 {
     public class HomeController : Controller
     {
-
-
-
         private ApplicationDbContext db;
 
         public HomeController()
         {
             db = new ApplicationDbContext();
         }
-
-
-
-
 
 
         [Authorize]
@@ -48,7 +42,6 @@ namespace Lexicon_LMS.Controllers
                 //return RedirectToAction("Index", "Home");
             }
 
-
             var startDate = db.Courses.FirstOrDefault(c => c.Id == id)
                 .Modules.Select(m => m.EndDate)
                 .Concat(
@@ -56,8 +49,6 @@ namespace Lexicon_LMS.Controllers
                     .Select(c => c.EndDate))
                 .Max().AddDays(1);
 
-
-            // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             if (startDate == null)
             {
@@ -77,64 +68,96 @@ namespace Lexicon_LMS.Controllers
         }
 
 
-       /* [Authorize(Roles = Role.Teacher)]
-        public ActionResult DeleteModuleOld(int? id, string returnUrl = "/")
+
+
+        
+
+
+/*
+        public ViewResult Index(string sortOrder, string searchString)
         {
-            if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            var students = from s in db.Students
+                           select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                students = students.Where(s => s.LastName.Contains(searchString)
+                                       || s.FirstMidName.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    students = students.OrderByDescending(s => s.LastName);
+                    break;
+                case "Date":
+                    students = students.OrderBy(s => s.EnrollmentDate);
+                    break;
+                case "date_desc":
+                    students = students.OrderByDescending(s => s.EnrollmentDate);
+                    break;
+                default:
+                    students = students.OrderBy(s => s.LastName);
+                    break;
+            }
 
-            Module module = db.Modules.Find(id);
-
-            if (module == null)
-                return HttpNotFound();
-
-            db.Modules.Remove(module);
-            db.SaveChanges();
-
-            return RedirectToLocal(returnUrl);
-        }*/
-
+            return View(students.ToList());
+        }  */
 
 
 
         [Authorize(Roles = Role.Teacher)]
-        public ActionResult DeleteCourse(int id, string returnUrl = "/")
+        public ActionResult DeleteCourse(int id)
         {
-           
+
             var course = db.Courses.Single(i => i.Id == id);
-            //ViewBag.returnUrl = returnUrl;
+
 
             if (course.Modules.Count() == 0 && course.Users.Count() == 0)
             {
                 db.Courses.Remove(course);
                 db.SaveChanges();
-                
-                //return RedirectToAction("ListCourses");
-                return RedirectToLocal(returnUrl);//RedirectToAction()//("Index","Home");
+                return RedirectToAction("Index", "Home");
             }
 
-         /*   if (course.Modules.Count() > 0 && course.Users.Count() > 0)
-            { status = false; } //ViewBag.ErrorMessage = $"{course.Name} has {course.Modules.Count()} modules, and {course.Users.Count()} students enrolled.  You must delete all modules and remove all students from the course, before you can delete the actual course."; }
-
-            //ViewBag.ErrorMessage = $"{course.Name} has {course.Modules.Count()} modules, and {course.Users.Count()} students enrolled.  You must delete all modules and remove all students from the course, before you can delete the actual course.";
+            if (course.Modules.Count() > 0 && course.Users.Count() > 0)
+                ViewBag.ErrorMessage = $"{course.Name} has {course.Modules.Count()} modules, and {course.Users.Count()} students enrolled.  You must delete all modules and remove all students from the course, before you can delete the actual course.";
 
             if (course.Modules.Count() > 0 && course.Users.Count() == 0)
-               { status = false; }
-
-              //  ViewBag.ErrorMessage = $"{course.Name} has {course.Modules.Count()} modules. You must delete all modules, before you can delete the actual course.";
+                ViewBag.ErrorMessage = $"{course.Name} has {course.Modules.Count()} modules. You must delete all modules, before you can delete the actual course.";
 
             if (course.Users.Count() > 0 && course.Modules.Count() == 0)
-               { status = false; }  */
-
-              //  ViewBag.ErrorMessage = $"{course.Name} has {course.Users.Count()} students enrolled. You must remove all students from the course, before you can delete the actual course.";
+                ViewBag.ErrorMessage = $"{course.Name} has {course.Users.Count()} students enrolled. You must remove all students from the course, before you can delete the actual course.";
 
 
-            //return View("Course");
-            return RedirectToAction("Index", "Home");
+            return View("Error");
         }
 
 
 
+
+        [Authorize(Roles = Role.Teacher)]
+        public ActionResult EditCourse(int id)
+        {
+            var course = db.Courses.Single(c => c.Id == id);
+
+            return View("EditCourse", course);
+        }
+
+
+       /* public ActionResult EditCourse(Course course)
+        {
+            var dbCourse = db.Courses.Single(c => c.Id == course.Id);
+
+            dbCourse.Name = course.Name;
+            dbCourse.Description = course.Description;
+            dbCourse.StartDate = course.StartDate;
+            dbCourse.EndDate = course.EndDate;
+
+            db.SaveChanges();
+
+            return RedirectToAction("Course", "Home");
+        }*/
 
 
 
@@ -160,6 +183,7 @@ namespace Lexicon_LMS.Controllers
 
 
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Role.Teacher)]
@@ -176,8 +200,6 @@ namespace Lexicon_LMS.Controllers
                     break;
                 }
             }
-
-
 
             if (bol == false)
             {
@@ -200,8 +222,6 @@ namespace Lexicon_LMS.Controllers
                 db.SaveChanges();
             }
 
-
-
             return RedirectToAction("Course", "Home");
         }
 
@@ -211,6 +231,8 @@ namespace Lexicon_LMS.Controllers
             var mods = db.Modules.Single(m => m.CourseId == 0);
             return View();
         }*/
+
+
 
 
 
@@ -245,6 +267,8 @@ namespace Lexicon_LMS.Controllers
 
 
 
+
+
         [Authorize(Roles = Role.Teacher)]
         public ActionResult Register()
         {
@@ -252,6 +276,7 @@ namespace Lexicon_LMS.Controllers
 
             return View("RegisterCourse", Course);
         }
+
 
 
 
@@ -286,13 +311,17 @@ namespace Lexicon_LMS.Controllers
 
 
 
+
+
+
         public ActionResult ListCourses()
         {
-
             var Courses = db.Courses.ToList();
 
             return View(Courses);
         }
+
+
 
 
 
@@ -302,10 +331,11 @@ namespace Lexicon_LMS.Controllers
         {
             if (User.IsInRole(Role.Teacher))
             {
-                //ViewBag.Status = status;
-
+               // ViewBag.Status = status;
                 return RedirectToAction("ListCourses");
             }
+                
+
             var user = db.Users.Find(User.Identity.GetUserId());
             var courseid = user?.Course?.Id;
 
@@ -314,6 +344,7 @@ namespace Lexicon_LMS.Controllers
 
             return View();
         }
+
 
 
 
@@ -330,12 +361,14 @@ namespace Lexicon_LMS.Controllers
 
 
 
+
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
 
             return View();
         }
+
 
 
 
@@ -366,6 +399,8 @@ namespace Lexicon_LMS.Controllers
             ViewBag.returnUrl = returnUrl;
             return View(module);
         }
+
+
 
 
 
@@ -405,6 +440,7 @@ namespace Lexicon_LMS.Controllers
 
 
 
+
         [Authorize(Roles = Role.Teacher)]
         public ActionResult EditModule(int? id, string returnUrl = "/")
         {
@@ -418,6 +454,7 @@ namespace Lexicon_LMS.Controllers
             ViewBag.returnUrl = returnUrl;
             return View(module);
         }
+
 
 
 
@@ -444,6 +481,7 @@ namespace Lexicon_LMS.Controllers
 
 
 
+
         [Authorize(Roles = Role.Teacher)]
         public ActionResult DeleteModuleOld(int? id, string returnUrl = "/")
         {
@@ -460,6 +498,7 @@ namespace Lexicon_LMS.Controllers
 
             return RedirectToLocal(returnUrl);
         }
+
 
 
 
@@ -522,6 +561,7 @@ namespace Lexicon_LMS.Controllers
 
             return View(activity);
         }
+
 
 
 

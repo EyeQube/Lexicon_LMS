@@ -1,26 +1,18 @@
 ﻿@model IEnumerable<Lexicon_LMS.Models.Course>
 
-
 @{
     ViewBag.Title = "ListCourses";
-    //Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@*<script>
 
-<script language='javascript' type='text/javascript'>
+    if (@ViewBag.Status)
+    {
+        confirm("!")
+    }
 
-
-        var status = '@ViewBag.Status';
-        if(status)
-        {
-            confirm("Success!");
-        }
-        else {
-            confirm("This course has modules, and students enrolled. You must first delete all modules and remove all students from the course, before you can delete the actual course.");
-        }
-
-</script>
-
+</script> *@
 
 
 <h2><b>Courses</b></h2>
@@ -32,8 +24,6 @@
 
 else
 {
-
-
  <div class="dl-horizontal" style="background-color:snow">    
         <table class="table table-responsive dl-horizontal table-bordered" >
             <thead>
@@ -62,15 +52,9 @@ else
 
         </table>
 
+
   </div>
 }
-
-
-
-
-
-
-
 
 @*<thead>
         <tr>

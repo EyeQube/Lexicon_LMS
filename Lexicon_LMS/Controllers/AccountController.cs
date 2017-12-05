@@ -147,6 +147,7 @@ namespace Lexicon_LMS.Controllers
             return View("Register", viewModel);
         }
 
+
         //
         // POST: /Account/Register
         [HttpPost]
@@ -183,12 +184,150 @@ namespace Lexicon_LMS.Controllers
             return View(viewModel);
         }
 
+        // Note: reusing parts of RegisterViewModel
+        //[Authorize(Roles = Role.Teacher)]
+        //public ActionResult EditUser(string userName)
+        //{
+        //    var User = _context.Users.FirstOrDefault(u => u.UserName == userName);
+        //    var viewModel = new RegisterViewModel
+        //    {
+        //        Id = User.Id,
+        //        Role = User.Roles.ToString(),
+        //        FirstName = User.FirstName,
+        //        LastName = User.LastName,
+        //        Email = User.Email,
+        //        Password = User.PasswordHash
+        //    };
+
+        //    return View("EditUser", viewModel);
+        //}
+
+        [Authorize(Roles = Role.Teacher)]
+        public ActionResult EditUser(string userId)
+        {
+            var User = _context.Users.FirstOrDefault(u => u.Id == userId);
+            var viewModel = new RegisterViewModel
+            {
+                Id = User.Id,
+                Role = User.Roles.ToString(),
+                FirstName = User.FirstName,
+                LastName = User.LastName,
+                Email = User.Email,
+                Password = User.PasswordHash
+            };
+
+            return View("EditUser", viewModel);
+        }
+
+
+        // POST: /Account/Register
+        //[HttpPost]
+        //[Authorize(Roles = Role.Teacher)]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult EditUser(RegisterViewModel viewModel)
+        //{
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        var User = _context.Users.FirstOrDefault(u => u.UserName == viewModel.Email);
+        //        User.FirstName = viewModel.FirstName;
+        //        User.LastName = viewModel.LastName;
+        //        User.Email = viewModel.Email;
+        //        var result = _context.SaveChanges();
+        //        return RedirectToAction("ListUsers");
+        //    }
+        //    return RedirectToAction("Home");
+        //}
+
+        [HttpPost]
+        [Authorize(Roles = Role.Teacher)]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditUser(RegisterViewModel viewModel)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var User = _context.Users.FirstOrDefault(u => u.Id == viewModel.Id);
+                User.FirstName = viewModel.FirstName;
+                User.LastName = viewModel.LastName;
+                User.Email = viewModel.Email;
+                var result = _context.SaveChanges();
+                return RedirectToAction("ListUsers");
+            }
+            return RedirectToAction("Home");
+        }
+
         public ActionResult ListUsers()
         {
+            ViewBag.Bool = true;
             var Users = _context.Users.ToList();
 
             return View(Users);
         }
+
+
+
+
+        public ActionResult SortUsers(string FirstSortOrder, string LastSortOrder, bool boll)
+        {
+            
+            var users = from s in _context.Users select s;
+
+
+            if (boll == true)
+            {
+                FirstSortOrder = "Desc";
+                LastSortOrder = "Desc";
+            }
+            else
+            {
+                FirstSortOrder = "Asc";
+                LastSortOrder = "Asc";
+            }
+                
+
+            if (FirstSortOrder != null)
+            {
+                switch (FirstSortOrder)
+                {
+                    case "Desc":
+                        users = users.OrderByDescending(s => s.FirstName);
+                        break;
+                    case "Asc":
+                        users = users.OrderBy(s => s.FirstName);
+                        break;
+                    default:
+                        users = users.OrderBy(s => s.LastName);
+                        break;
+                }
+            }
+
+            if (LastSortOrder != null)
+            {
+                switch (LastSortOrder)
+                {
+                    case "Desc":
+                        users = users.OrderByDescending(s => s.LastName);
+                        break;
+                    case "Asc":
+                        users = users.OrderBy(s => s.LastName);
+                        break;
+                    default:
+                        users = users.OrderBy(s => s.LastName);
+                        break;
+                }
+            }
+
+
+            ViewBag.Bool = boll == true ? false : true;
+
+            //ViewBag.FirstBool = true;
+            //ViewBag.Bool = boll;
+
+
+            return View("ListUsers", users.ToList());
+        }
+
 
         //
         // GET: /Account/ConfirmEmail
