@@ -22,8 +22,8 @@ namespace Lexicon_LMS.Controllers.Api
         {
             if (id == null)
                 return Content(HttpStatusCode.NotFound, "Missing id in API call");
-            
-            if (id == User.Identity.GetUserId() )
+
+            if (id == User.Identity.GetUserId())
                 return Content(HttpStatusCode.BadRequest, "You can not remove yourself !");
 
             var user = _context.Users.Single(a => a.Id == id);
@@ -36,5 +36,7 @@ namespace Lexicon_LMS.Controllers.Api
 
             return Ok();
         }
+
+
     }
 }

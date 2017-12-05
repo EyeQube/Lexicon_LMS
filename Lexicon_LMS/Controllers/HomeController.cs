@@ -68,44 +68,6 @@ namespace Lexicon_LMS.Controllers
         }
 
 
-
-
-        
-
-
-/*
-        public ViewResult Index(string sortOrder, string searchString)
-        {
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
-            var students = from s in db.Students
-                           select s;
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                students = students.Where(s => s.LastName.Contains(searchString)
-                                       || s.FirstMidName.Contains(searchString));
-            }
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    students = students.OrderByDescending(s => s.LastName);
-                    break;
-                case "Date":
-                    students = students.OrderBy(s => s.EnrollmentDate);
-                    break;
-                case "date_desc":
-                    students = students.OrderByDescending(s => s.EnrollmentDate);
-                    break;
-                default:
-                    students = students.OrderBy(s => s.LastName);
-                    break;
-            }
-
-            return View(students.ToList());
-        }  */
-
-
-
         [Authorize(Roles = Role.Teacher)]
         public ActionResult DeleteCourse(int id)
         {
@@ -134,8 +96,6 @@ namespace Lexicon_LMS.Controllers
         }
 
 
-
-
         [Authorize(Roles = Role.Teacher)]
         public ActionResult EditCourse(int id)
         {
@@ -143,22 +103,6 @@ namespace Lexicon_LMS.Controllers
 
             return View("EditCourse", course);
         }
-
-
-       /* public ActionResult EditCourse(Course course)
-        {
-            var dbCourse = db.Courses.Single(c => c.Id == course.Id);
-
-            dbCourse.Name = course.Name;
-            dbCourse.Description = course.Description;
-            dbCourse.StartDate = course.StartDate;
-            dbCourse.EndDate = course.EndDate;
-
-            db.SaveChanges();
-
-            return RedirectToAction("Course", "Home");
-        }*/
-
 
 
         [Authorize(Roles = Role.Teacher)]
@@ -177,11 +121,6 @@ namespace Lexicon_LMS.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-
-
-
-
-
 
 
         [HttpPost]
@@ -225,17 +164,6 @@ namespace Lexicon_LMS.Controllers
             return RedirectToAction("Course", "Home");
         }
 
-        /*[Authorize]
-        public ActionResult Course()
-        {
-            var mods = db.Modules.Single(m => m.CourseId == 0);
-            return View();
-        }*/
-
-
-
-
-
 
         [Authorize]
         public ActionResult Course(int id)
@@ -265,10 +193,6 @@ namespace Lexicon_LMS.Controllers
         }
 
 
-
-
-
-
         [Authorize(Roles = Role.Teacher)]
         public ActionResult Register()
         {
@@ -276,11 +200,6 @@ namespace Lexicon_LMS.Controllers
 
             return View("RegisterCourse", Course);
         }
-
-
-
-
-
 
         //
         // POST: /Home/SaveCourse
@@ -309,11 +228,6 @@ namespace Lexicon_LMS.Controllers
         }
 
 
-
-
-
-
-
         public ActionResult ListCourses()
         {
             var Courses = db.Courses.ToList();
@@ -321,20 +235,15 @@ namespace Lexicon_LMS.Controllers
             return View(Courses);
         }
 
-
-
-
-
-
         [Authorize]
         public ActionResult Index()
         {
             if (User.IsInRole(Role.Teacher))
             {
-               // ViewBag.Status = status;
+                // ViewBag.Status = status;
                 return RedirectToAction("ListCourses");
             }
-                
+
 
             var user = db.Users.Find(User.Identity.GetUserId());
             var courseid = user?.Course?.Id;
@@ -344,34 +253,6 @@ namespace Lexicon_LMS.Controllers
 
             return View();
         }
-
-
-
-
-
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-
-
-
-
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
-
-
-
 
 
         // GET: 
@@ -401,11 +282,6 @@ namespace Lexicon_LMS.Controllers
         }
 
 
-
-
-
-
-
         [Authorize(Roles = Role.Teacher)]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -431,14 +307,9 @@ namespace Lexicon_LMS.Controllers
                 db.SaveChanges();
                 return RedirectToLocal(returnUrl);
             }
-
+            ViewBag.returnUrl = returnUrl;
             return View(module);
         }
-
-
-
-
-
 
 
         [Authorize(Roles = Role.Teacher)]
@@ -456,11 +327,6 @@ namespace Lexicon_LMS.Controllers
         }
 
 
-
-
-
-
-
         [Authorize(Roles = Role.Teacher)]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -475,11 +341,6 @@ namespace Lexicon_LMS.Controllers
             }
             return View(module);
         }
-
-
-
-
-
 
 
         [Authorize(Roles = Role.Teacher)]
@@ -500,40 +361,35 @@ namespace Lexicon_LMS.Controllers
         }
 
 
-
-
-
-
-
         public ActionResult ListActivity(int id)
         {
             var activity = db.Activities.Where(m => m.ModuleId == id).ToList();
 
-            return PartialView(activity);
+            var module = db.Modules.Find(id);
+
+            return PartialView(module);
         }
-
-
-
 
 
         // GET: 
         [Authorize(Roles = Role.Teacher)]
-        public ActionResult CreateActivity(int? moduleId, string returnUrl = "/")
+        public ActionResult CreateActivity(int? id, string returnUrl = "/")
         {
-            if (moduleId == null)
+            if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             // get latest end-date from module list OR the course start-date
-            var startDate = db.Modules.FirstOrDefault(c => c.Id == moduleId)
+            var startDate = db.Modules.FirstOrDefault(c => c.Id == id)
                 .Activity.Select(m => m.EndDate)
                 .Concat(
-                    db.Modules.Where(c => c.Id == moduleId)
+                    db.Modules.Where(c => c.Id == id)
                     .Select(c => c.StartDate))
                 .Max().AddDays(1);
 
             var activity = new Activity
             {
-                ModuleId = (int)moduleId,
+                ModuleId = (int)id,
+                ActivityTypes = db.ActivityTypes.ToList(),
                 StartDate = startDate,
                 EndDate = startDate
             };
@@ -541,10 +397,6 @@ namespace Lexicon_LMS.Controllers
             ViewBag.returnUrl = returnUrl;
             return View(activity);
         }
-
-
-
-
 
 
         [Authorize(Roles = Role.Teacher)]
@@ -558,14 +410,11 @@ namespace Lexicon_LMS.Controllers
                 db.SaveChanges();
                 return RedirectToLocal(returnUrl);
             }
+            ViewBag.returnUrl = returnUrl;
+            activity.ActivityTypes = db.ActivityTypes.ToList();
 
             return View(activity);
         }
-
-
-
-
-
 
 
         //TODO copy from accountcontroller ... move to common utility class

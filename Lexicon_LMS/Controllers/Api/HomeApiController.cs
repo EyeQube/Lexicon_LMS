@@ -38,6 +38,31 @@ namespace Lexicon_LMS.Controllers.Api
             return Ok();
         }
 
+        //TODO improve routing
+        [Route("HomeApi/DeleteActivity/{id}")]
+        [HttpDelete]
+        [Authorize(Roles = Role.Teacher)]
+        public IHttpActionResult DeleteActivity(int? id)
+        {
+            if (id == null)
+                return Content(HttpStatusCode.NotFound, "Missing id in API call");
+
+            Activity activity = db.Activities.Find(id);
+
+            if (activity == null)
+                return Content(HttpStatusCode.NotFound, "Item not found in database");
+
+            // Some kind of validation logic
+            var validatedOk = true;
+            if (!validatedOk)
+                return Content(HttpStatusCode.BadRequest, "Delete request failed due to validation: <placeholder>");
+
+            db.Activities.Remove(activity);
+            db.SaveChanges();
+
+            return Ok();
+        }
+
 
     }
 }
