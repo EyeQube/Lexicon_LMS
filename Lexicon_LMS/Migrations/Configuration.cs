@@ -29,9 +29,9 @@ namespace Lexicon_LMS.Migrations
             var dnCourseId = context.Courses.First(x => x.Name == "DNMVC17").Id;
             Module[] dnModules = new[]
             {
-                new Module{ CourseId = dnCourseId, Name = "C# grundkurs", StartDate = new DateTime(2017,11,27), EndDate = new DateTime(2017,12,5), Description = "todo: module descritpion for C# module"},
-                new Module{ CourseId = dnCourseId, Name = "C# OO", StartDate = new DateTime(2017,12,6), EndDate = new DateTime(2017,12,10), Description = "todo: module descritpion for C# OO"},
-                new Module{ CourseId = dnCourseId, Name = "C# LINQ", StartDate = new DateTime(2017,12,10), EndDate = new DateTime(2017,12,15), Description = "todo: module descritpion for C# LINQ"},
+                new Module{ CourseId = dnCourseId, Name = "C# grundkurs", StartDate = new DateTime(2017,11,27), EndDate = new DateTime(2017,12,5), Description = "Grunderna i C#"},
+                new Module{ CourseId = dnCourseId, Name = "C# OO", StartDate = new DateTime(2017,12,6), EndDate = new DateTime(2017,12,10), Description = "Objekt orienterad mjukvaruutveckling i teori och praktik"},
+                new Module{ CourseId = dnCourseId, Name = "C# LINQ", StartDate = new DateTime(2017,12,10), EndDate = new DateTime(2017,12,15), Description = "Introduktion till biblioteket LINQ"},
             };
             context.Modules.AddOrUpdate(x => x.Name, dnModules);
             context.SaveChanges();
