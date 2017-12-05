@@ -1,9 +1,8 @@
 ﻿@model Lexicon_LMS.Models.Course
 @{
-    ViewBag.Title = "RegisterCourse";
+    ViewBag.Title = "Create course";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 
 <h2>@ViewBag.Title</h2>
 
@@ -17,20 +16,20 @@
 
     <div class="form-group">
         @Html.LabelFor(m => m.Name)
-        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder ="Skriv in ett kursnamn" })
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder ="enter course name" })
         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.Description)
-        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", placeholder = "Skriv in en beskrivning" })
+        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", placeholder = "enter course description" })
         @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.StartDate)
         <div class="input-group" id="datetimepicker">
-            @Html.TextBoxFor(m => m.StartDate, new { @class = "form-control datepickerDate", @Value = "", placeholder = "Välj startdatum" })
+            @Html.TextBoxFor(m => m.StartDate, new { @class = "form-control datepickerDate", @Value = "", placeholder = "enter start date" })
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-calendar"></span>
             </span>
@@ -40,7 +39,7 @@
     <div class="form-group">
         @Html.LabelFor(m => m.EndDate)
         <div class="input-group" id="datetimepicker">
-            @Html.TextBoxFor(m => m.EndDate, new { @class = "form-control datepickerDate", @Value = "", placeholder = "Välj slutdatum" })
+            @Html.TextBoxFor(m => m.EndDate, new { @class = "form-control datepickerDate", @Value = "", placeholder = "enter end date" })
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-calendar"></span>
             </span>
@@ -48,7 +47,7 @@
         @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
     </div>
     <div class="form-group">
-        <input type="submit" class="btn btn-default" value="Register" />
+        <input type="submit" class="btn btn-default" value="Create course" />
     </div>
 }
 
