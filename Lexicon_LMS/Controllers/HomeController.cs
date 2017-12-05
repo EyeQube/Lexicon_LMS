@@ -9,12 +9,19 @@ namespace Lexicon_LMS.Controllers
 {
     public class HomeController : Controller
     {
+
+
+
         private ApplicationDbContext db;
 
         public HomeController()
         {
             db = new ApplicationDbContext();
         }
+
+
+
+
 
 
         [Authorize]
@@ -70,32 +77,65 @@ namespace Lexicon_LMS.Controllers
         }
 
 
-        [Authorize(Roles = Role.Teacher)]
-        public ActionResult DeleteCourse(int id)
+       /* [Authorize(Roles = Role.Teacher)]
+        public ActionResult DeleteModuleOld(int? id, string returnUrl = "/")
         {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
+            Module module = db.Modules.Find(id);
+
+            if (module == null)
+                return HttpNotFound();
+
+            db.Modules.Remove(module);
+            db.SaveChanges();
+
+            return RedirectToLocal(returnUrl);
+        }*/
+
+
+
+
+        [Authorize(Roles = Role.Teacher)]
+        public ActionResult DeleteCourse(int id, string returnUrl = "/")
+        {
+           
             var course = db.Courses.Single(i => i.Id == id);
-
+            //ViewBag.returnUrl = returnUrl;
 
             if (course.Modules.Count() == 0 && course.Users.Count() == 0)
             {
                 db.Courses.Remove(course);
                 db.SaveChanges();
-                return RedirectToAction("Index", "Home");
+                
+                //return RedirectToAction("ListCourses");
+                return RedirectToLocal(returnUrl);//RedirectToAction()//("Index","Home");
             }
 
-            if (course.Modules.Count() > 0 && course.Users.Count() > 0)
-                ViewBag.ErrorMessage = $"{course.Name} has {course.Modules.Count()} modules, and {course.Users.Count()} students enrolled.  You must delete all modules and remove all students from the course, before you can delete the actual course.";
+         /*   if (course.Modules.Count() > 0 && course.Users.Count() > 0)
+            { status = false; } //ViewBag.ErrorMessage = $"{course.Name} has {course.Modules.Count()} modules, and {course.Users.Count()} students enrolled.  You must delete all modules and remove all students from the course, before you can delete the actual course."; }
+
+            //ViewBag.ErrorMessage = $"{course.Name} has {course.Modules.Count()} modules, and {course.Users.Count()} students enrolled.  You must delete all modules and remove all students from the course, before you can delete the actual course.";
 
             if (course.Modules.Count() > 0 && course.Users.Count() == 0)
-                ViewBag.ErrorMessage = $"{course.Name} has {course.Modules.Count()} modules. You must delete all modules, before you can delete the actual course.";
+               { status = false; }
+
+              //  ViewBag.ErrorMessage = $"{course.Name} has {course.Modules.Count()} modules. You must delete all modules, before you can delete the actual course.";
 
             if (course.Users.Count() > 0 && course.Modules.Count() == 0)
-                ViewBag.ErrorMessage = $"{course.Name} has {course.Users.Count()} students enrolled. You must remove all students from the course, before you can delete the actual course.";
+               { status = false; }  */
+
+              //  ViewBag.ErrorMessage = $"{course.Name} has {course.Users.Count()} students enrolled. You must remove all students from the course, before you can delete the actual course.";
 
 
-            return View("Error");
+            //return View("Course");
+            return RedirectToAction("Index", "Home");
         }
+
+
+
+
 
 
         [Authorize(Roles = Role.Teacher)]
@@ -114,6 +154,10 @@ namespace Lexicon_LMS.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+
+
+
 
 
         [HttpPost]
@@ -169,6 +213,8 @@ namespace Lexicon_LMS.Controllers
         }*/
 
 
+
+
         [Authorize]
         public ActionResult Course(int id)
         {
@@ -196,6 +242,9 @@ namespace Lexicon_LMS.Controllers
             return View(course);
         }
 
+
+
+
         [Authorize(Roles = Role.Teacher)]
         public ActionResult Register()
         {
@@ -203,6 +252,10 @@ namespace Lexicon_LMS.Controllers
 
             return View("RegisterCourse", Course);
         }
+
+
+
+
 
         //
         // POST: /Home/SaveCourse
@@ -230,19 +283,29 @@ namespace Lexicon_LMS.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+
+
+
         public ActionResult ListCourses()
         {
+
             var Courses = db.Courses.ToList();
 
             return View(Courses);
         }
 
+
+
+
         [Authorize]
         public ActionResult Index()
         {
             if (User.IsInRole(Role.Teacher))
-                return RedirectToAction("ListCourses");
+            {
+                //ViewBag.Status = status;
 
+                return RedirectToAction("ListCourses");
+            }
             var user = db.Users.Find(User.Identity.GetUserId());
             var courseid = user?.Course?.Id;
 
@@ -252,6 +315,10 @@ namespace Lexicon_LMS.Controllers
             return View();
         }
 
+
+
+
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -259,12 +326,20 @@ namespace Lexicon_LMS.Controllers
             return View();
         }
 
+
+
+
+
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
 
             return View();
         }
+
+
+
+
 
         // GET: 
         [Authorize(Roles = Role.Teacher)]
@@ -291,6 +366,10 @@ namespace Lexicon_LMS.Controllers
             ViewBag.returnUrl = returnUrl;
             return View(module);
         }
+
+
+
+
 
         [Authorize(Roles = Role.Teacher)]
         [HttpPost]
@@ -322,6 +401,10 @@ namespace Lexicon_LMS.Controllers
         }
 
 
+
+
+
+
         [Authorize(Roles = Role.Teacher)]
         public ActionResult EditModule(int? id, string returnUrl = "/")
         {
@@ -335,6 +418,11 @@ namespace Lexicon_LMS.Controllers
             ViewBag.returnUrl = returnUrl;
             return View(module);
         }
+
+
+
+
+
 
         [Authorize(Roles = Role.Teacher)]
         [HttpPost]
@@ -350,6 +438,11 @@ namespace Lexicon_LMS.Controllers
             }
             return View(module);
         }
+
+
+
+
+
 
         [Authorize(Roles = Role.Teacher)]
         public ActionResult DeleteModuleOld(int? id, string returnUrl = "/")
@@ -368,12 +461,22 @@ namespace Lexicon_LMS.Controllers
             return RedirectToLocal(returnUrl);
         }
 
+
+
+
+
+
         public ActionResult ListActivity(int id)
         {
             var activity = db.Activities.Where(m => m.ModuleId == id).ToList();
 
             return PartialView(activity);
         }
+
+
+
+
+
         // GET: 
         [Authorize(Roles = Role.Teacher)]
         public ActionResult CreateActivity(int? moduleId, string returnUrl = "/")
@@ -400,6 +503,11 @@ namespace Lexicon_LMS.Controllers
             return View(activity);
         }
 
+
+
+
+
+
         [Authorize(Roles = Role.Teacher)]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -414,6 +522,10 @@ namespace Lexicon_LMS.Controllers
 
             return View(activity);
         }
+
+
+
+
 
 
         //TODO copy from accountcontroller ... move to common utility class

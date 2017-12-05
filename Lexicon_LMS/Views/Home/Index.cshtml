@@ -1,4 +1,6 @@
-﻿@{
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
     ViewBag.Title = "Index";
 }
 
@@ -7,3 +9,14 @@
 
 <p>This page is empty, probably because you have no course registred</p>
 
+@*<script language='javascript' type='text/javascript'>
+
+var status = '@ViewBag.ErrorMessage';
+        if (status) {
+            confirm('Success!')
+        }
+        else {
+            confirm("This course has modules, and students enrolled. You must first delete all modules and remove all students from the course, before you can delete the actual course.");
+        }
+
+</script>*@
