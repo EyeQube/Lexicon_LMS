@@ -97,6 +97,11 @@ HelloSpace{
     color:black;
 }
 
+.glyphicon {
+    color: black;
+    text-decoration: none !important;
+}
+
 .newActivityBtn {
     margin-bottom: 20px;
 }
