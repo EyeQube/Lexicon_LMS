@@ -1,12 +1,18 @@
-﻿@model Lexicon_LMS.Models.Module
+﻿@using Lexicon_LMS.Models
+@using Microsoft.AspNet.Identity
+
+@model Lexicon_LMS.Models.Module
 
 @{
     ViewBag.Title = "ListActivity";
 }
 
 <h2></h2>
-
+<div class="activity-table">
+@if (User.IsInRole(Role.Teacher))
+{
     @Html.ActionLink("Add new activity", "CreateActivity", "Home", new { id = Model.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm newActivityBtn" })
+}
 
 <table class="table table-responsive dl-horizontal table-striped table-bordered">
     <tr>
@@ -54,3 +60,4 @@
 }
 
 </table>
+</div>
