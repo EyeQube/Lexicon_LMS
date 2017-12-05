@@ -1,21 +1,11 @@
 ﻿@model IEnumerable<Lexicon_LMS.Models.Course>
 
 @{
-    ViewBag.Title = "ListCourses";
+    ViewBag.Title = "Courses";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@*<script>
-
-    if (@ViewBag.Status)
-    {
-        confirm("!")
-    }
-
-</script> *@
-
-
-<h2><b>Courses</b></h2>
+<h2><b>@ViewBag.Title</b></h2>
 
 @if (!Model.Any())
 {
@@ -24,43 +14,27 @@
 
 else
 {
- <div class="dl-horizontal" style="background-color:snow">    
-        <table class="table table-responsive dl-horizontal table-bordered" >
-            <thead>
-                <tr>
-                    <th><b>Course</b></th>
-                    @*<th>Description</th>*@
-                    <th><b>Start Date</b></th>
-                    <th><b>End Date</b></th>
-                </tr>
-            </thead>
-      
-            <tbody>
-            
-                @foreach (var course in Model)
-             {
-                <tr>       
-                    <td>@Html.ActionLink(course.Name, "Course", "Home", new { id = course.Id }, null)</td>
-                    @*<td>@course.Description</td>*@
-                    <td> @Html.DisplayFor(m => course.StartDate, "{0:yyyy-MM-dd}")</td>  @*@course.StartDate.ToShortDateString()</td>*@
-                    <td>@Html.DisplayFor(m => course.EndDate, "{0:yyyy-MM-dd}")</td>  @*@course.EndDate.ToShortDateString()</td>*@
-                </tr>
-             }
-
-            </tbody>
-
-
-        </table>
-
-
-  </div>
-}
-
-@*<thead>
+    <table class="table table-responsive dl-horizontal table-striped table-bordered">
         <tr>
             <th>Course</th>
-            <th>Description</th>
-            <th>Start Date</th>
-            <th>End Date</th>
+            <th>Start date</th>
+            <th>End date</th>
         </tr>
-    </thead> *@
+
+        @foreach (var course in Model)
+        {
+            <tr>
+                <td>@Html.ActionLink(course.Name, "Course", "Home", new { id = course.Id }, null)</td>
+                <td>@Html.DisplayFor(m => course.StartDate, "{0:yyyy-MM-dd}")</td>  
+                <td>@Html.DisplayFor(m => course.EndDate, "{0:yyyy-MM-dd}")</td>  
+            </tr>
+        }
+
+
+
+    </table>
+
+
+                @*</div>*@
+}
+
