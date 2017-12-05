@@ -327,49 +327,27 @@ namespace Lexicon_LMS.Controllers
             var users = from s in _context.Users select s;
 
 
-            if (boll == true)
+            if(boll == true && FirstSortOrder != null)
             {
-                FirstSortOrder = "Desc";
-                LastSortOrder = "Desc";
+                users = users.OrderByDescending(s => s.FirstName);
+            }
+            else if(boll == false && FirstSortOrder != null)
+            {
+                users = users.OrderBy(s => s.FirstName);
+            }
+            else if(boll == true && LastSortOrder != null)
+            {
+                users = users.OrderByDescending(s => s.LastName);
+            }
+            else if(boll == false && LastSortOrder != null)
+            {
+                users = users.OrderBy(s => s.LastName);
             }
             else
             {
-                FirstSortOrder = "Asc";
-                LastSortOrder = "Asc";
+                users = users.OrderBy(s => s.LastName);
             }
                 
-
-            if (FirstSortOrder != null)
-            {
-                switch (FirstSortOrder)
-                {
-                    case "Desc":
-                        users = users.OrderByDescending(s => s.FirstName);
-                        break;
-                    case "Asc":
-                        users = users.OrderBy(s => s.FirstName);
-                        break;
-                    default:
-                        users = users.OrderBy(s => s.LastName);
-                        break;
-                }
-            }
-
-            if (LastSortOrder != null)
-            {
-                switch (LastSortOrder)
-                {
-                    case "Desc":
-                        users = users.OrderByDescending(s => s.LastName);
-                        break;
-                    case "Asc":
-                        users = users.OrderBy(s => s.LastName);
-                        break;
-                    default:
-                        users = users.OrderBy(s => s.LastName);
-                        break;
-                }
-            }
 
             ViewBag.Bool = boll == true ? false : true;
             var rolesLookup = _context.Roles.ToDictionary(x => x.Id, x => x.Name);
