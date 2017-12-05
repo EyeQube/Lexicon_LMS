@@ -372,7 +372,8 @@ namespace Lexicon_LMS.Controllers
             }
 
             ViewBag.Bool = boll == true ? false : true;
-
+            var rolesLookup = _context.Roles.ToDictionary(x => x.Id, x => x.Name);
+            ViewBag.RolesLookup = rolesLookup;
             return View("ListUsers", users.ToList());
         }
 
