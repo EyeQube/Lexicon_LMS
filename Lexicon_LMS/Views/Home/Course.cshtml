@@ -59,14 +59,14 @@
 
 <hr />
 
-<div class="col-lg-4">
+<div class="col-lg-3 ">
     <div class="row">
         <h3 style="color:darkred;"><b>Course modules</b></h3>
 
         @if (User.IsInRole(Role.Teacher))
             {
-            @Html.ActionLink("Add new module", "CreateModule", "Home", routeValues: new { courseId = Model.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
-        }
+                @Html.ActionLink("Add new module", "CreateModule", "Home", routeValues: new { courseId = Model.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
+            }
 
         @foreach (var module in Model.Modules.OrderBy(x => x.StartDate))
             {
@@ -85,17 +85,27 @@
                         )
 
 
-                    </strong> ( @Html.DisplayFor(m => module.StartDate) - @Html.DisplayFor(m => module.EndDate) )
+                   </strong> 
+                    @if (User.IsInRole(Role.Teacher))
+                    {
+                        <div>
+                            (@Html.DisplayFor(m => module.StartDate) - @Html.DisplayFor(m => module.EndDate) )@Html.ActionLink(" ", "EditModule", "Home", routeValues: new { id = module.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "glyphicon glyphicon-edit btn-gly" })|<a href="#" class="js-delete-entity glyphicon glyphicon-trash btn-gly-trash" data-user-api="/HomeApi/DeleteModule/" data-user-id="@module.Id" data-user-remove=".user-module" data-user-message="Delete module @Html.DisplayFor(m => module.Name)"></a>
+                        </div>
+
+                    }
+                    @if (User.IsInRole(Role.Student))
+                    {
+                        <div>
+                            (@Html.DisplayFor(m => module.StartDate) - @Html.DisplayFor(m => module.EndDate) )
+                        </div>
+
+                    }
+                    
+
                 </h5>
                 <p>@module.Description</p>
 
-                @if (User.IsInRole(Role.Teacher))
-                {
-                    <div>
-                        @Html.ActionLink("edit", "EditModule", "Home", routeValues: new { id = module.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
-                        <a href="#" class="js-delete-entity btn btn-danger btn-sm" data-user-api="/HomeApi/DeleteModule/" data-user-id="@module.Id" data-user-remove=".user-module" data-user-message="Delete module @Html.DisplayFor(m => module.Name)">DELETE</a>
-                    </div>
-                }
+               
 
             </div>
         }
@@ -107,7 +117,7 @@
 
     </div>
 </div>
-<div class="col-lg-6">
+<div class="col-lg-8 col-lg-offset-1">
 
     <div id="UpdateContentDiv">
 
@@ -139,7 +149,7 @@
         @if (User.IsInRole(Role.Teacher))
         {
             <hr />
-            @Html.ActionLink("Add new student", "Register", "Account", routeValues: new { role = Role.Student, courseid = Model.Id }, htmlAttributes: new { @class = "btn btn-default" })
+            @Html.ActionLink("Add new student", "Register", "Account", routeValues: new { role = Role.Student, courseid = Model.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
         }
         <hr />
     </div>
