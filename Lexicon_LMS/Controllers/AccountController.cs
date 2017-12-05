@@ -147,12 +147,13 @@ namespace Lexicon_LMS.Controllers
             return View("Register", viewModel);
         }
 
+
         //
         // POST: /Account/Register
         [HttpPost]
         [Authorize(Roles = Role.Teacher)]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel viewModel)
+        public async Task<ActionResult> Register(RegisterViewModel viewModel, string button)
         {
 
             if (ModelState.IsValid)
@@ -166,6 +167,13 @@ namespace Lexicon_LMS.Controllers
                 {
                     UserManager.AddToRole(user.Id, viewModel.Role);
 
+                    if (button == "SaveNew")
+                    {
+                        viewModel.Courses = _context.Courses;
+                        ViewBag.Message = $"Successfully added user \"{user.Email}\"";
+                        return View(viewModel);
+                    }
+
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
@@ -174,6 +182,79 @@ namespace Lexicon_LMS.Controllers
 
             viewModel.Courses = _context.Courses;
             return View(viewModel);
+        }
+
+        // Note: reusing parts of RegisterViewModel
+        //[Authorize(Roles = Role.Teacher)]
+        //public ActionResult EditUser(string userName)
+        //{
+        //    var User = _context.Users.FirstOrDefault(u => u.UserName == userName);
+        //    var viewModel = new RegisterViewModel
+        //    {
+        //        Id = User.Id,
+        //        Role = User.Roles.ToString(),
+        //        FirstName = User.FirstName,
+        //        LastName = User.LastName,
+        //        Email = User.Email,
+        //        Password = User.PasswordHash
+        //    };
+
+        //    return View("EditUser", viewModel);
+        //}
+
+        [Authorize(Roles = Role.Teacher)]
+        public ActionResult EditUser(string userId)
+        {
+            var User = _context.Users.FirstOrDefault(u => u.Id == userId);
+            var viewModel = new RegisterViewModel
+            {
+                Id = User.Id,
+                Role = User.Roles.ToString(),
+                FirstName = User.FirstName,
+                LastName = User.LastName,
+                Email = User.Email,
+                Password = User.PasswordHash
+            };
+
+            return View("EditUser", viewModel);
+        }
+
+
+        // POST: /Account/Register
+        //[HttpPost]
+        //[Authorize(Roles = Role.Teacher)]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult EditUser(RegisterViewModel viewModel)
+        //{
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        var User = _context.Users.FirstOrDefault(u => u.UserName == viewModel.Email);
+        //        User.FirstName = viewModel.FirstName;
+        //        User.LastName = viewModel.LastName;
+        //        User.Email = viewModel.Email;
+        //        var result = _context.SaveChanges();
+        //        return RedirectToAction("ListUsers");
+        //    }
+        //    return RedirectToAction("Home");
+        //}
+
+        [HttpPost]
+        [Authorize(Roles = Role.Teacher)]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditUser(RegisterViewModel viewModel)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var User = _context.Users.FirstOrDefault(u => u.Id == viewModel.Id);
+                User.FirstName = viewModel.FirstName;
+                User.LastName = viewModel.LastName;
+                User.Email = viewModel.Email;
+                var result = _context.SaveChanges();
+                return RedirectToAction("ListUsers");
+            }
+            return RedirectToAction("Home");
         }
 
         public ActionResult ListUsers()

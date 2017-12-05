@@ -3,12 +3,12 @@ namespace Lexicon_LMS.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialModel : DbMigration
+    public partial class init : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.Courses",
+                "dbo.Activities",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -16,6 +16,21 @@ namespace Lexicon_LMS.Migrations
                         Description = c.String(nullable: false, maxLength: 1200),
                         StartDate = c.DateTime(nullable: false),
                         EndDate = c.DateTime(nullable: false),
+                        ModuleId = c.Int(nullable: false),
+                        ActivityTypeId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.ActivityTypes", t => t.ActivityTypeId, cascadeDelete: true)
+                .ForeignKey("dbo.Modules", t => t.ModuleId, cascadeDelete: true)
+                .Index(t => t.ModuleId)
+                .Index(t => t.ActivityTypeId);
+            
+            CreateTable(
+                "dbo.ActivityTypes",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -33,6 +48,18 @@ namespace Lexicon_LMS.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Courses", t => t.CourseId, cascadeDelete: true)
                 .Index(t => t.CourseId);
+            
+            CreateTable(
+                "dbo.Courses",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false, maxLength: 100),
+                        Description = c.String(nullable: false, maxLength: 1200),
+                        StartDate = c.DateTime(nullable: false),
+                        EndDate = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -117,6 +144,8 @@ namespace Lexicon_LMS.Migrations
             DropForeignKey("dbo.AspNetUsers", "CourseId", "dbo.Courses");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Modules", "CourseId", "dbo.Courses");
+            DropForeignKey("dbo.Activities", "ModuleId", "dbo.Modules");
+            DropForeignKey("dbo.Activities", "ActivityTypeId", "dbo.ActivityTypes");
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
@@ -125,13 +154,17 @@ namespace Lexicon_LMS.Migrations
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.AspNetUsers", new[] { "CourseId" });
             DropIndex("dbo.Modules", new[] { "CourseId" });
+            DropIndex("dbo.Activities", new[] { "ActivityTypeId" });
+            DropIndex("dbo.Activities", new[] { "ModuleId" });
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
-            DropTable("dbo.Modules");
             DropTable("dbo.Courses");
+            DropTable("dbo.Modules");
+            DropTable("dbo.ActivityTypes");
+            DropTable("dbo.Activities");
         }
     }
 }

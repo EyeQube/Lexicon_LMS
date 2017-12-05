@@ -10,8 +10,12 @@
 }
 
 
-<h2 style="color:darkred;"><b>@Model.Name</b></h2>
+<h2 style="color:darkred;"><b>@Model.Name</b></h2>  
 
+<div>
+@Html.ActionLink("Edit Course", "EditCourse", "Home", routeValues: new { role = Role.Teacher, id = Model.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
+@Html.ActionLink("Delete Course", "DeleteCourse", "Home", routeValues: new { Role = Role.Teacher, id = Model.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm", onclick = "return confirm('Are you sure you want to delete this course?');" })
+</div>
 
 <div>
     @*<h4>@Html.DisplayFor(model => model.Name)</h4>*@
@@ -102,9 +106,11 @@
 
         </div>
     </div>
-    <div class="col-lg-8">
+    <div class="col-lg-6">
 
         <div id="UpdateContentDiv">
+
+        @Html.ActionLink("Add/Update Module", "Module", "Home", routeValues: new { role = Role.Teacher, id = Model.Id}, htmlAttributes: new { @class = "btn btn-default btn-sm" })
 
         </div>
     </div>

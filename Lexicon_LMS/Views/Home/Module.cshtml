@@ -13,12 +13,12 @@
     @Html.AntiForgeryToken()
     <h4>Add a new module</h4>
     <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
+    @Html.ValidationSummary( true, "", new { @class = "text-danger" })
 
     <div class="form-group">
         @Html.LabelFor(m => m.Name)
         @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-
+        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
         @*<div class="col-md-10">
                 @Html.DropDownListFor(m => m.Users, new SelectList(Model.Users, "userIdentity", "Members"), "", new { @class = "form-control" })
                 @Html.DropDownListFor(m => m.Roles, new SelectList(db-model, id-field-name, stringdescription-field-name), "Roll", new { @class = "form-control" })
@@ -28,17 +28,18 @@
     <div class="form-group">
         @Html.LabelFor(m => m.Description)
         @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.StartDate)
-        @Html.TextBoxFor(m => m.StartDate, "{0:YYYY-MM-DD}", new { @class = "form-control" })
-
+        @Html.EditorFor(m => m.StartDate, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.EndDate)
-        @Html.TextBoxFor(m => m.EndDate, "{0:YYYY-MM-DD}", new { @class = "form-control" })
-
+        @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control", @Value = "" } })
+        @Html.ValidationMessageFor(m => m.EndDate, "", new { @class = "text-danger" })
     </div>
 
 

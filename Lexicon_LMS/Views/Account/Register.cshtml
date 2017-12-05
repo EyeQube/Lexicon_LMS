@@ -11,8 +11,8 @@
     @Html.HiddenFor(m => m.Role)
 
     <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+
     <div class="form-group">
         @Html.LabelFor(m => m.FirstName)
         @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", placeholder = "Skriv in förnamn på elev/lärare" })
@@ -46,7 +46,12 @@
         </div>
     }
     <div class="form-group">
-        <input type="submit" class="btn btn-default" value="Register" />
+        <div class="col-md-offset-2 col-md-10">
+            @*<input type="submit" class="btn btn-default" value="Register" />*@
+            <button class="btn btn-default" name="button" value="Save">Register</button>
+            <button class="btn btn-default" name="button" value="SaveNew">Register and add another</button>
+
+        </div>
     </div>
 }
 

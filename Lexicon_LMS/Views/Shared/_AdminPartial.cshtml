@@ -8,16 +8,16 @@
             <h2 style="font-style:normal"><b>Administration Panel</b></h2>
 
             <div>
-                @Html.ActionLink("Register teacher", "Register", "Account", routeValues: new { role = Role.Teacher }, htmlAttributes: new { @class = "btn btn-primary" })
+                @Html.ActionLink("Register teacher", "Register", "Account", routeValues: new { role = Role.Teacher }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
 
                 @*NOTE: send courseid to controller action ...*@
-                @Html.ActionLink("Register student", "Register", "Account", routeValues: new { role = Role.Student, courseid = ViewBag.CourseId }, htmlAttributes: new { @class = "btn btn-primary" })
+                @Html.ActionLink("Register student", "Register", "Account", routeValues: new { role = Role.Student, courseid = ViewBag.CourseId }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
 
-                @Html.ActionLink("Register Course", "Register", "Home", null, htmlAttributes: new { @class = "btn btn-primary" })
+                @Html.ActionLink("Register Course", "Register", "Home", null, htmlAttributes: new { @class = "btn btn-default btn-sm" })
 
-                @Html.ActionLink("List Courses", "ListCourses", "Home", null, htmlAttributes: new { @class = "btn btn-primary" })
+                @Html.ActionLink("List Courses", "ListCourses", "Home", null, htmlAttributes: new { @class = "btn btn-default btn-sm" })
 
-                @Html.ActionLink("List Users", "ListUsers", "Account", null, htmlAttributes: new { @class = "btn btn-primary" })
+                @Html.ActionLink("List Users", "ListUsers", "Account", null, htmlAttributes: new { @class = "btn btn-default btn-sm" })
                 
             </div>
             <hr />
