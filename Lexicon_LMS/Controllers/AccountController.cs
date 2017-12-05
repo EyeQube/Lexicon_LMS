@@ -259,10 +259,75 @@ namespace Lexicon_LMS.Controllers
 
         public ActionResult ListUsers()
         {
+            ViewBag.Bool = true;
             var Users = _context.Users.ToList();
 
             return View(Users);
         }
+
+
+
+
+        public ActionResult SortUsers(string FirstSortOrder, string LastSortOrder, bool boll)
+        {
+            
+            var users = from s in _context.Users select s;
+
+
+            if (boll == true)
+            {
+                FirstSortOrder = "Desc";
+                LastSortOrder = "Desc";
+            }
+            else
+            {
+                FirstSortOrder = "Asc";
+                LastSortOrder = "Asc";
+            }
+                
+
+            if (FirstSortOrder != null)
+            {
+                switch (FirstSortOrder)
+                {
+                    case "Desc":
+                        users = users.OrderByDescending(s => s.FirstName);
+                        break;
+                    case "Asc":
+                        users = users.OrderBy(s => s.FirstName);
+                        break;
+                    default:
+                        users = users.OrderBy(s => s.LastName);
+                        break;
+                }
+            }
+
+            if (LastSortOrder != null)
+            {
+                switch (LastSortOrder)
+                {
+                    case "Desc":
+                        users = users.OrderByDescending(s => s.LastName);
+                        break;
+                    case "Asc":
+                        users = users.OrderBy(s => s.LastName);
+                        break;
+                    default:
+                        users = users.OrderBy(s => s.LastName);
+                        break;
+                }
+            }
+
+
+            ViewBag.Bool = boll == true ? false : true;
+
+            //ViewBag.FirstBool = true;
+            //ViewBag.Bool = boll;
+
+
+            return View("ListUsers", users.ToList());
+        }
+
 
         //
         // GET: /Account/ConfirmEmail
