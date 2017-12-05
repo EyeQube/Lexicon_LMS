@@ -135,7 +135,7 @@ namespace Lexicon_LMS.Controllers
         }
 
         [Authorize(Roles = Role.Teacher)]
-        public ActionResult Register(string role, int? courseid)
+        public ActionResult Register(string role, int? courseid, string message)
         {
             var viewModel = new RegisterViewModel
             {
@@ -143,7 +143,8 @@ namespace Lexicon_LMS.Controllers
                 Courses = _context.Courses,
                 CourseId = courseid
             };
-
+            if (message != null)
+                ViewBag.Message = message;
             return View("Register", viewModel);
         }
 
@@ -170,8 +171,9 @@ namespace Lexicon_LMS.Controllers
                     if (button == "SaveNew")
                     {
                         viewModel.Courses = _context.Courses;
-                        ViewBag.Message = $"Successfully added user \"{user.Email}\"";
-                        return View(viewModel);
+                        var message = $"Successfully added user \"{user.Email}\"";
+                        return RedirectToAction("Register", "Account", new { role = viewModel.Role, courseid = viewModel.CourseId, message = message });
+
                     }
 
                     return RedirectToAction("Index", "Home");
