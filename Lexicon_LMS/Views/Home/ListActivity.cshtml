@@ -53,8 +53,13 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ActivityType.Name)
-            <span class="right"><a href="#" class="js-delete-entity glyphicon glyphicon-trash" data-user-api="/HomeApi/DeleteActivity/" data-user-id="@item.Id" data-user-remove=".user-tr" data-user-message="Delete activity @Html.DisplayFor(modelItem => item.Name)"></a></span>
+            @if (User.IsInRole(Role.Teacher))
+            {
+               <span class="right"><a href="#" class="js-delete-entity glyphicon glyphicon-trash" data-user-api="/HomeApi/DeleteActivity/" data-user-id="@item.Id" data-user-remove=".user-tr" data-user-message="Delete activity @Html.DisplayFor(modelItem => item.Name)"></a></span>
+            }
+
         </td>
+
    
     </tr>
 }
