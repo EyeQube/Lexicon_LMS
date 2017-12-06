@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -264,7 +265,6 @@ namespace Lexicon_LMS.Controllers
 
 
 
-
         // POST: /Account/Register
         //[HttpPost]
         //[Authorize(Roles = Role.Teacher)]
@@ -283,6 +283,8 @@ namespace Lexicon_LMS.Controllers
         //    }
         //    return RedirectToAction("Home");
         //}
+
+
 
         [HttpPost]
         [Authorize(Roles = Role.Teacher)]
@@ -306,72 +308,84 @@ namespace Lexicon_LMS.Controllers
 
 
 
-        public ActionResult ListUsers()
+        public ActionResult ListUsers(string searchString)
         {
-            ViewBag.Bool = true;
+           
+            var rolesLookup = _context.Roles.ToDictionary(x => x.Id, x => x.Name);
+
             var Users = _context.Users.ToList();
 
+            var users = from s in _context.Users select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+
+                users = users.Where(s => s.LastName.Contains(searchString)
+                                   || s.FirstName.Contains(searchString));
+
+                ViewBag.Bool = true;
+                ViewBag.SearchString = searchString;
+                
+                ViewBag.RolesLookup = rolesLookup;
+                return View(users.ToList());
+            }
+
+            ViewBag.Bool = true;
             // Generate lookup table for roles to use in list view
-            var rolesLookup = _context.Roles.ToDictionary(x => x.Id, x => x.Name);
+            //var rolesLookup = _context.Roles.ToDictionary(x => x.Id, x => x.Name);
             ViewBag.RolesLookup = rolesLookup;
 
             return View(Users);
         }
-
-
-
-
-        public ActionResult SortUsers(string FirstSortOrder, string LastSortOrder, bool boll)
-        {
             
+
+
+
+
+        public ActionResult SortUsers(string FirstSortOrder, string LastSortOrder, string searchString, bool boll)
+        {
+            var rolesLookup = _context.Roles.ToDictionary(x => x.Id, x => x.Name);
             var users = from s in _context.Users select s;
 
-
-            if (boll == true)
+            if (!String.IsNullOrEmpty(searchString))
             {
-                FirstSortOrder = "Desc";
-                LastSortOrder = "Desc";
+
+                users = users.Where(s => s.LastName.Contains(searchString)
+                                   || s.FirstName.Contains(searchString));
+
+                ViewBag.Bool = boll;
+
+
+                ViewBag.RolesLookup = rolesLookup;
+                return View("ListUsers", users.ToList());
+            }
+
+
+            if (boll == true && FirstSortOrder != null)
+            {
+                users = users.OrderByDescending(s => s.FirstName);
+            }
+            else if(boll == false && FirstSortOrder != null)
+            {
+                users = users.OrderBy(s => s.FirstName);
+            }
+            else if(boll == true && LastSortOrder != null)
+            {
+                users = users.OrderByDescending(s => s.LastName);
+            }
+            else if(boll == false && LastSortOrder != null)
+            {
+                users = users.OrderBy(s => s.LastName);
             }
             else
             {
-                FirstSortOrder = "Asc";
-                LastSortOrder = "Asc";
+                users = users.OrderBy(s => s.LastName);
             }
                 
 
-            if (FirstSortOrder != null)
-            {
-                switch (FirstSortOrder)
-                {
-                    case "Desc":
-                        users = users.OrderByDescending(s => s.FirstName);
-                        break;
-                    case "Asc":
-                        users = users.OrderBy(s => s.FirstName);
-                        break;
-                    default:
-                        users = users.OrderBy(s => s.LastName);
-                        break;
-                }
-            }
-
-            if (LastSortOrder != null)
-            {
-                switch (LastSortOrder)
-                {
-                    case "Desc":
-                        users = users.OrderByDescending(s => s.LastName);
-                        break;
-                    case "Asc":
-                        users = users.OrderBy(s => s.LastName);
-                        break;
-                    default:
-                        users = users.OrderBy(s => s.LastName);
-                        break;
-                }
-            }
-
             ViewBag.Bool = boll == true ? false : true;
+            
+            ViewBag.RolesLookup = rolesLookup;
+
 
             return View("ListUsers", users.ToList());
         }

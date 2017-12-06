@@ -1,24 +1,36 @@
 ﻿@model IEnumerable<Lexicon_LMS.Models.ApplicationUser>
 @{
-    ViewBag.Title = "List users";
+    ViewBag.Title = "Users";
 }
 
 <h2>@ViewBag.Title</h2>
+
+
+@using (Html.BeginForm())
+{
+    <p>
+        Find by name: @Html.TextBox("searchString")
+        <input type="submit" value="Search" />
+    </p>
+}
+
+
 
 @if (!Model.Any())
 {
     <p>There are no register users at the moment</p>
 }
 
+
 else
 {
     <table class="table table-responsive dl-horizontal table-striped table-bordered">
         <tr>
             <th>
-               @Html.ActionLink("Lastname", "SortUsers", new { LastSortOrder = "Desc", boll = ViewBag.Bool})   @* @Html.DisplayNameFor(model => model.LastName) *@
+               @Html.ActionLink("Lastname", "SortUsers", new { LastSortOrder = "Desc", searchString = ViewBag.SearchString, boll = ViewBag.Bool})   @* @Html.DisplayNameFor(model => model.LastName) *@
             </th>
             <th>
-               @Html.ActionLink("Firstname", "SortUsers", new { FirstSortOrder = "Asc", boll = ViewBag.Bool})  @*@Html.DisplayNameFor(model => model.FirstName) *@
+               @Html.ActionLink("Firstname", "SortUsers", new { FirstSortOrder = "Desc", searchString = ViewBag.SearchString, boll = ViewBag.Bool})  @*@Html.DisplayNameFor(model => model.FirstName) *@
             </th>   
             <th>
                 @Html.DisplayNameFor(model => model.Email)
