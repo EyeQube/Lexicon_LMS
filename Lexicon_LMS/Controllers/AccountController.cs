@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -264,7 +265,6 @@ namespace Lexicon_LMS.Controllers
 
 
 
-
         // POST: /Account/Register
         //[HttpPost]
         //[Authorize(Roles = Role.Teacher)]
@@ -283,6 +283,8 @@ namespace Lexicon_LMS.Controllers
         //    }
         //    return RedirectToAction("Home");
         //}
+
+
 
         [HttpPost]
         [Authorize(Roles = Role.Teacher)]
@@ -306,28 +308,59 @@ namespace Lexicon_LMS.Controllers
 
 
 
-        public ActionResult ListUsers()
+        public ActionResult ListUsers(string searchString)
         {
-            ViewBag.Bool = true;
+           
+            var rolesLookup = _context.Roles.ToDictionary(x => x.Id, x => x.Name);
+
             var Users = _context.Users.ToList();
 
+            var users = from s in _context.Users select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+
+                users = users.Where(s => s.LastName.Contains(searchString)
+                                   || s.FirstName.Contains(searchString));
+
+                ViewBag.Bool = true;
+                ViewBag.SearchString = searchString;
+                
+                ViewBag.RolesLookup = rolesLookup;
+                return View(users.ToList());
+            }
+
+            ViewBag.Bool = true;
             // Generate lookup table for roles to use in list view
-            var rolesLookup = _context.Roles.ToDictionary(x => x.Id, x => x.Name);
+            //var rolesLookup = _context.Roles.ToDictionary(x => x.Id, x => x.Name);
             ViewBag.RolesLookup = rolesLookup;
 
             return View(Users);
         }
-
-
-
-
-        public ActionResult SortUsers(string FirstSortOrder, string LastSortOrder, bool boll)
-        {
             
+
+
+
+
+        public ActionResult SortUsers(string FirstSortOrder, string LastSortOrder, string searchString, bool boll)
+        {
+            var rolesLookup = _context.Roles.ToDictionary(x => x.Id, x => x.Name);
             var users = from s in _context.Users select s;
 
+            if (!String.IsNullOrEmpty(searchString))
+            {
 
-            if(boll == true && FirstSortOrder != null)
+                users = users.Where(s => s.LastName.Contains(searchString)
+                                   || s.FirstName.Contains(searchString));
+
+                ViewBag.Bool = boll;
+
+
+                ViewBag.RolesLookup = rolesLookup;
+                return View("ListUsers", users.ToList());
+            }
+
+
+            if (boll == true && FirstSortOrder != null)
             {
                 users = users.OrderByDescending(s => s.FirstName);
             }
@@ -350,8 +383,10 @@ namespace Lexicon_LMS.Controllers
                 
 
             ViewBag.Bool = boll == true ? false : true;
-            var rolesLookup = _context.Roles.ToDictionary(x => x.Id, x => x.Name);
+            
             ViewBag.RolesLookup = rolesLookup;
+
+
             return View("ListUsers", users.ToList());
         }
 
