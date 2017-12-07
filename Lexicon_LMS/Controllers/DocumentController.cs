@@ -31,7 +31,7 @@ namespace Lexicon_LMS.Controllers
         {
             document.FileName = Path.GetFileName(file.FileName);
             document.CreateTime = DateTime.Now;
- 
+
             if (ModelState.IsValid)
             {
                 db.Documents.Add(document);
@@ -44,6 +44,18 @@ namespace Lexicon_LMS.Controllers
                 return RedirectToAction("Index", "Home");
             }
             return View(document);
+        }
+
+        [HttpGet]
+        public FileResult GetFile(int id)
+        {
+            var document = db.Documents.Find(id);
+            var rootPath = AppDomain.CurrentDomain.BaseDirectory;
+            var path = Path.Combine(rootPath, "App_Docs", id.ToString());
+            var fileName = document.FileName;
+            var fullPath = Path.Combine(path, fileName);
+
+            return File(fullPath, "application/octet-stream", document.FileName);
         }
     }
 }
