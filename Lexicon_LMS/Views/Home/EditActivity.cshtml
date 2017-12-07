@@ -1,7 +1,6 @@
-﻿@model Lexicon_LMS.Models.Module
-
+﻿@model Lexicon_LMS.Models.Activity
 @{
-    ViewBag.Title = "Edit Module";
+    ViewBag.Title = "Edit Activity";
 }
 
 <h3>@ViewBag.Title</h3>
@@ -9,18 +8,18 @@
 @using (Html.BeginForm(routeValues: new { returnUrl = ViewBag.ReturnUrl }))
 {
     @Html.AntiForgeryToken()
-         
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.Id)
-            @Html.HiddenFor(model => model.CourseId)
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.ModuleId)
 
-                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
 
-            </div>
+        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+
+    </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
@@ -47,6 +46,12 @@
             </div>
 
             <div class="form-group">
+                @Html.LabelFor(model => model.ActivityTypes, htmlAttributes: new { @class = "control-label" })
+                @Html.DropDownList("ActivityTypeId", new SelectList(Model.ActivityTypes, "Id", "Name"), "", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ActivityTypeId, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
 
                 <input type="submit" value="Save" class="btn btn-primary" />
 
@@ -56,4 +61,3 @@
             </div>
 
 }
-

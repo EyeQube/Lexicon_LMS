@@ -12,10 +12,8 @@
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.CourseId)
 
-<div class="form-horizontal">
-
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
 
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
@@ -56,7 +54,6 @@
             <input type="submit" value="Create" class="btn btn-primary" />
             <a href="@ViewBag.ReturnUrl" class="btn btn-default">Cancel</a>
         </div>
-</div>
 }
 
 

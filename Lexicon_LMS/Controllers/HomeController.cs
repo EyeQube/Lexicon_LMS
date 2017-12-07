@@ -1,6 +1,5 @@
 ﻿using Lexicon_LMS.Models;
 using Microsoft.AspNet.Identity;
-using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -323,7 +322,7 @@ namespace Lexicon_LMS.Controllers
                 return HttpNotFound();
 
             ViewBag.returnUrl = returnUrl;
-            return View(module);
+            return PartialView(module);
         }
 
 
@@ -404,6 +403,19 @@ namespace Lexicon_LMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateActivity(Activity activity, string returnUrl)
         {
+            var module = db.Modules.Find(activity.ModuleId);
+            if (module == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "module id not found");
+
+            if (activity.StartDate < module.StartDate ||
+                activity.StartDate > module.EndDate ||
+                activity.EndDate > module.EndDate)
+            {
+                ModelState.AddModelError("", $"Dates must be within module time span.\n Start: {module.StartDate.ToShortDateString()} End: {module.EndDate.ToShortDateString()}");
+            }
+            if (activity.StartDate > activity.EndDate)
+                ModelState.AddModelError("", $"Dates must be in sequence");
+
             if (ModelState.IsValid)
             {
                 db.Activities.Add(activity);
@@ -416,6 +428,38 @@ namespace Lexicon_LMS.Controllers
             return View(activity);
         }
 
+        [Authorize(Roles = Role.Teacher)]
+        public ActionResult EditActivity(int? id, string returnUrl = "/")
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            Activity activity = db.Activities.Find(id);
+            if (activity == null)
+                return HttpNotFound();
+
+            ViewBag.returnUrl = returnUrl;
+
+            activity.ActivityTypes = db.ActivityTypes.ToList();
+
+            return PartialView(activity);
+        }
+
+        [Authorize(Roles = Role.Teacher)]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditActivity([Bind(Include = "Id,Name,Description,StartDate,EndDate,ModuleId,ActivityTypeId")] Activity activity, string returnUrl)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(activity).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return RedirectToLocal(returnUrl);
+            }
+
+            return View(activity);
+        }
 
         //TODO copy from accountcontroller ... move to common utility class
         private ActionResult RedirectToLocal(string returnUrl)

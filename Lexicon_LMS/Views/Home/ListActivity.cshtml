@@ -55,7 +55,17 @@
             @Html.DisplayFor(modelItem => item.ActivityType.Name)
             @if (User.IsInRole(Role.Teacher))
             {
-               <span class="right"><a href="#" class="js-delete-entity glyphicon glyphicon-trash" data-user-api="/HomeApi/DeleteActivity/" data-user-id="@item.Id" data-user-remove=".user-tr" data-user-message="Delete activity @Html.DisplayFor(modelItem => item.Name)"></a></span>
+                <span class="right">|<a href="#" class="js-delete-entity glyphicon glyphicon-trash btn-gly-trash-act" data-user-api="/HomeApi/DeleteActivity/" data-user-id="@item.Id" data-user-remove=".user-tr" data-user-message="Delete activity @Html.DisplayFor(modelItem => item.Name)"></a></span>
+                <span class="right">@Ajax.ActionLink(" ", "EditActivity", "Home", new { id = item.Id }, new AjaxOptions
+                               {
+                                   UpdateTargetId = "UpdateContentDiv", // <-- DOM element ID to update
+                                   InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
+                                   HttpMethod = "GET", // <-- HTTP method
+
+
+                               },
+                                   new { @class = "glyphicon glyphicon-edit btn-gly" })</span>
+
             }
 
         </td>
