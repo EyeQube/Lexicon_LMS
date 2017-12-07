@@ -41,20 +41,26 @@
         <dt>
             @Html.DisplayNameFor(model => model.StartDate)
         </dt>
-       
-            <dd>
-                @Html.DisplayFor(model => model.StartDate)
-            </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.EndDate)
-            </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.EndDate)
-            </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
 
-        </dl>
+        <dd>
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+
+    </dl>
+    @if (User.IsInRole(Role.Teacher))
+    {
+        @Html.ActionLink("Add document", "AddFileToSystem", "Document", routeValues: new { courseId = Model.Id, }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
+    }
+
+
 </div>
 
 <hr />
@@ -64,9 +70,9 @@
         <h3 style="color:darkred;"><b>Course modules</b></h3>
 
         @if (User.IsInRole(Role.Teacher))
-            {
-                @Html.ActionLink("Add new module", "CreateModule", "Home", routeValues: new { courseId = Model.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
-            }
+        {
+            @Html.ActionLink("Add new module", "CreateModule", "Home", routeValues: new { courseId = Model.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
+        }
 
         @foreach (var module in Model.Modules.OrderBy(x => x.StartDate))
             {
@@ -74,18 +80,18 @@
                 <h5>
                     <strong>
                         @Ajax.ActionLink(module.Name, "ListActivity", "Home", new { id = module.Id }, new AjaxOptions
-                       {
-                           UpdateTargetId = "UpdateContentDiv", // <-- DOM element ID to update
-                           InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
-                           HttpMethod = "GET", // <-- HTTP method
+                   {
+                       UpdateTargetId = "UpdateContentDiv", // <-- DOM element ID to update
+                       InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
+                       HttpMethod = "GET", // <-- HTTP method
 
 
-                       },
+                   },
                             new { @class = "btn btn-link" } //-- Class
                         )
 
 
-                   </strong> 
+                    </strong>
                     @if (User.IsInRole(Role.Teacher))
                     {
                         <div>
@@ -100,12 +106,12 @@
                         </div>
 
                     }
-                    
+
 
                 </h5>
                 <p>@module.Description</p>
 
-               
+
 
             </div>
         }
@@ -153,5 +159,5 @@
         }
         <hr />
     </div>
-   
+
 </div>

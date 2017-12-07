@@ -41,5 +41,6 @@ namespace Lexicon_LMS.Models
 
         [NotMapped]
         public IEnumerable<ActivityType> ActivityTypes { get; set; }
+        public virtual ICollection<Document> Documents { get; set; }
     }
 }

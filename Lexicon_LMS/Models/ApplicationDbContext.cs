@@ -19,5 +19,7 @@ namespace Lexicon_LMS.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<Lexicon_LMS.Models.Document> Documents { get; set; }
     }
 }
