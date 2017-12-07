@@ -1,4 +1,8 @@
-﻿body {
+﻿html {
+    overflow-y: scroll;
+}
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -127,5 +131,37 @@ HelloSpace{
 .btn-gly-trash{
     margin-right:10px;
     margin-left:10px;
+}
+.btn-gly-trash-act {
+    margin-left: 10px;
+}
+h3, h2 {
+    color: darkred;
+    font-weight:bold;
+}
+
+.alert li{
+    display:inline;
+    
+}
+
+.alert-danger {
+    background-color: #DC143C;
+    margin-right: 600px;
+    border-color: #DC143C;
+}
+
+.headling-users {
+    color: darkred;
+    font-size: 24px;
+    font-variant:normal;
+}
+
+.btn-link:hover {
+    color: darkred;
+}
+
+.btn-link {
+    text-transform: capitalize;
 }
 

@@ -10,38 +10,44 @@
 }
 
 
-<h2 style="color:darkred;"><b>@Model.Name</b></h2>
+<h2><b>@Model.Name</b></h2>
 
 @if (User.IsInRole(Role.Teacher))
 {
     @Html.ActionLink("Edit Course", "EditCourse", "Home", routeValues: new { role = Role.Teacher, id = Model.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
     @Html.ActionLink("Delete Course", "DeleteCourse", "Home", routeValues: new { Role = Role.Teacher, id = Model.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm", onclick = "return confirm('Are you sure you want to delete this course?');" })
 }
+    <a href="#" class="btn btn-default btn-sm" data-toggle="popover" data-placement="bottom" title="Course document" data-content="Test.txt">Documents</a>
 
-<div>
-    @*<h4>@Html.DisplayFor(model => model.Name)</h4>*@
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+   <a href="#" class="btn btn-default btn-sm" data-toggle="collapse" data-target=".demo">Course info</a>
 
-        <dd style="color:darkred;">
-            <b>@Html.DisplayFor(model => model.Name)</b>
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+<hr />
+<div class="col-lg-12">
+    <div class="demo collapse out">
+        @*<h4>@Html.DisplayFor(model => model.Name)</h4>*@
+        
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+            <dd style="color:darkred;">
+                <b>@Html.DisplayFor(model => model.Name)</b>
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </dt>
-       
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </dt>
+
             <dd>
                 @Html.DisplayFor(model => model.StartDate)
             </dd>
@@ -55,9 +61,11 @@
             </dd>
 
         </dl>
+        <hr />
+    </div>
 </div>
 
-<hr />
+
 
 <div class="col-lg-3 ">
     <div class="row">
@@ -89,14 +97,25 @@
                     @if (User.IsInRole(Role.Teacher))
                     {
                         <div>
-                            (@Html.DisplayFor(m => module.StartDate) - @Html.DisplayFor(m => module.EndDate) )@Html.ActionLink(" ", "EditModule", "Home", routeValues: new { id = module.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "glyphicon glyphicon-edit btn-gly" })|<a href="#" class="js-delete-entity glyphicon glyphicon-trash btn-gly-trash" data-user-api="/HomeApi/DeleteModule/" data-user-id="@module.Id" data-user-remove=".user-module" data-user-message="Delete module @Html.DisplayFor(m => module.Name)"></a>
+                            (@Html.DisplayFor(m => module.StartDate) - @Html.DisplayFor(m => module.EndDate) )@Ajax.ActionLink(" ", "EditModule", "Home", new { id = module.Id }, new AjaxOptions
+                                                                                                         {
+                                                                                                             UpdateTargetId = "UpdateContentDiv", // <-- DOM element ID to update
+                                                                                                             InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
+                                                                                                             HttpMethod = "GET", // <-- HTTP method
+
+
+                                                                                                         },
+                                                                                                                    new { @class = "glyphicon glyphicon-edit btn-gly" } 
+                                                                                                                    )
+                            |<a href="#" class="js-delete-entity glyphicon glyphicon-trash btn-gly-trash" data-user-api="/HomeApi/DeleteModule/" data-user-id="@module.Id" data-user-remove=".user-module" data-user-message="Delete module @Html.DisplayFor(m => module.Name)"></a>|<a href="#" class="glyphicon glyphicon-list-alt btn-gly-trash" data-toggle="popover" data-placement="bottom" title="Module document" data-content="Test.txt"></a>
+
                         </div>
 
                     }
                     @if (User.IsInRole(Role.Student))
                     {
                         <div>
-                            (@Html.DisplayFor(m => module.StartDate) - @Html.DisplayFor(m => module.EndDate) )
+                            (@Html.DisplayFor(m => module.StartDate) - @Html.DisplayFor(m => module.EndDate) )<a href="#" class="glyphicon glyphicon-list-alt btn-gly-trash" data-toggle="popover" data-placement="bottom" title="Module document" data-content="Test.txt"></a>
                         </div>
 
                     }
@@ -130,16 +149,16 @@
 <div class="col-md-12">
     <div class="row">
         <hr />
-        <h3 style="color:darkred;"><b>Course members</b></h3>
+        <strong><a href="#" class="btn btn-link headling-users" data-toggle="collapse" data-target=".users">Course students</a></strong>
 
-
-
-        @foreach (var student in Model.Users.ToList())
+        <div class="users collapse out">
+            @foreach (var student in Model.Users.ToList())
             {
-            <div class="col-sm-4 col-md-4">
-                <p><strong>@student.FullName</strong> <a href="@student.Email">@student.Email</a></p>
-            </div>
-        }
+                <div class="col-sm-4 col-md-4">
+                    <p><strong>@student.FullName</strong> <a href="mailto:@student.Email">@student.Email</a></p>
+                </div>
+            }
+        </div>
     </div>
 </div>
 
