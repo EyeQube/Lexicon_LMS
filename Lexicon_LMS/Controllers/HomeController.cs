@@ -5,6 +5,10 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using System.Collections.Generic;
+using DHTMLX.Common;
+using DHTMLX.Scheduler.Data;
+using DHTMLX.Scheduler;
 
 namespace Lexicon_LMS.Controllers
 {
@@ -166,7 +170,7 @@ namespace Lexicon_LMS.Controllers
 
 
         [Authorize]
-        public ActionResult Course(int id)
+        public ActionResult Course(int? id)
         {
 
             /*if(id == 0)
@@ -428,6 +432,67 @@ namespace Lexicon_LMS.Controllers
         }
 
 
+
+
+        public ActionResult ScheduleIndex(int? id) 
+        {
+            var courseStartDate = db.Courses.FirstOrDefault(c => c.Id == id);
+                
+            var sched = new DHXScheduler(this);
+            sched.Skin = DHXScheduler.Skins.Terrace;
+            sched.LoadData = true;
+            sched.EnableDataprocessor = true;
+            sched.InitialDate = courseStartDate.StartDate;  //DateTime(2016, 5, 5);
+
+            ViewBag.Id = courseStartDate.Id;
+
+            return View(sched);
+        }
+
+
+
+        public ContentResult Data()
+        {
+            return (new SchedulerAjaxData(
+                new SchedulerContext().Events
+                .Select(e => new { e.Id, e.Text, e.Start_date, e.End_date })   
+                )   
+                );  
+        }
+
+
+        [Authorize(Roles = Role.Teacher)]
+        public ContentResult Save(int? id, FormCollection actionValues)
+        {
+            var action = new DataAction(actionValues);
+            var changedEvent = DHXEventsHelper.Bind<Event>(actionValues);
+            var entities = new SchedulerContext();
+            try
+            {
+                switch (action.Type)
+                {
+                    case DataActionTypes.Insert:
+                        entities.Events.Add(changedEvent);
+                        break;
+                    case DataActionTypes.Delete:
+                        changedEvent = entities.Events.FirstOrDefault(ev => ev.Id == action.SourceId);
+                        entities.Events.Remove(changedEvent);
+                        break;
+                    default:// "update"
+                        var target = entities.Events.Single(e => e.Id == changedEvent.Id);
+                        DHXEventsHelper.Update(target, changedEvent, new List<string> { "id" });
+                        break;
+                }
+                entities.SaveChanges();
+                action.TargetId = changedEvent.Id;
+            }
+            catch (Exception a)
+            {
+                action.Type = DataActionTypes.Error;
+            }
+
+            return (new AjaxSaveResponse(action));
+        }
 
     }
 }

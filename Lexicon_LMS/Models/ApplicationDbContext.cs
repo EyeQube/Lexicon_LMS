@@ -5,6 +5,8 @@ namespace Lexicon_LMS.Models
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        private string v;
+
         public DbSet<Course> Courses { get; set; }
         public DbSet<Module> Modules { get; set; }
         public DbSet<Activity> Activities { get; set; }
@@ -13,6 +15,11 @@ namespace Lexicon_LMS.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
+        }
+
+        public ApplicationDbContext(string v)
+        {
+            this.v = v;
         }
 
         public static ApplicationDbContext Create()

@@ -3,7 +3,7 @@ namespace Lexicon_LMS.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initialModel : DbMigration
+    public partial class InitialOne : DbMigration
     {
         public override void Up()
         {
@@ -125,6 +125,17 @@ namespace Lexicon_LMS.Migrations
                 .Index(t => t.RoleId);
             
             CreateTable(
+                "dbo.Events",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Text = c.String(),
+                        Start_date = c.DateTime(nullable: false),
+                        End_date = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
                 "dbo.AspNetRoles",
                 c => new
                     {
@@ -157,6 +168,7 @@ namespace Lexicon_LMS.Migrations
             DropIndex("dbo.Activities", new[] { "ActivityTypeId" });
             DropIndex("dbo.Activities", new[] { "ModuleId" });
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.Events");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
