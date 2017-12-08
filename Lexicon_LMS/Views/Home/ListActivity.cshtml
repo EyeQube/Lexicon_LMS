@@ -32,6 +32,9 @@
         <th>
           ActivityType
         </th>
+        <th>
+            [Placeholder column name]
+        </th>
 
     </tr>
 
@@ -68,6 +71,17 @@
 
             }
 
+        </td>
+        <td>
+            @if (item.ActivityType.AllowStudentDocuments &&
+                 User.IsInRole(Role.Student))
+            {
+                @Html.ActionLink("upload assignment", "AddFileToSystem", "Document", routeValues: new { activityId = item.Id }, htmlAttributes: new { @class = "btn btn-default btn-xs" })
+            }
+            @if (User.IsInRole(Role.Teacher))
+            {
+                @Html.ActionLink("add document", "AddFileToSystem", "Document", routeValues: new { activityId = item.Id }, htmlAttributes: new { @class = "btn btn-default btn-xs" })
+            }
         </td>
 
    
