@@ -39,9 +39,9 @@ namespace Lexicon_LMS.Migrations
             //Create ActivityType
             ActivityType[] activityTypes = new[]
             {
-                new ActivityType{ Name = "Föreläsning"},
-                new ActivityType{ Name= "E-learning"},
-                new ActivityType{ Name= "Övningstillfälle"}
+                new ActivityType{ Name = "Föreläsning", AllowStudentDocuments = false},
+                new ActivityType{ Name = "E-learning" , AllowStudentDocuments = false},
+                new ActivityType{ Name = "Övningstillfälle" , AllowStudentDocuments = true}
             };
             context.ActivityTypes.AddOrUpdate(x => x.Name, activityTypes);
             context.SaveChanges();

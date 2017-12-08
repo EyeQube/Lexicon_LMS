@@ -219,6 +219,10 @@
     <Compile Include="Migrations\201712071419543_AddDocsClass.Designer.cs">
       <DependentUpon>201712071419543_AddDocsClass.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712080854187_studentassignmentdocuments.cs" />
+    <Compile Include="Migrations\201712080854187_studentassignmentdocuments.Designer.cs">
+      <DependentUpon>201712080854187_studentassignmentdocuments.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -230,6 +234,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Module.cs" />
     <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\StudentDocument.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -385,6 +390,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712071419543_AddDocsClass.resx">
       <DependentUpon>201712071419543_AddDocsClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712080854187_studentassignmentdocuments.resx">
+      <DependentUpon>201712080854187_studentassignmentdocuments.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
