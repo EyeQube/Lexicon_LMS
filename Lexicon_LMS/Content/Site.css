@@ -25,6 +25,9 @@ body {
     margin-left: 83px;
 }
 
+.form-horizontal .form-group{
+    margin-left:0;
+}
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
