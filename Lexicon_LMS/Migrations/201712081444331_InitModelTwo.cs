@@ -1,9 +1,9 @@
-namespace Lexicon_LMS.Migrations
+namespace Lexicon_LMS.Migration
 {
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialOne : DbMigration
+    public partial class InitModelTwo : DbMigration
     {
         public override void Up()
         {
@@ -60,6 +60,20 @@ namespace Lexicon_LMS.Migrations
                         EndDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.Events",
+                c => new
+                    {
+                        Id = c.Int(nullable: false),
+                        text = c.String(),
+                        start_date = c.DateTime(nullable: false),
+                        end_date = c.DateTime(nullable: false),
+                        CourseId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Courses", t => t.Id)
+                .Index(t => t.Id);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -125,17 +139,6 @@ namespace Lexicon_LMS.Migrations
                 .Index(t => t.RoleId);
             
             CreateTable(
-                "dbo.Events",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Text = c.String(),
-                        Start_date = c.DateTime(nullable: false),
-                        End_date = c.DateTime(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id);
-            
-            CreateTable(
                 "dbo.AspNetRoles",
                 c => new
                     {
@@ -155,6 +158,7 @@ namespace Lexicon_LMS.Migrations
             DropForeignKey("dbo.AspNetUsers", "CourseId", "dbo.Courses");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Modules", "CourseId", "dbo.Courses");
+            DropForeignKey("dbo.Events", "Id", "dbo.Courses");
             DropForeignKey("dbo.Activities", "ModuleId", "dbo.Modules");
             DropForeignKey("dbo.Activities", "ActivityTypeId", "dbo.ActivityTypes");
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
@@ -164,15 +168,16 @@ namespace Lexicon_LMS.Migrations
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.AspNetUsers", new[] { "CourseId" });
+            DropIndex("dbo.Events", new[] { "Id" });
             DropIndex("dbo.Modules", new[] { "CourseId" });
             DropIndex("dbo.Activities", new[] { "ActivityTypeId" });
             DropIndex("dbo.Activities", new[] { "ModuleId" });
             DropTable("dbo.AspNetRoles");
-            DropTable("dbo.Events");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
+            DropTable("dbo.Events");
             DropTable("dbo.Courses");
             DropTable("dbo.Modules");
             DropTable("dbo.ActivityTypes");

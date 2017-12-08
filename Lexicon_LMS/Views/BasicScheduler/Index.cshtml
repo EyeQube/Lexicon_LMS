@@ -1,4 +1,5 @@
-﻿@using Lexicon_LMS.Models
+﻿
+@model Lexicon_LMS.ViewModel.CourseDhxViewModel
 
 @{
     //Layout = null;
@@ -18,11 +19,11 @@
 </head>
 <body>
     <div>
-        @Html.ActionLink("Back to Startpage", "Course", "Home", new {id = ViewBag.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm", onclick = "return confirm('Are you sure you want the recent changes to take place?');" })
+        @Html.ActionLink("Back to Startpage", "Course", "Home", new { id = Model.Course.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm", onclick = "return confirm('Are you sure you want the recent changes to take place?');" })
     </div>
 
     <div style="height:700px;width:900px;margin:0 auto">
-        @Html.Raw(Model.Render())
+        @Html.Raw(Model.DHX.Render())
     </div>
 </body>
 </html>

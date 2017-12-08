@@ -1,4 +1,4 @@
-﻿namespace Lexicon_LMS.Migration 
+﻿namespace Lexicon_LMS.Migration
 {
     using Lexicon_LMS.Models;
     using Microsoft.AspNet.Identity;
@@ -8,7 +8,7 @@
     using System.Linq;
 
     internal sealed class ConfigurationTwo : DbMigrationsConfiguration<Lexicon_LMS.Models.ApplicationDbContext>
-    {   
+    {
         public ConfigurationTwo()
         {
             AutomaticMigrationsEnabled = false;

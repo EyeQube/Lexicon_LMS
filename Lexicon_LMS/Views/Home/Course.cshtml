@@ -11,7 +11,7 @@
 
 
 <h2 style="color:darkred;"><b>@Model.Name</b></h2>
-<div>@Html.ActionLink("Schedule", "ScheduleIndex" ,"Home", routeValues: new { id = Model.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm" })</div>
+<div>@Html.ActionLink("Schedule", "Index" ,"BasicScheduler", routeValues: new { id = Model.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm" })</div>
 
 @if (User.IsInRole(Role.Teacher))
 {
