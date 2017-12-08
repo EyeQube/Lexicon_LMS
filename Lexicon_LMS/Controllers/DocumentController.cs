@@ -1,7 +1,9 @@
 ﻿using Lexicon_LMS.Models;
 using Microsoft.AspNet.Identity;
 using System;
+using System.Data.Entity;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
@@ -13,6 +15,41 @@ namespace Lexicon_LMS.Controllers
 
         private ApplicationDbContext db = new ApplicationDbContext();
 
+
+        public ActionResult ListStudentDocuments(int? activityId)
+        {
+            //var listModelExample = new
+            //{
+            //    userId = 123,
+            //    userName = "foo",
+            //    userDocument = new Document() { }, // OR null if not submitted 
+            //}
+            var courseId = db.Activities.Find(activityId).Module.CourseId;
+
+            var foo = new StudentDocumentViewModel();
+
+            var studentsInCourse = db.Users.Where(x => x.CourseId == courseId)
+                .Select(x => new StudentDocumentViewModel { UserId = x.Id, FirstName = x.FirstName, LastName = x.LastName, Document = null })
+                .ToList();
+
+            var uploadedDocuments = db.Documents.Where(x => x.ActivityId == activityId)
+                .Where(x => x.StudentDocumentId != null)
+                .Include("StudentDocument")
+                .Select(x => new StudentDocumentViewModel
+                {
+                    UserId = x.Author.Id,
+                    FirstName = x.Author.FirstName,
+                    LastName = x.Author.LastName,
+                    Document = x
+                })
+                .ToList();
+
+            //studentsInCourse.Except(uploadedDocuments);
+            //TODO implement comparer in ViewModel...
+            var viewModel = studentsInCourse.Concat(uploadedDocuments);
+
+            return View(viewModel.ToList());
+        }
 
         // GET: Document
         public ActionResult AddFileToSystem(int? courseId, int? moduleId, int? activityId)
@@ -46,6 +83,7 @@ namespace Lexicon_LMS.Controllers
                     {
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Student not allowed to upload in this course (student not enrolled in specified course");
                     }
+                    document.StudentDocument = new StudentDocument { Graded = false };
                 }
                 document.Author = db.Users.Find(userId);
 

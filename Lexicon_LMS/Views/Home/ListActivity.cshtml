@@ -90,6 +90,11 @@
             {
                 @Html.ActionLink("add document", "AddFileToSystem", "Document", routeValues: new { activityId = item.Id }, htmlAttributes: new { @class = "btn btn-default btn-xs" })
             }
+            @if (item.ActivityType.AllowStudentDocuments && User.IsInRole(Role.Teacher))
+            {
+                @Html.ActionLink("view assignments", "ListStudentDocuments", "Document", routeValues: new { activityId = item.Id }, htmlAttributes: new { @class = "btn btn-default btn-xs" })
+            }
+
         </td>
 
    

@@ -235,6 +235,7 @@
     <Compile Include="Models\Module.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\StudentDocument.cs" />
+    <Compile Include="Models\StudentDocumentViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -376,6 +377,7 @@
     <Content Include="Views\Home\EditCourse.cshtml" />
     <Content Include="Views\Document\AddFileToSystem.cshtml" />
     <Content Include="Views\Home\EditActivity.cshtml" />
+    <Content Include="Views\Document\ListStudentDocuments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
