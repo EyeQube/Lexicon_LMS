@@ -31,7 +31,7 @@ namespace Lexicon_LMS.Controllers
 
             var activity = db.Activities.Find(activityId); 
             ViewBag.Title = $"Student assignments ( {activity.Module.Course.Name} - {activity.Module.Name} - {activity.Name} )";
-
+            ViewBag.ReturnUrl = Url.Action("Course", "Home", new { id = activity.Module.Course.Id, ModuleId = TempData["ModuleId"] });
             return View(studentDocuments.ToList());
         }
 

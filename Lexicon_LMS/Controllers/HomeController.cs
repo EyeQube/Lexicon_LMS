@@ -165,9 +165,10 @@ namespace Lexicon_LMS.Controllers
 
 
         [Authorize]
-        public ActionResult Course(int id)
+        public ActionResult Course(int id, int? moduleId)
         {
-
+            TempData["ReturnUrl"] = Request.Url.PathAndQuery;
+            ViewBag.ModuleId = moduleId;
             /*if(id == 0)
             {
                 //Course _course = new Course();
@@ -362,9 +363,14 @@ namespace Lexicon_LMS.Controllers
 
         public ActionResult ListActivity(int id)
         {
+            TempData["ModuleId"] = id;
+            
+
             var activity = db.Activities.Where(m => m.ModuleId == id).ToList();
 
             var module = db.Modules.Find(id);
+
+            TempData["ReturnUrl"] = Url.Action("Course", routeValues: new { id = module.CourseId, moduleId = module.Id });
 
             return PartialView(module);
         }

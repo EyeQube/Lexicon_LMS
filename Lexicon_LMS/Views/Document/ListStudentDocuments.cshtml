@@ -16,30 +16,32 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.FullName)
-        </td>
-        <td>
-            @if (item.Document != null)
-            {
-                <a href="@Url.Action("GetFile","Document", new { id = item.Document.Id })" download="@item.Document.FileName"><span class="glyphicon glyphicon-file"></span>@item.Document.FileName</a>
-            }
-        </td>
-        <td>
-            @if (item.Document != null)
-            {
-                <input class="status-checkbox" type="checkbox" data-user-api="/DocumentApi/SetGrade/@item.Document.StudentDocument.Id" @(item.Document.StudentDocument.Graded ? "checked" : "")>
-                @*@(item.Document.StudentDocument.Graded ? " (Pass)" : " (Ungraded)")*@
-            }
-        </td>
-        <td>
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @if (item.Document != null)
+                {
+                    <a href="@Url.Action("GetFile","Document", new { id = item.Document.Id })" download="@item.Document.FileName"><span class="glyphicon glyphicon-file"></span>@item.Document.FileName</a>
+                }
+            </td>
+            <td>
+                @if (item.Document != null)
+                {
+                    <input class="status-checkbox" type="checkbox" data-user-api="/DocumentApi/SetGrade/@item.Document.StudentDocument.Id" @(item.Document.StudentDocument.Graded ? "checked" : "")>
+                    @*@(item.Document.StudentDocument.Graded ? " (Pass)" : " (Ungraded)")*@
+                }
+            </td>
+            <td></td>
+        </tr>
+    }
 
 </table>
+
+<a href="@TempData["ReturnUrl"]" class="btn btn-default">Back</a>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jquery")
