@@ -10,6 +10,6 @@ namespace Lexicon_LMS.Models
     {
         public SchedulerContext() : base("name=SchedulerContext") { }
         public virtual DbSet<Event> Events { get; set; }
-
+       
     }
 }

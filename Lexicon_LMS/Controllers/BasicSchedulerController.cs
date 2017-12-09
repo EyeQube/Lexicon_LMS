@@ -16,9 +16,13 @@ namespace Lexicon_LMS.Controllers
 
         private ApplicationDbContext db;
 
+        //private SchedulerContext _dbDH;
+
         public BasicSchedulerController()
         {
             db = new ApplicationDbContext();
+
+          //  _dbDH = new SchedulerContext();
 
         }
 
@@ -27,11 +31,16 @@ namespace Lexicon_LMS.Controllers
         public ActionResult Index(int? id)
         {
             var course = db.Courses.FirstOrDefault(c => c.Id == id);
+
+            //var events = _dbDH.Events.FirstOrDefault(c => c.CourseId == id);
+
+
             var sched = new DHXScheduler(this);
             sched.Skin = DHXScheduler.Skins.Terrace;
             sched.LoadData = true;
             sched.EnableDataprocessor = true;
             sched.InitialDate = course.StartDate; //new DateTime(2016, 5, 5); //course.StartDate;  //new DateTime(2017, 11, 27);
+          
 
             /*public ActionResult Index()
             {
@@ -43,30 +52,32 @@ namespace Lexicon_LMS.Controllers
                 return View(sched);
             }*/
 
-              var ViewModel = new CourseDhxViewModel()
-             {
-                 Course = course,
-                 DHX = sched
-             };
+            //var events = _dbDH.Events.FirstOrDefault(c => c.CourseId == id);
+
+            var ViewModel = new CourseDhxViewModel()
+            {
+                Course = course,
+                DHX = sched
+            };
 
             // ViewBag.Id = course.Id;
 
             return View(ViewModel);
         }
 
-
+        
         public ContentResult Data()
         {
             return (new SchedulerAjaxData(
                 new SchedulerContext().Events
-                .Select(e => new { e.Id, e.text, e.start_date, e.end_date })    
+                .Select(e => new { e.id, e.text, e.start_date, e.end_date})
                 )
                 );
-        }   
-            
+        }
+
 
         [Authorize(Roles = Role.Teacher)]
-        public ContentResult Save(int? Id, FormCollection actionValues)
+        public ContentResult Save(int? id, FormCollection actionValues)
         {
             var action = new DataAction(actionValues);
             var changedEvent = DHXEventsHelper.Bind<Event>(actionValues);
@@ -79,16 +90,16 @@ namespace Lexicon_LMS.Controllers
                         entities.Events.Add(changedEvent);
                         break;
                     case DataActionTypes.Delete:
-                        changedEvent = entities.Events.FirstOrDefault(ev => ev.Id == action.SourceId);
+                        changedEvent = entities.Events.FirstOrDefault(ev => ev.id == action.SourceId);
                         entities.Events.Remove(changedEvent);
                         break;
                     default:// "update"
-                        var target = entities.Events.Single(e => e.Id == changedEvent.Id);
-                        DHXEventsHelper.Update(target, changedEvent, new List<string> { "Id" });
+                        var target = entities.Events.Single(e => e.id == changedEvent.id);
+                        DHXEventsHelper.Update(target, changedEvent, new List<string> { "id" });
                         break;
                 }
                 entities.SaveChanges();
-                action.TargetId = changedEvent.Id;
+                action.TargetId = changedEvent.id;
             }
             catch (Exception a)
             {
@@ -97,6 +108,5 @@ namespace Lexicon_LMS.Controllers
 
             return (new AjaxSaveResponse(action));
         }
-
     }
 }

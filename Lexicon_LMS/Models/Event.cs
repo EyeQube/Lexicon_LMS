@@ -9,18 +9,28 @@ namespace Lexicon_LMS.Models
 {
     public class Event
     {
-        public int Id { get; set; }
-
+        public int id { get; set; }
+            
         public string text { get; set; }
         public DateTime start_date { get; set; }
         public DateTime end_date { get; set; }
 
-        [Required]
-        public int CourseId { get; set; }
-        
-        [Required]
-        public virtual Course Course { get; set; }
 
+        //[Display(Name = "Parent course")]
+
+
+        /* public int CourseId { get; set; }
+
+         [ForeignKey("id")]
+         public virtual Course Course { get; set; }*/
+
+        //[Required]
+
+        
+       
+       // public int CourseId { get; set; }
+       // [ForeignKey("CourseId")]
+       // public virtual Course Course { get; set; }
 
     }   
 }

@@ -9,7 +9,8 @@ namespace Lexicon_LMS.ViewModel
 {
     public class CourseDhxViewModel
     {
-        public Course Course { get; set; }
-        public DHXScheduler DHX { get; set; }   
+        public Course Course { get; set; }  
+        public DHXScheduler DHX { get; set; }
+        
     }
-}
+}   

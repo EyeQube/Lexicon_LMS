@@ -31,9 +31,11 @@ namespace Lexicon_LMS.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime EndDate { get; set; }
 
-        public virtual Event Event { get; set; }
+        //public virtual Event Event { get; set; }
             
         public virtual ICollection<Module> Modules { get; set; }
+
+        public virtual ICollection<Event> Events { get; set; }
     }
 
 }
