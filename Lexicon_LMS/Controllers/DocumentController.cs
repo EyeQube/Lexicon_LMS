@@ -15,43 +15,24 @@ namespace Lexicon_LMS.Controllers
 
         private ApplicationDbContext db = new ApplicationDbContext();
 
-
+        // GET: list student hand-ins for a specified activity, including those students who have not yet submitted a document
+        [Authorize(Roles = Role.Teacher)]
         public ActionResult ListStudentDocuments(int? activityId)
         {
-            //var listModelExample = new
-            //{
-            //    userId = 123,
-            //    userName = "foo",
-            //    userDocument = new Document() { }, // OR null if not submitted 
-            //}
             var courseId = db.Activities.Find(activityId).Module.CourseId;
-
-            var foo = new StudentDocumentViewModel();
-
-            var studentsInCourse = db.Users.Where(x => x.CourseId == courseId)
-                .Select(x => new StudentDocumentViewModel { UserId = x.Id, FirstName = x.FirstName, LastName = x.LastName, Document = null })
-                .ToList();
-
-            var uploadedDocuments = db.Documents.Where(x => x.ActivityId == activityId)
-                .Where(x => x.StudentDocumentId != null)
-                .Include("StudentDocument")
+            var documents = db.Documents.Where(x => x.ActivityId == activityId);
+            var studentDocuments = db.Users
+                .Where(x => x.CourseId == courseId)
                 .Select(x => new StudentDocumentViewModel
-                {
-                    UserId = x.Author.Id,
-                    FirstName = x.Author.FirstName,
-                    LastName = x.Author.LastName,
-                    Document = x
-                })
-                .ToList();
+                    { UserId = x.Id, FirstName = x.FirstName, LastName = x.LastName, Document = documents.FirstOrDefault(d => d.Author.Id == x.Id) })
+                .OrderBy(x => x.Document == null)
+                .ThenBy(x => x.LastName)
+                .ThenBy(x => x.FirstName);
 
-            //studentsInCourse.Except(uploadedDocuments);
-            //TODO implement comparer in ViewModel...
-            var viewModel = studentsInCourse.Concat(uploadedDocuments);
-
-            return View(viewModel.ToList());
+            return View(studentDocuments.ToList());
         }
 
-        // GET: Document
+        [Authorize]
         public ActionResult AddFileToSystem(int? courseId, int? moduleId, int? activityId)
         {
             var document = new Document
@@ -64,6 +45,7 @@ namespace Lexicon_LMS.Controllers
             return View(document);
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddFileToSystem(HttpPostedFileBase file, Document document)
@@ -99,6 +81,7 @@ namespace Lexicon_LMS.Controllers
             return View(document);
         }
 
+        [Authorize]
         [HttpGet]
         public FileResult GetFile(int id)
         {
