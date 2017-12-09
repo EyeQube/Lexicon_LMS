@@ -29,6 +29,9 @@ namespace Lexicon_LMS.Controllers
                 .ThenBy(x => x.LastName)
                 .ThenBy(x => x.FirstName);
 
+            var activity = db.Activities.Find(activityId); 
+            ViewBag.Title = $"Student assignments ( {activity.Module.Course.Name} - {activity.Module.Name} - {activity.Name} )";
+
             return View(studentDocuments.ToList());
         }
 
