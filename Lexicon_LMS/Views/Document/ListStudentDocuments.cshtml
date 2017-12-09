@@ -1,5 +1,11 @@
 ﻿@model IEnumerable<Lexicon_LMS.Models.StudentDocumentViewModel>
 
+@{
+    ViewBag.Title = "Student assignments";
+}
+
+<h2>@ViewBag.Title</h2>
+
 <table class="table">
     <tr>
         <th>
@@ -20,7 +26,10 @@
             @Html.DisplayFor(modelItem => item.FullName)
         </td>
         <td>
-            @(item.Document != null ? item.Document.FileName : "none")
+            @if (item.Document != null)
+            {
+                <a href="@Url.Action("GetFile","Document", new { id = item.Document.Id })" download="@item.Document.FileName"><span class="glyphicon glyphicon-file"></span>@item.Document.FileName</a>
+            }
         </td>
         <td>
             @if (item.Document != null)
