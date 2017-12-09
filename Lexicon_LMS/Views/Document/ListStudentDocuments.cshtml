@@ -3,10 +3,10 @@
 <table class="table">
     <tr>
         <th>
-            Name
+            Student
         </th>
         <th>
-            Document
+            Student document
         </th>
         <th>
             Grade/Status
@@ -25,7 +25,8 @@
         <td>
             @if (item.Document != null)
             {
-                @(item.Document.StudentDocument.Graded ? "Pass" : "Ungraded")
+                <input class="status-checkbox" type="checkbox" data-user-api="/DocumentApi/SetGrade/@item.Document.StudentDocument.Id" @(item.Document.StudentDocument.Graded ? "checked" : "")>
+                @*@(item.Document.StudentDocument.Graded ? " (Pass)" : " (Ungraded)")*@
             }
         </td>
         <td>
@@ -34,3 +35,30 @@
 }
 
 </table>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jquery")
+
+    <script>
+        // call documents api for toggle student document status
+        $(document).on('click', '.status-checkbox', function (e) {
+            e.preventDefault();
+            var link = $(e.target);
+
+            $.ajax({
+                url: link.attr("data-user-api"),
+                method: "POST"
+            }).done(function (data) {
+                // Read response message and sett checkbox
+                if (data['IsGraded']) {
+                    link.prop("checked", true);
+                } else {
+                    link.prop("checked", false);
+                }
+            }).fail(function (xhr) {
+                bootbox.alert(xhr.responseText);
+            });
+        });
+
+    </script>
+}
