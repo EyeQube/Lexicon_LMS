@@ -1,7 +1,6 @@
 ﻿using Lexicon_LMS.Models;
 using Microsoft.AspNet.Identity;
 using System;
-using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -24,12 +23,12 @@ namespace Lexicon_LMS.Controllers
             var studentDocuments = db.Users
                 .Where(x => x.CourseId == courseId)
                 .Select(x => new StudentDocumentViewModel
-                    { UserId = x.Id, FirstName = x.FirstName, LastName = x.LastName, Document = documents.FirstOrDefault(d => d.Author.Id == x.Id) })
+                { UserId = x.Id, FirstName = x.FirstName, LastName = x.LastName, Document = documents.FirstOrDefault(d => d.Author.Id == x.Id) })
                 .OrderBy(x => x.Document == null)
                 .ThenBy(x => x.LastName)
                 .ThenBy(x => x.FirstName);
 
-            var activity = db.Activities.Find(activityId); 
+            var activity = db.Activities.Find(activityId);
             ViewBag.Title = $"Student assignments ( {activity.Module.Course.Name} - {activity.Module.Name} - {activity.Name} )";
             ViewBag.ReturnUrl = Url.Action("Course", "Home", new { id = activity.Module.Course.Id, ModuleId = TempData["ModuleId"] });
             return View(studentDocuments.ToList());
@@ -51,11 +50,13 @@ namespace Lexicon_LMS.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddFileToSystem(HttpPostedFileBase file, Document document)
+        public ActionResult AddFileToSystem(HttpPostedFileBase file, [Bind(Include = "Description,CourseId,ModuleId,ActivityId")]  Document document)
         {
+            ModelState.Remove("FileName");
+
             document.FileName = Path.GetFileName(file.FileName);
             document.CreateTime = DateTime.Now;
-
+            var foo = ModelState;
             if (ModelState.IsValid)
             {
                 var userId = User.Identity.GetUserId();
@@ -74,11 +75,14 @@ namespace Lexicon_LMS.Controllers
 
                 db.Documents.Add(document);
                 db.SaveChanges();
+
+                // Write file to disc
                 var rootPath = AppDomain.CurrentDomain.BaseDirectory;
                 var fileName = Path.GetFileName(file.FileName);
                 var fullPath = Path.Combine(rootPath, "App_Docs", document.Id.ToString(), fileName);
                 Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
                 file.SaveAs(fullPath);
+
                 return RedirectToAction("Index", "Home");
             }
             return View(document);

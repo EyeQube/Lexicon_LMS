@@ -19,16 +19,10 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
-        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })  
+        @Html.LabelFor(model => model.Description)
+        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "enter optional file description" })
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.FileName, htmlAttributes: new { @class = "control-label" })
-        @Html.EditorFor(model => model.FileName, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.FileName, "", new { @class = "text-danger" })
-    </div>
     <div class="form-group">
         <div style="position: relative;">
             <a class='btn btn-default btn-sm btn-font'>Choose File...
