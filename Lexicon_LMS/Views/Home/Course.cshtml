@@ -79,12 +79,14 @@
                 </dt>
             }
 
+           
+            <dd>
             @foreach (var file in Model.Documents)
             {
-                <dd>
-                    <a href="@Url.Action("GetFile","Document", new { id = file.Id })" download="@file.FileName">@file.FileName</a>
-                </dd>
+                <span class="space"><a href="@Url.Action("GetFile","Document", new { id = file.Id })" download="@file.FileName">@file.FileName</a></span>
             }
+            </dd>
+            
         </dl>
 
         <hr />
@@ -132,11 +134,9 @@
 
 
                                                                                                          },
-                                                                                                                    new { @class = "glyphicon glyphicon-edit btn-gly" }
+                                                                                                                    new { @class = "glyphicon glyphicon-edit btn-gly", title = "Edit" }
                                                                                                                     )
-                            |<a href="#" class="js-delete-entity glyphicon glyphicon-trash btn-gly-trash" data-user-api="/HomeApi/DeleteModule/" data-user-id="@module.Id" data-user-remove=".user-module" data-user-message="Delete module @Html.DisplayFor(m => module.Name)">
-                            </a>|
-                            <a href="#" class="glyphicon glyphicon-list-alt btn-gly-trash" data-toggle="popover" data-placement="bottom" title="Module document" data-content="Test.txt"></a>
+                            |<a href="#" class="js-delete-entity glyphicon glyphicon-trash btn-gly-trash" title = "Delete" data-user-api="/HomeApi/DeleteModule/" data-user-id="@module.Id" data-user-remove=".user-module" data-user-message="Delete module @Html.DisplayFor(m => module.Name)"></a>
 
                         </div>
 
