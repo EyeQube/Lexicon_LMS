@@ -35,7 +35,7 @@ namespace Lexicon_LMS.Controllers
         }
 
         [Authorize]
-        public ActionResult AddFileToSystem(int? courseId, int? moduleId, int? activityId)
+        public ActionResult AddFileToSystem(int? courseId, int? moduleId, int? activityId, bool? isPartial)
         {
             var document = new Document
             {
@@ -44,7 +44,10 @@ namespace Lexicon_LMS.Controllers
                 ActivityId = activityId,
             };
 
-            return PartialView(document);
+            if (isPartial ?? false)
+                return PartialView(document);
+            else
+                return View(document);
         }
 
         [Authorize]

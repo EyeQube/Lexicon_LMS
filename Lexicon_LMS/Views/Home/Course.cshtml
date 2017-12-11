@@ -16,7 +16,7 @@
 {
     @Html.ActionLink("Edit Course", "EditCourse", "Home", routeValues: new { role = Role.Teacher, id = Model.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
     @Html.ActionLink("Delete Course", "DeleteCourse", "Home", routeValues: new { Role = Role.Teacher, id = Model.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm", onclick = "return confirm('Are you sure you want to delete this course?');" })
-    @Ajax.ActionLink("Add document", "AddFileToSystem", "Document", new { courseId = Model.Id, }, new AjaxOptions {
+    @Ajax.ActionLink("Add document", "AddFileToSystem", "Document", new { courseId = Model.Id, isPartial = true }, new AjaxOptions {
                     UpdateTargetId = "UpdateContentDiv1", // <-- DOM element ID to update
                     InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
                     HttpMethod = "GET", // <-- HTTP method
