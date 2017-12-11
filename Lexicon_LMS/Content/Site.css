@@ -103,6 +103,7 @@ HelloSpace{
 }
 .right{
     float:right;
+
 }
 
 .glyphicon-trash{
@@ -123,7 +124,7 @@ HelloSpace{
 .btn-gly{
     color:black;
     margin-right:10px;
-    margin-left:20px;
+    margin-left:10px;
 }
 
 .btn-link {
@@ -169,10 +170,6 @@ h3, h2 {
     text-transform: capitalize;
 }
 
-.glyphicon-file {
-    color: white;
-}
-
 #inputFileName {
     position: absolute;
     z-index: 2;
@@ -194,4 +191,6 @@ h3, h2 {
     width: 300px;
 }
 
-
+.space{
+    margin-right:5px;
+}
