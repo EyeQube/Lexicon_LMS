@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    $('.datepickerDate').datepicker({ format: 'yyyy/mm/dd', autoclose: true });
+    $('.datepickerDate').datepicker({ format: 'yyyy-mm-dd', autoclose: true });
     $('[data-toggle="popover"]').popover(); 
     // General function for removing stuff in database and DOM.
     // Uses the following html data attributes:

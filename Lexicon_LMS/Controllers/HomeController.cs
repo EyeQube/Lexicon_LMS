@@ -208,10 +208,11 @@ namespace Lexicon_LMS.Controllers
         [Authorize(Roles = Role.Teacher)]
         public ActionResult SaveCourse(Course course)
         {
-
             if (course.Id == 0)
             {
                 db.Courses.Add(course);
+                db.SaveChanges();
+                return RedirectToAction("Course", routeValues: new { id = course.Id });
             }
             else
             {
@@ -220,11 +221,8 @@ namespace Lexicon_LMS.Controllers
                 courseInDb.Description = course.Description;
                 courseInDb.StartDate = course.StartDate;
                 courseInDb.EndDate = course.EndDate;
+                return RedirectToLocal(TempData["ReturnUrl"]?.ToString());
             }
-
-            db.SaveChanges();
-
-            return RedirectToAction("Index", "Home");
         }
 
 
@@ -257,7 +255,7 @@ namespace Lexicon_LMS.Controllers
 
         // GET: 
         [Authorize(Roles = Role.Teacher)]
-        public ActionResult CreateModule(int? courseId, string returnUrl = "/")
+        public ActionResult CreateModule(int? courseId)
         {
             if (courseId == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -277,7 +275,6 @@ namespace Lexicon_LMS.Controllers
                 EndDate = startDate
             };
 
-            ViewBag.returnUrl = returnUrl;
             return View(module);
         }
 
@@ -285,7 +282,7 @@ namespace Lexicon_LMS.Controllers
         [Authorize(Roles = Role.Teacher)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateModule(Module module, string returnUrl)
+        public ActionResult CreateModule(Module module)
         {
             var course = db.Courses.Find(module.CourseId);
             if (course == null)
@@ -305,15 +302,14 @@ namespace Lexicon_LMS.Controllers
             {
                 db.Modules.Add(module);
                 db.SaveChanges();
-                return RedirectToLocal(returnUrl);
+                return RedirectToAction("Course", routeValues: new { id = course.Id, moduleId = module.Id });
             }
-            ViewBag.returnUrl = returnUrl;
             return View(module);
         }
 
 
         [Authorize(Roles = Role.Teacher)]
-        public ActionResult EditModule(int? id, string returnUrl = "/")
+        public ActionResult EditModule(int? id)
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -322,7 +318,7 @@ namespace Lexicon_LMS.Controllers
             if (module == null)
                 return HttpNotFound();
 
-            ViewBag.returnUrl = returnUrl;
+            TempData.Keep("ReturnUrl");
             return PartialView(module);
         }
 
@@ -330,15 +326,16 @@ namespace Lexicon_LMS.Controllers
         [Authorize(Roles = Role.Teacher)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditModule([Bind(Include = "Id,Name,Description,StartDate,EndDate,CourseId")] Module module, string returnUrl)
+        public ActionResult EditModule([Bind(Include = "Id,Name,Description,StartDate,EndDate,CourseId")] Module module)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(module).State = EntityState.Modified;
                 db.SaveChanges();
 
-                return RedirectToLocal(returnUrl);
+                return RedirectToLocal(TempData["ReturnUrl"]?.ToString());
             }
+            TempData.Keep("ReturnUrl");
             return View(module);
         }
 
@@ -364,7 +361,7 @@ namespace Lexicon_LMS.Controllers
         public ActionResult ListActivity(int id)
         {
             TempData["ModuleId"] = id;
-            
+
 
             var activity = db.Activities.Where(m => m.ModuleId == id).ToList();
 
@@ -378,7 +375,7 @@ namespace Lexicon_LMS.Controllers
 
         // GET: 
         [Authorize(Roles = Role.Teacher)]
-        public ActionResult CreateActivity(int? id, string returnUrl = "/")
+        public ActionResult CreateActivity(int? id)
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -399,7 +396,7 @@ namespace Lexicon_LMS.Controllers
                 EndDate = startDate
             };
 
-            ViewBag.returnUrl = returnUrl;
+            TempData.Keep("ReturnUrl");
             return View(activity);
         }
 
@@ -407,7 +404,7 @@ namespace Lexicon_LMS.Controllers
         [Authorize(Roles = Role.Teacher)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateActivity(Activity activity, string returnUrl)
+        public ActionResult CreateActivity(Activity activity)
         {
             var module = db.Modules.Find(activity.ModuleId);
             if (module == null)
@@ -426,16 +423,16 @@ namespace Lexicon_LMS.Controllers
             {
                 db.Activities.Add(activity);
                 db.SaveChanges();
-                return RedirectToLocal(returnUrl);
+                return RedirectToLocal(TempData["ReturnUrl"]?.ToString());
             }
-            ViewBag.returnUrl = returnUrl;
             activity.ActivityTypes = db.ActivityTypes.ToList();
 
+            TempData.Keep("ReturnUrl");
             return View(activity);
         }
 
         [Authorize(Roles = Role.Teacher)]
-        public ActionResult EditActivity(int? id, string returnUrl = "/")
+        public ActionResult EditActivity(int? id)
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -444,33 +441,33 @@ namespace Lexicon_LMS.Controllers
             if (activity == null)
                 return HttpNotFound();
 
-            ViewBag.returnUrl = returnUrl;
-
             activity.ActivityTypes = db.ActivityTypes.ToList();
 
+            TempData.Keep("ReturnUrl");
             return PartialView(activity);
         }
 
         [Authorize(Roles = Role.Teacher)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditActivity([Bind(Include = "Id,Name,Description,StartDate,EndDate,ModuleId,ActivityTypeId")] Activity activity, string returnUrl)
+        public ActionResult EditActivity([Bind(Include = "Id,Name,Description,StartDate,EndDate,ModuleId,ActivityTypeId")] Activity activity)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(activity).State = EntityState.Modified;
                 db.SaveChanges();
 
-                return RedirectToLocal(returnUrl);
+                return RedirectToLocal(TempData["ReturnUrl"]?.ToString());
             }
 
+            TempData.Keep("ReturnUrl");
             return View(activity);
         }
 
         //TODO copy from accountcontroller ... move to common utility class
         private ActionResult RedirectToLocal(string returnUrl)
         {
-            if (Url.IsLocalUrl(returnUrl))
+            if (returnUrl != null && Url.IsLocalUrl(returnUrl))
             {
                 return Redirect(returnUrl);
             }
