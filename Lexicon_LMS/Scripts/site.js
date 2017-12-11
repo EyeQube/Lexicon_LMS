@@ -1,6 +1,12 @@
-﻿$(document).ready(function () {
+﻿$(document).ajaxComplete(function () {
     $('.datepickerDate').datepicker({ format: 'yyyy-mm-dd', autoclose: true });
     $('[data-toggle="popover"]').popover(); 
+});
+
+$(document).ready(function () {
+    $('.datepickerDate').datepicker({ format: 'yyyy-mm-dd', autoclose: true });
+    $('[data-toggle="popover"]').popover(); 
+
     // General function for removing stuff in database and DOM.
     // Uses the following html data attributes:
     //    data-user-api:    Database API for removing something
