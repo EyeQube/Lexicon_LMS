@@ -82,7 +82,7 @@
             @foreach (var file in Model.Documents)
             {
                 <dd>
-                    <a href="@Url.Action("GetFile","Document", new { id = file.Id })" download="@file.FileName">@file.FileName</a>
+                    <span class="space"><a href="@Url.Action("GetFile","Document", new { id = file.Id })" download="@file.FileName" title="created @file.CreateTime.ToString() by @file.Author.FullName">@file.FileName</a></span>
                 </dd>
             }
         </dl>
