@@ -1,11 +1,19 @@
-﻿$(document).ajaxComplete(function () {
+﻿function site_init() {
     $('.datepickerDate').datepicker({ format: 'yyyy-mm-dd', autoclose: true });
-    $('[data-toggle="popover"]').popover(); 
+    $('[data-toggle="popover"]').popover();
+
+    $('.datetimepicker').datetimepicker({
+        sideBySide: true,
+        format: 'YYYY-MM-DD HH:mm'
+    });
+}
+
+$(document).ajaxComplete(function () {
+    site_init();
 });
 
 $(document).ready(function () {
-    $('.datepickerDate').datepicker({ format: 'yyyy-mm-dd', autoclose: true });
-    $('[data-toggle="popover"]').popover(); 
+    site_init();
 
     // General function for removing stuff in database and DOM.
     // Uses the following html data attributes:
