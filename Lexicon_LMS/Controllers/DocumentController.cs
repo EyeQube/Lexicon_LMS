@@ -44,6 +44,7 @@ namespace Lexicon_LMS.Controllers
                 ActivityId = activityId,
             };
 
+            TempData.Keep("ReturnUrl");
             if (isPartial ?? false)
                 return PartialView(document);
             else
@@ -86,8 +87,12 @@ namespace Lexicon_LMS.Controllers
                 Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
                 file.SaveAs(fullPath);
 
-                return RedirectToAction("Index", "Home");
+                if (TempData["ReturnUrl"] != null)
+                    return Redirect(TempData["ReturnUrl"].ToString());
+                else
+                    return RedirectToAction("Index", "Home");
             }
+            TempData.Keep("ReturnUrl");
             return View(document);
         }
 
