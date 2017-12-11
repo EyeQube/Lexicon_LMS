@@ -22,7 +22,7 @@
     }
 
     <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
+    @Html.ValidationSummary(true,"", new { @class = "text-danger" })
 
     <div class="form-group">
         @Html.LabelFor(m => m.FirstName)
@@ -57,8 +57,8 @@
         </div>
     }
     <div class="form-group">
-            <button class="btn btn-default" name="button" value="Save">Register</button>
-            <button class="btn btn-default" name="button" value="SaveNew">Register and add another</button>
+            <button class="btn btn-default" name="button" value="SaveNew">Register</button>
+            @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-default" })
     </div>
 }
 

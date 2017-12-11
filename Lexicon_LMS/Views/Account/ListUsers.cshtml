@@ -8,63 +8,68 @@
 
 @using (Html.BeginForm())
 {
-    <p>
-        Find by name: @Html.TextBox("searchString")
-        <input type="submit" value="Search" />
-    </p>
+        <form>
+            <div id="search" class="input-group">
+                <input type="text" name="SearchString" class="form-control" placeholder="Search for students and teachers..">
+                    <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </span>
+            </div>
+        </form>
 }
 
 
 
 @if (!Model.Any())
 {
-    <p>There are no register users at the moment</p>
+    <p>Could't find any student or teacher with that name</p>
 }
 
 
 else
 {
-    <table class="table table-responsive dl-horizontal table-striped table-bordered">
-        <tr>
-            <th>
-               @Html.ActionLink("Lastname", "SortUsers", new { LastSortOrder = "Desc", searchString = ViewBag.SearchString, boll = ViewBag.Bool})   @* @Html.DisplayNameFor(model => model.LastName) *@
-            </th>
-            <th>
-               @Html.ActionLink("Firstname", "SortUsers", new { FirstSortOrder = "Desc", searchString = ViewBag.SearchString, boll = ViewBag.Bool})  @*@Html.DisplayNameFor(model => model.FirstName) *@
-            </th>   
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                Role
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            <tr class="user-row">
-                <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @(ViewBag.RolesLookup.ContainsKey(item.Roles.First().RoleId)? ViewBag.RolesLookup[item.Roles.First().RoleId] : "none")
-                </td>
-                <td>
-                    <span class="right">
-                        <a href=@Url.Action("EditUser", new { userId = item.Id }) class="glyphicon glyphicon-edit btn-gly"></a>
-                        <a href="#" class="js-delete-entity glyphicon glyphicon-trash" data-user-api="/AccountApi/DeleteUser/" data-user-id="@item.Id" data-user-remove=".user-row" data-user-message="Delete user @Html.DisplayFor(modelItem => item.FullName)"></a>
-                    </span>
-                </td>
+    <table class="table sortable table-responsive dl-horizontal table-striped table-bordered">
+        <thead>
+            <tr>
+                <th data-defaultsort="desc">
+                    @Html.DisplayNameFor(model => model.LastName)
+                </th>
+                <th data-defaultsort="desc">
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th data-defaultsort="desc">
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th data-defaultsort="desc">
+                    Role
+                </th>
+                <th></th>
             </tr>
-        }
+        </thead>
+            @foreach (var item in Model)
+            {
+                <tr class="user-row">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @(ViewBag.RolesLookup.ContainsKey(item.Roles.First().RoleId) ? ViewBag.RolesLookup[item.Roles.First().RoleId] : "none")
+                    </td>
+                    <td>
+                        <span class="right">
+                            <a href=@Url.Action("EditUser", new { userId = item.Id }) class="glyphicon glyphicon-edit btn-gly"></a>
+                            <a href="#" class="js-delete-entity glyphicon glyphicon-trash" data-user-api="/AccountApi/DeleteUser/" data-user-id="@item.Id" data-user-remove=".user-row" data-user-message="Delete user @Html.DisplayFor(modelItem => item.FullName)"></a>
+                        </span>
+                    </td>
+                </tr>
+            }
 
-    </table>
+</table>
 }
 

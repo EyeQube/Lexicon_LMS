@@ -145,6 +145,7 @@ h3, h2 {
 
 .alert li{
     display:inline;
+    margin-left:7px;
     
 }
 
@@ -167,4 +168,30 @@ h3, h2 {
 .btn-link {
     text-transform: capitalize;
 }
+
+.glyphicon-file {
+    color: white;
+}
+
+#inputFileName {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    filter: alpha(opacity=0);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    opacity: 0;
+    background-color: transparent;
+    color: transparent;
+    cursor: pointer
+}
+
+.input-group {
+    padding-bottom: 20px;
+}
+
+#search {
+    width: 300px;
+}
+
 

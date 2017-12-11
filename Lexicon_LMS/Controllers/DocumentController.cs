@@ -45,7 +45,7 @@ namespace Lexicon_LMS.Controllers
                 ActivityId = activityId,
             };
 
-            return View(document);
+            return PartialView(document);
         }
 
         [Authorize]
