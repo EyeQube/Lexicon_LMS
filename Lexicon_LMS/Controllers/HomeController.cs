@@ -461,6 +461,7 @@ namespace Lexicon_LMS.Controllers
             }
 
             TempData.Keep("ReturnUrl");
+            activity.ActivityTypes = db.ActivityTypes.ToList();
             return View(activity);
         }
 
