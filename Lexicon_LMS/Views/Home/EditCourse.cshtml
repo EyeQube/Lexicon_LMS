@@ -29,7 +29,7 @@
     <div class="form-group">
         @Html.LabelFor(m => m.StartDate)
         <div class="input-group" id="datetimepicker">
-            @Html.TextBoxFor(m => m.StartDate, new { @class = "form-control datepickerDate", @Value = "", placeholder = "enter start date" })
+            @Html.EditorFor(m => m.StartDate, new { htmlAttributes = new { type = "text", @class = "form-control datepickerDate", placeholder = "enter start date" } })
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-calendar"></span>
             </span>
@@ -38,7 +38,7 @@
     <div class="form-group">
         @Html.LabelFor(m => m.EndDate)
         <div class="input-group" id="datetimepicker">
-            @Html.TextBoxFor(m => m.EndDate, new { @class = "form-control datepickerDate", @Value = "", placeholder = "enter end date" })
+            @Html.EditorFor(m => m.EndDate, new { htmlAttributes = new { type = "text", @class = "form-control datepickerDate", placeholder = "enter end date" } })
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-calendar"></span>
             </span>
