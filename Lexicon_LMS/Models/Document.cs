@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace Lexicon_LMS.Models
 {
@@ -39,6 +36,7 @@ namespace Lexicon_LMS.Models
         public int? ModuleId { get; set; }
         public int? ActivityId { get; set; }
 
+        public int? StudentDocumentId { get; set; }
 
         // Navigation
         //[ForeignKey(" ApplicationUserId")]
@@ -52,5 +50,9 @@ namespace Lexicon_LMS.Models
 
         [ForeignKey("ActivityId")]
         public virtual Activity Activity { get; set; }
+
+        [ForeignKey("StudentDocumentId")]
+        public virtual StudentDocument StudentDocument { get; set; }
+
     }
 }

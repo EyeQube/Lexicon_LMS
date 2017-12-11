@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Lexicon_LMS.Models.StudentDocumentViewModel>
+
+<h2>@ViewBag.Title</h2>
+
+<table class="table table-responsive dl-horizontal table-striped table-bordered">
+    <tr>
+        <th>
+            Student
+        </th>
+        <th>
+            Student document
+        </th>
+        <th>
+            Grade/Status
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FullName)
+        </td>
+        <td>
+            @if (item.Document != null)
+            {
+                <a href="@Url.Action("GetFile","Document", new { id = item.Document.Id })" download="@item.Document.FileName"><span class="glyphicon glyphicon-file"></span>@item.Document.FileName</a>
+            }
+        </td>
+        <td>
+            @if (item.Document != null)
+            {
+                <input class="status-checkbox" type="checkbox" data-user-api="/DocumentApi/SetGrade/@item.Document.StudentDocument.Id" @(item.Document.StudentDocument.Graded ? "checked" : "")>
+                @*@(item.Document.StudentDocument.Graded ? " (Pass)" : " (Ungraded)")*@
+            }
+        </td>
+        <td>
+        </td>
+    </tr>
+}
+
+</table>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jquery")
+
+    <script>
+        // call documents api for toggle student document status
+        $(document).on('click', '.status-checkbox', function (e) {
+            e.preventDefault();
+            var link = $(e.target);
+
+            $.ajax({
+                url: link.attr("data-user-api"),
+                method: "POST"
+            }).done(function (data) {
+                // Read response message and sett checkbox
+                if (data['IsGraded']) {
+                    link.prop("checked", true);
+                } else {
+                    link.prop("checked", false);
+                }
+            }).fail(function (xhr) {
+                bootbox.alert(xhr.responseText);
+            });
+        });
+
+    </script>
+}

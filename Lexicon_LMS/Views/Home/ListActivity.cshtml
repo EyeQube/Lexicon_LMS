@@ -32,6 +32,9 @@
         <th>
           ActivityType
         </th>
+        <th>
+            [Placeholder column name]
+        </th>
 
     </tr>
 
@@ -66,6 +69,30 @@
                                },
                                    new { @class = "glyphicon glyphicon-edit btn-gly" })</span>
 
+            }
+
+        </td>
+        <td>
+            @if (item.ActivityType.AllowStudentDocuments && User.IsInRole(Role.Student))
+            {
+                var document = item.Documents.FirstOrDefault(x => x.Author.Id == User.Identity.GetUserId());
+                if (document == null)
+                {
+                <p>@Html.ActionLink("upload assignment", "AddFileToSystem", "Document", routeValues: new { activityId = item.Id }, htmlAttributes: new { @class = "btn btn-default btn-xs" })</p>
+                }
+                else
+                {
+                    <p>submitted: <a href="@Url.Action("GetFile","Document", new { id = document.Id })" download="@document.FileName"><span class="glyphicon glyphicon-file"></span>@document.FileName</a></p>
+                }
+
+            }
+            @if (User.IsInRole(Role.Teacher))
+            {
+                @Html.ActionLink("add document", "AddFileToSystem", "Document", routeValues: new { activityId = item.Id }, htmlAttributes: new { @class = "btn btn-default btn-xs" })
+            }
+            @if (item.ActivityType.AllowStudentDocuments && User.IsInRole(Role.Teacher))
+            {
+                @Html.ActionLink("view assignments", "ListStudentDocuments", "Document", routeValues: new { activityId = item.Id }, htmlAttributes: new { @class = "btn btn-default btn-xs" })
             }
 
         </td>
