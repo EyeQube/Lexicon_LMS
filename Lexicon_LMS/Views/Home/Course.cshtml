@@ -145,7 +145,7 @@
                         @if (User.IsInRole(Role.Student))
                         {
                             <div>
-                                (@Html.DisplayFor(m => module.StartDate) - @Html.DisplayFor(m => module.EndDate) )<a href="#" class="glyphicon glyphicon-list-alt btn-gly-trash" data-toggle="popover" data-placement="bottom" title="Module document" data-content="Test.txt"></a>
+                                (@Html.DisplayFor(m => module.StartDate) - @Html.DisplayFor(m => module.EndDate) )
                             </div>
 
                         }
@@ -183,8 +183,11 @@
         <div class="row">
             <hr />
             <strong><a href="#" class="btn btn-link headling-users" data-toggle="collapse" data-target=".users">Course students</a></strong>
-
-            <div class="users collapse out">
+            @if (User.IsInRole(Role.Teacher))
+            {
+                @Html.ActionLink("Add new student", "Register", "Account", routeValues: new { role = Role.Student, courseid = Model.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm btn-side" })
+            }
+            <div class="users collapse in">
                 @foreach (var student in Model.Users.ToList())
             {
                     <div class="col-sm-4 col-md-4">
@@ -198,11 +201,7 @@
 
     <div class="col-md-12">
         <div class="row">
-            @if (User.IsInRole(Role.Teacher))
-            {
-                <hr />
-                @Html.ActionLink("Add new student", "Register", "Account", routeValues: new { role = Role.Student, courseid = Model.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
-            }
+           
             <hr />
         </div>
 

@@ -105,7 +105,6 @@
 {
     <td>
 
-        <a href="#" class="js-delete-entity glyphicon glyphicon-trash btn-gly-trash-act" title="Delete" data-user-api="/HomeApi/DeleteActivity/" data-user-id="@item.Id" data-user-remove=".user-tr" data-user-message="Delete activity @Html.DisplayFor(modelItem => item.Name)"></a>
         @Ajax.ActionLink(" ", "EditActivity", "Home", new { id = item.Id }, new AjaxOptions
    {
        UpdateTargetId = "UpdateContentDiv",
@@ -116,7 +115,8 @@
                                     {
                                         @class = "glyphicon glyphicon-edit btn-gly",
                                         title = "Edit"
-                                    })
+                                    })|
+        <a href="#" class="js-delete-entity glyphicon glyphicon-trash btn-gly-trash-act" title="Delete" data-user-api="/HomeApi/DeleteActivity/" data-user-id="@item.Id" data-user-remove=".user-tr" data-user-message="Delete activity @Html.DisplayFor(modelItem => item.Name)"></a>
     </td>
 }
 
