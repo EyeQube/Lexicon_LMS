@@ -28,22 +28,18 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.StartDate)
-            <div class="input-group" id="datetimepicker">
-                @Html.TextBoxFor(model => model.StartDate, new { @class = "form-control datepickerDate", placeholder = "Välj startdatum" })
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
+            <div class="input-group datetimepicker" id="datetimepicker">
+                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { type = "text", @class = "form-control datetimepicker", @Value = "", placeholder = "enter start date" } })
+                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
             </div>
              @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.EndDate)
-            <div class="input-group" id="datetimepicker">
-                @Html.TextBoxFor(model => model.EndDate, new { @class = "form-control datepickerDate", @Value = "", placeholder = "Välj slutdatum" })
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
+            <div class="input-group datetimepicker" id="datetimepicker">
+                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { type = "text", @class = "form-control datetimepicker", @Value = "", placeholder = "enter end date" } })
+                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
             </div>
             @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
         </div>

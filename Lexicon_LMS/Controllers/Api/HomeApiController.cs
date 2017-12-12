@@ -95,6 +95,7 @@ namespace Lexicon_LMS.Controllers.Api
             if (!validatedOk)
                 return Content(HttpStatusCode.BadRequest, "Delete request failed due to validation: <placeholder>");
 
+            db.Documents.RemoveRange(activity.Documents);
             db.Activities.Remove(activity);
             db.SaveChanges();
 

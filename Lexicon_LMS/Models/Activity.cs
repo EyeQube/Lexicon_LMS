@@ -20,13 +20,13 @@ namespace Lexicon_LMS.Models
         [Required]
         [Display(Name = "Start Date")]
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd hh:mm}")]
         public DateTime StartDate { get; set; }
 
         [Required]
         [Display(Name = "Ending Date")]
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd hh:mm}")]
         public DateTime EndDate { get; set; }
 
         [Required]

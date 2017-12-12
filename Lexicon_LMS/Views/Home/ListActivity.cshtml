@@ -24,21 +24,21 @@
            Description
         </th>
         <th>
-           Start Date
+           Time
         </th>
-        <th>
+        @*<th>
             End Date
-        </th>
+        </th>*@
         <th>
           ActivityType
         </th>
         
+            <th>
         @if (User.IsInRole(Role.Student))
         {
-            <th>
-                Documents
-            </th>
+            <p>Documents</p>
         }
+            </th>
 
     </tr>
 
@@ -50,38 +50,37 @@
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
+            <p>
             @Html.DisplayFor(modelItem => item.Description)
-                @if (User.IsInRole(Role.Teacher))
-                {
-                    <span class="right">@Html.ActionLink(" ", "AddFileToSystem", "Document", routeValues: new { activityId = item.Id }, htmlAttributes: new { @class = "glyphicon glyphicon-paperclip", title = "Add documents" })</span>
-                }
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EndDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ActivityType.Name)
             @if (User.IsInRole(Role.Teacher))
             {
-                <span class="right">|<a href="#" class="js-delete-entity glyphicon glyphicon-trash btn-gly-trash-act" title = "Delete" data-user-api="/HomeApi/DeleteActivity/" data-user-id="@item.Id" data-user-remove=".user-tr" data-user-message="Delete activity @Html.DisplayFor(modelItem => item.Name)"></a></span>
-                <span class="right">|@Ajax.ActionLink(" ", "EditActivity", "Home", new { id = item.Id }, new AjaxOptions
-                                {
-                                    UpdateTargetId = "UpdateContentDiv", // <-- DOM element ID to update
-                                    InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
-                                    HttpMethod = "GET", // <-- HTTP method
-
-
-                                },
-                                   new { @class = "glyphicon glyphicon-edit btn-gly",
-                                       title = "Edit" })</span>
-                                <span class="right">@Html.ActionLink(" ", "ListStudentDocuments", "Document", routeValues: new { activityId = item.Id }, htmlAttributes: new { @class = "glyphicon glyphicon-list-alt btn-gly", title = "view assignments" })</span>
-
-
+                <span class="right">@Html.ActionLink(" ", "AddFileToSystem", "Document", routeValues: new { activityId = item.Id }, htmlAttributes: new { @class = "glyphicon glyphicon-paperclip", title = "Add documents" })</span>
             }
+            </p>
+            <p>
+            @foreach (var file in item.Documents)
+            {
+                <span class="space"><a href="@Url.Action("GetFile","Document", new { id = file.Id })" download="@file.FileName" title="created @file.CreateTime.ToString() by @file.Author.FullName">@file.FileName</a></span>
+            }
+            </p>
 
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate) -
+            @Html.DisplayFor(modelItem => item.EndDate)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.EndDate)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.ActivityType.Name)
+            @if (User.IsInRole(Role.Teacher) && item.ActivityType.AllowStudentDocuments)
+            {
+                <span class="right">
+                    @Html.ActionLink(" ", "ListStudentDocuments", "Document", routeValues: new { activityId = item.Id }, htmlAttributes: new { @class = "glyphicon glyphicon-list-alt btn-gly", title = "view assignments" })
+                </span>
+            }
+            
         </td>
         @if (User.IsInRole(Role.Student))
         {
@@ -102,6 +101,24 @@
         </td>
         }
 
+@if (User.IsInRole(Role.Teacher))
+{
+    <td>
+
+        <a href="#" class="js-delete-entity glyphicon glyphicon-trash btn-gly-trash-act" title="Delete" data-user-api="/HomeApi/DeleteActivity/" data-user-id="@item.Id" data-user-remove=".user-tr" data-user-message="Delete activity @Html.DisplayFor(modelItem => item.Name)"></a>
+        @Ajax.ActionLink(" ", "EditActivity", "Home", new { id = item.Id }, new AjaxOptions
+   {
+       UpdateTargetId = "UpdateContentDiv",
+       InsertionMode = InsertionMode.Replace,
+       HttpMethod = "GET",
+   },
+                                    new
+                                    {
+                                        @class = "glyphicon glyphicon-edit btn-gly",
+                                        title = "Edit"
+                                    })
+    </td>
+}
 
     </tr>
 }

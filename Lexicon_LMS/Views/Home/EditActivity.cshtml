@@ -32,22 +32,26 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label" })
 
-                @Html.TextBoxFor(model => model.StartDate, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
-
-            </div>
+                <div class="input-group datetimepicker" id="datetimepicker">
+                    @Html.EditorFor(m => m.StartDate, new { htmlAttributes = new { type = "text", @class = "form-control datetimepicker" } })
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label" })
 
-                @Html.TextBoxFor(model => model.EndDate, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
-
-            </div>
+                <div class="input-group datetimepicker" id="datetimepicker">
+                    @Html.EditorFor(m => m.EndDate, new { htmlAttributes = new { type = "text", @class = "form-control datetimepicker" } })
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.ActivityTypes, htmlAttributes: new { @class = "control-label" })
-                @Html.DropDownList("ActivityTypeId", new SelectList(Model.ActivityTypes, "Id", "Name"), "", new { @class = "form-control" })
+                @Html.DropDownList("ActivityTypeId", new SelectList(Model.ActivityTypes, "Id", "Name"), "", new { @class = "form-control datetimepicker" })
                 @Html.ValidationMessageFor(model => model.ActivityTypeId, "", new { @class = "text-danger" })
             </div>
 
