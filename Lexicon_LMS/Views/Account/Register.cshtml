@@ -3,7 +3,7 @@
     ViewBag.Title = "Register new user";
 }
 
-<h2>Register new @Model.Role</h2>
+<h2>Register new @Model.Role.ToLower()</h2>
 
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
@@ -52,7 +52,7 @@
     {
         <div class="form-group">
             @Html.LabelFor(m => m.CourseId)
-            @Html.DropDownListFor(m => m.CourseId, new SelectList(Model.Courses, "Id", "Name"), "-- Select a course --", new { @class = "form-control" })
+            @Html.DropDownListFor(m => m.CourseId, new SelectList(Model.Courses, "Id", "Name"), "-- select a course --", new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.CourseId, "", new { @class = "text-danger" })
         </div>
     }

@@ -302,7 +302,7 @@ namespace Lexicon_LMS.Controllers
                 var result = _context.SaveChanges();
                 return RedirectToAction("ListUsers");
             }
-            return RedirectToAction("Home");
+            return RedirectToAction("EditUser", "AccountController");
         }
 
 
