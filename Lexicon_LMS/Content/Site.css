@@ -3,7 +3,6 @@
 }
 
 body {
-    padding-top: 50px;
     padding-bottom: 20px;
 }
 
@@ -59,6 +58,7 @@ textarea {
 .navbar-inverse{
     color:brown !important;
     border-color:brown;
+
 }
 
 .navbar-header {
@@ -120,6 +120,13 @@ HelloSpace{
     color:black;
     margin-right:10px;
     margin-left:10px;
+}
+
+.btn-gly1 {
+    color: black;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-top:9px;
 }
 
 .btn-link {
@@ -191,7 +198,7 @@ h3, h2 {
 }
 
 .btn-side{
-    margin-left:30px;
+    margin-bottom:30px;
 }
 
 .module-link, .module-link:hover{
@@ -199,4 +206,7 @@ h3, h2 {
     border-width: 0px 0px;
     margin: 0px 0px;
     color: darkred;
+}
+#UpdateContentDiv{
+    margin-left:50px;
 }
