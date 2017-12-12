@@ -3,20 +3,16 @@
 
 @model Lexicon_LMS.Models.Module
 
-@{
-    ViewBag.Title = "ListActivity";
-}
 
-<h2></h2>
-<div class="activity-table">
+<h3>Module: @Model.Name</h3>
 @if (User.IsInRole(Role.Teacher))
 {
     @Html.ActionLink("Add new activity", "CreateActivity", "Home", new { id = Model.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm newActivityBtn" })
 }
 
+@*<div class="activity-table">*@
 <table class="table table-responsive dl-horizontal table-striped table-bordered">
-    <tr>
-        
+    <tr>       
         <th>
           Name
         </th>
@@ -26,26 +22,20 @@
         <th>
            Time
         </th>
-        @*<th>
-            End Date
-        </th>*@
         <th>
           ActivityType
         </th>
-        
-            <th>
+        <th>
         @if (User.IsInRole(Role.Student))
         {
             <p>Documents</p>
         }
-            </th>
-
+        </th>
     </tr>
 
 @foreach (var item in Model.Activity) {
-   
+  
     <tr class="user-tr">
-      
         <td>
             @Html.DisplayFor(modelItem => item.Name)
         </td>
@@ -69,9 +59,6 @@
             @Html.DisplayFor(modelItem => item.StartDate) -
             @Html.DisplayFor(modelItem => item.EndDate)
         </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.EndDate)
-        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.ActivityType.Name)
             @if (User.IsInRole(Role.Teacher) && item.ActivityType.AllowStudentDocuments)
@@ -80,7 +67,6 @@
                     @Html.ActionLink(" ", "ListStudentDocuments", "Document", routeValues: new { activityId = item.Id }, htmlAttributes: new { @class = "glyphicon glyphicon-list-alt btn-gly", title = "view assignments" })
                 </span>
             }
-            
         </td>
         @if (User.IsInRole(Role.Student))
         {
@@ -124,4 +110,4 @@
 }
 
 </table>
-</div>
+@*</div>*@
