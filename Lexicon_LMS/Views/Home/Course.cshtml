@@ -7,7 +7,8 @@
     ViewBag.Title = "Course";
 
     ViewBag.CourseId = Model.Id;
-    }
+}
+
     <div class="user-course">
 
     <h2><b>@Model.Name</b></h2>
@@ -16,16 +17,16 @@
     {
         @Html.ActionLink("Edit Course", "EditCourse", "Home", routeValues: new { role = Role.Teacher, id = Model.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
         <a href="#" class="js-delete-entity btn btn-default btn-sm" title="Delete" data-user-api="/HomeApi/DeleteCourse/" data-user-id="@Model.Id" data-user-remove=".user-course" data-user-message="Delete course @Html.DisplayFor(m => m.Name)">Delete course</a>
-        @Ajax.ActionLink("Add document", "AddFileToSystem", "Document", new { courseId = Model.Id, }, new AjaxOptions
-{
-    UpdateTargetId = "UpdateContentDiv1", // <-- DOM element ID to update
-    InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
-    HttpMethod = "GET", // <-- HTTP method
+        @Ajax.ActionLink("Add document", "AddFileToSystem", "Document", new { courseId = Model.Id, ispartial = true }, new AjaxOptions
+                                {
+                                    UpdateTargetId = "UpdateContentDiv", // <-- DOM element ID to update
+                                    InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
+                                    HttpMethod = "GET", // <-- HTTP method
 
 
-},
-                            new { @class = "btn btn-default btn-sm" } //-- Class
-                        )
+                                },
+                                                            new { @class = "btn btn-default btn-sm" } //-- Class
+                                                        )
 
     }
     <a href="#" class="btn btn-default btn-sm" data-toggle="collapse" data-target=".Description">Course info</a>
@@ -136,9 +137,9 @@
                 @if (User.IsInRole(Role.Teacher))
                 {
                     <span class="pull-right">
-                        @Ajax.ActionLink(" ", "EditModule", "Home", new { id = module.Id }, new AjaxOptions {UpdateTargetId = "UpdateContentDiv", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "glyphicon glyphicon-edit btn-gly", title = "Edit" } )
+                        @Ajax.ActionLink(" ", "EditModule", "Home", new { id = module.Id }, new AjaxOptions {UpdateTargetId = "UpdateContentDiv", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "glyphicon glyphicon-edit btn-gly1", title = "Edit" } )
                         | 
-                        <a href="#" class="js-delete-entity glyphicon glyphicon-trash btn-gly-trash" title = "Delete" data-user-api="/HomeApi/DeleteModule/" data-user-id="@module.Id" data-user-remove=".user-module" data-user-message="Delete module @Html.DisplayFor(m => module.Name)"></a>
+                        <a href="#" class="js-delete-entity glyphicon glyphicon-trash btn-gly1" title = "Delete" data-user-api="/HomeApi/DeleteModule/" data-user-id="@module.Id" data-user-remove=".user-module" data-user-message="Delete module @Html.DisplayFor(m => module.Name)"></a>
                     </span>
                 }
                     
@@ -170,7 +171,7 @@
     <div class="col-sm-12">
         <div class="row">
             <hr />
-            <strong><a href="#" class="btn btn-link headling-users" data-toggle="collapse" data-target=".users">Course students</a></strong>
+            <strong><a href="#" class="btn btn-link headling-users" data-toggle="collapse" data-target=".users">Course students</a></strong><br />
             @if (User.IsInRole(Role.Teacher))
             {
                 @Html.ActionLink("Add new student", "Register", "Account", routeValues: new { role = Role.Student, courseid = Model.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm btn-side" })
