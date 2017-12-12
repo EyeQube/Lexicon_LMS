@@ -5,33 +5,40 @@
 
 
 <h3>Module: @Model.Name</h3>
-@if (User.IsInRole(Role.Teacher))
-{
-    @Html.ActionLink("Add new activity", "CreateActivity", "Home", new { id = Model.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm newActivityBtn" })
-}
+<div class="activity-table">
+    @if (User.IsInRole(Role.Teacher))
+    {
+        @Html.ActionLink("Add new activity", "CreateActivity", "Home", new { id = Model.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm newActivityBtn" })
+        @Html.ActionLink("Add document", "AddFileToSystem", "Document", new { moduleId = Model.Id, }, htmlAttributes: new { @class = "btn btn-default btn-sm newActivityBtn" })
+    }
 
-@*<div class="activity-table">*@
-<table class="table table-responsive dl-horizontal table-striped table-bordered">
-    <tr>       
-        <th>
-          Name
-        </th>
-        <th>
-           Description
-        </th>
-        <th>
-           Time
-        </th>
-        <th>
-          ActivityType
-        </th>
-        <th>
-        @if (User.IsInRole(Role.Student))
-        {
-            <p>Documents</p>
-        }
-        </th>
-    </tr>
+    <table class="table table-responsive dl-horizontal table-striped table-bordered">
+        <tr>
+
+            <th>
+                Name
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Time
+            </th>
+            @*<th>
+                    End Date
+                </th>*@
+            <th>
+                Activity type
+            </th>
+
+            <th>
+                @if (User.IsInRole(Role.Student))
+                {
+                    <p>Documents</p>
+                }
+            </th>
+
+        </tr>
 
 @foreach (var item in Model.Activity) {
   
@@ -83,13 +90,14 @@
                     <p>submitted: <a href="@Url.Action("GetFile", "Document", new { id = document.Id })" download="@document.FileName"><span class="glyphicon glyphicon-file"></span>@document.FileName</a></p>
                 }
 
-            }
-        </td>
-        }
+                        }
+                    </td>
+                }
 
-@if (User.IsInRole(Role.Teacher))
-{
-    <td>
+
+                @if (User.IsInRole(Role.Teacher))
+                {
+                    <td>
 
         @Ajax.ActionLink(" ", "EditActivity", "Home", new { id = item.Id }, new AjaxOptions
    {
@@ -106,8 +114,19 @@
     </td>
 }
 
-    </tr>
-}
+            </tr>
+        }
 
-</table>
-@*</div>*@
+    </table>
+
+    <span>Module documents: </span>
+    @foreach (var file in Model.Documents)
+    {
+        <span class="space">
+            <a href="@Url.Action("GetFile", "Document", new { id = file.Id })" download="@file.FileName" title="created @file.CreateTime.ToString() by @file.Author.FullName">@file.FileName</a>
+        </span>
+    }
+
+
+
+</div>

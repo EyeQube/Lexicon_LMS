@@ -20,13 +20,13 @@ namespace Lexicon_LMS.Models
         public virtual ICollection<ApplicationUser> Users { get; set; }
 
         [Required]
-        [Display(Name = "Start Date")]
+        [Display(Name = "Start date")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime StartDate { get; set; }
 
         [Required]
-        [Display(Name = "Ending Date")]
+        [Display(Name = "End date")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime EndDate { get; set; }

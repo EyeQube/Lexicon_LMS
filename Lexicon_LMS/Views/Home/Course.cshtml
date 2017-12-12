@@ -74,22 +74,42 @@
                     @Html.DisplayFor(model => model.EndDate)
                 </dd>
 
-                @if (Model.Documents.Count > 0)
+            @*@if (Model.Documents.Count > 0)
             {
-                    <dt>
-                        File(s):
-                    </dt>
+                <dt>
+                    Documents 
+                </dt>
+            }*@
+
+            <dt>
+                Documents
+            </dt>
+
+            <dd>
+                @foreach (var file in Model.Documents)
+            {
+                    <span class="space">
+                        <a href="@Url.Action("GetFile", "Document", new { id = file.Id })" download="@file.FileName"
+                           title="created @file.CreateTime.ToString() by @file.Author.FullName">@file.FileName</a>
+                    </span>
                 }
+            </dd>
 
-
-                <dd>
+            @*<h4>Documents: </h4>
+                <div class="row">
                     @foreach (var file in Model.Documents)
-            {
-                        <span class="space"><a href="@Url.Action("GetFile","Document", new { id = file.Id })" download="@file.FileName">@file.FileName</a></span>
+                {
+                        <div class="col-sm-3">
+                            <a href="@Url.Action("GetFile","Document", new { moduleId = file.Id })" download="@file.FileName"><span class="glyphicon glyphicon-file"></span>@file.FileName</a>
+                        </div>
                     }
-                </dd>
+                </div>*@
 
-            </dl>
+
+
+
+
+        </dl>
 
             <hr />
 
