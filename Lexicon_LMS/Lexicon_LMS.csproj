@@ -214,53 +214,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201712111937350_InitialOne.cs" />
-    <Compile Include="Migrations\201712111937350_InitialOne.Designer.cs">
-      <DependentUpon>201712111937350_InitialOne.cs</DependentUpon>
+    <Compile Include="Migrations\201712121430212_InitOne.cs" />
+    <Compile Include="Migrations\201712121430212_InitOne.Designer.cs">
+      <DependentUpon>201712121430212_InitOne.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201712111940043_InitialTwo.cs" />
-    <Compile Include="Migrations\201712111940043_InitialTwo.Designer.cs">
-      <DependentUpon>201712111940043_InitialTwo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712111421178_AddKeyToEvent.cs" />
-    <Compile Include="Migrations\201712111421178_AddKeyToEvent.Designer.cs">
-      <DependentUpon>201712111421178_AddKeyToEvent.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712111421487_AddKeyToEventTwo.cs" />
-    <Compile Include="Migrations\201712111421487_AddKeyToEventTwo.Designer.cs">
-      <DependentUpon>201712111421487_AddKeyToEventTwo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712111539374_EntitiesDateTime.cs" />
-    <Compile Include="Migrations\201712111539374_EntitiesDateTime.Designer.cs">
-      <DependentUpon>201712111539374_EntitiesDateTime.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712111541014_EntitiesDateTime.cs" />
-    <Compile Include="Migrations\201712111541014_EntitiesDateTime.Designer.cs">
-      <DependentUpon>201712111541014_EntitiesDateTime.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712111546376_EntitiesDateTimeTree.cs" />
-    <Compile Include="Migrations\201712111546376_EntitiesDateTimeTree.Designer.cs">
-      <DependentUpon>201712111546376_EntitiesDateTimeTree.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712111547111_EntitiesDateTimeFour.cs" />
-    <Compile Include="Migrations\201712111547111_EntitiesDateTimeFour.Designer.cs">
-      <DependentUpon>201712111547111_EntitiesDateTimeFour.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712121254570_scheduleONE.cs" />
-    <Compile Include="Migrations\201712121254570_scheduleONE.Designer.cs">
-      <DependentUpon>201712121254570_scheduleONE.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712121256098_scheduleTWO.cs" />
-    <Compile Include="Migrations\201712121256098_scheduleTWO.Designer.cs">
-      <DependentUpon>201712121256098_scheduleTWO.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712121311338_scheduleONE1.cs" />
-    <Compile Include="Migrations\201712121311338_scheduleONE1.Designer.cs">
-      <DependentUpon>201712121311338_scheduleONE1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712121312027_scheduleTWO1.cs" />
-    <Compile Include="Migrations\201712121312027_scheduleTWO1.Designer.cs">
-      <DependentUpon>201712121312027_scheduleTWO1.cs</DependentUpon>
+    <Compile Include="Migrations\201712121430510_InitTwo.cs" />
+    <Compile Include="Migrations\201712121430510_InitTwo.Designer.cs">
+      <DependentUpon>201712121430510_InitTwo.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migration\ConfigurationTwo.cs" />
@@ -635,41 +595,11 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201712111937350_InitialOne.resx">
-      <DependentUpon>201712111937350_InitialOne.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201712121430212_InitOne.resx">
+      <DependentUpon>201712121430212_InitOne.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712111940043_InitialTwo.resx">
-      <DependentUpon>201712111940043_InitialTwo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712111421178_AddKeyToEvent.resx">
-      <DependentUpon>201712111421178_AddKeyToEvent.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712111421487_AddKeyToEventTwo.resx">
-      <DependentUpon>201712111421487_AddKeyToEventTwo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712111539374_EntitiesDateTime.resx">
-      <DependentUpon>201712111539374_EntitiesDateTime.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712111541014_EntitiesDateTime.resx">
-      <DependentUpon>201712111541014_EntitiesDateTime.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712111546376_EntitiesDateTimeTree.resx">
-      <DependentUpon>201712111546376_EntitiesDateTimeTree.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712111547111_EntitiesDateTimeFour.resx">
-      <DependentUpon>201712111547111_EntitiesDateTimeFour.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712121254570_scheduleONE.resx">
-      <DependentUpon>201712121254570_scheduleONE.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712121256098_scheduleTWO.resx">
-      <DependentUpon>201712121256098_scheduleTWO.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712121311338_scheduleONE1.resx">
-      <DependentUpon>201712121311338_scheduleONE1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712121312027_scheduleTWO1.resx">
-      <DependentUpon>201712121312027_scheduleTWO1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201712121430510_InitTwo.resx">
+      <DependentUpon>201712121430510_InitTwo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

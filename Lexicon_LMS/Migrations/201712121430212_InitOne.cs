@@ -3,7 +3,7 @@ namespace Lexicon_LMS.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialOne : DbMigration
+    public partial class InitOne : DbMigration
     {
         public override void Up()
         {
@@ -67,13 +67,13 @@ namespace Lexicon_LMS.Migrations
                     {
                         id = c.Int(nullable: false, identity: true),
                         text = c.String(),
-                        start_date = c.DateTime(nullable: false),
-                        end_date = c.DateTime(nullable: false),
-                        Course_Id = c.Int(),
+                        start_date = c.DateTime(),
+                        end_date = c.DateTime(),
+                        CourseId = c.Int(),
                     })
                 .PrimaryKey(t => t.id)
-                .ForeignKey("dbo.Courses", t => t.Course_Id)
-                .Index(t => t.Course_Id);
+                .ForeignKey("dbo.Courses", t => t.CourseId)
+                .Index(t => t.CourseId);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -158,7 +158,7 @@ namespace Lexicon_LMS.Migrations
             DropForeignKey("dbo.AspNetUsers", "CourseId", "dbo.Courses");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Modules", "CourseId", "dbo.Courses");
-            DropForeignKey("dbo.Events", "Course_Id", "dbo.Courses");
+            DropForeignKey("dbo.Events", "CourseId", "dbo.Courses");
             DropForeignKey("dbo.Activities", "ModuleId", "dbo.Modules");
             DropForeignKey("dbo.Activities", "ActivityTypeId", "dbo.ActivityTypes");
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
@@ -168,7 +168,7 @@ namespace Lexicon_LMS.Migrations
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.AspNetUsers", new[] { "CourseId" });
-            DropIndex("dbo.Events", new[] { "Course_Id" });
+            DropIndex("dbo.Events", new[] { "CourseId" });
             DropIndex("dbo.Modules", new[] { "CourseId" });
             DropIndex("dbo.Activities", new[] { "ActivityTypeId" });
             DropIndex("dbo.Activities", new[] { "ModuleId" });

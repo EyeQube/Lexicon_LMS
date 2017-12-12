@@ -44,7 +44,7 @@ namespace Lexicon_LMS.Controllers
             sched.LoadData = true;
             sched.EnableDataprocessor = true;
             sched.InitialDate = course.StartDate; //new DateTime(2016, 5, 5); //course.StartDate;  //new DateTime(2017, 11, 27);
-          
+
 
             //var events = _dbDH.Events.FirstOrDefault(c => c.CourseId == id);
 
@@ -58,24 +58,24 @@ namespace Lexicon_LMS.Controllers
 
             //Event _event = new Event(course.Id);
 
-           B_Event = new Event(course.Id);
+            B_Event = new Event(course.Id);
 
-           var entities = new SchedulerContext();
+            var entities = new SchedulerContext();
 
             //entities.Events.Add(_event);
-           entities.Events.Add(B_Event);
+            entities.Events.Add(B_Event);
 
-           entities.SaveChanges();
+            entities.SaveChanges(); 
 
             return View(ViewModel);
         }
 
-        
+
         public ContentResult Data()
         {
             return (new SchedulerAjaxData(
                 new SchedulerContext().Events
-                .Select(e => new { e.id, e.text, e.start_date, e.end_date, e.CourseId})
+                .Select(e => new { e.id, e.text, e.start_date, e.end_date, e.CourseId })
                 )
                 );
         }
@@ -89,6 +89,11 @@ namespace Lexicon_LMS.Controllers
             Event changedEvent = DHXEventsHelper.Bind<Event>(actionValues);
             var entities = new SchedulerContext();
 
+
+
+            Event _Event = new Event(changedEvent);
+
+            _Event.CourseId = _CourseID;
             //changedEvent.CourseId = _CourseID;
 
             //changedEvent.CourseId = B_Event.CourseId;
@@ -107,24 +112,24 @@ namespace Lexicon_LMS.Controllers
                 switch (action.Type)
                 {
                     case DataActionTypes.Insert:
-                         var target = entities.Events.Single(e => e.id == (changedEvent.id - 1));
-                         DHXEventsHelper.Update(target, changedEvent, new List<string> { "id" });
-                         //changedEvent = entities.Events.FirstOrDefault(ev => ev.id == (action.SourceId));
-                        // entities.Events.Remove(changedEvent);
-                        //entities.Events.Add(changedEvent);
-                        break; 
+                        var target = entities.Events.Single(e => e.id == (changedEvent.id - 1));
+                        DHXEventsHelper.Update(target, _Event, new List<string> { "id" });
+                       // changedEvent = entities.Events.FirstOrDefault(ev => ev.id == (action.SourceId));
+                       // entities.Events.Remove(changedEvent);
+                        //entities.Events.Add(_Event);
+                        break;
                     // entities.Events.Add(changedEvent);
                     // break;
                     case DataActionTypes.Delete:
-                        changedEvent = entities.Events.FirstOrDefault(ev => ev.id == action.SourceId - 1);
-                        entities.Events.Remove(changedEvent);
+                        _Event = entities.Events.FirstOrDefault(ev => ev.id == action.SourceId);  //////************ .SourceId - 1
+                        entities.Events.Remove(_Event);
                         //changedEvent = entities.Events.FirstOrDefault(ev => ev.id == (action.SourceId));
                         //entities.Events.Remove(changedEvent);
                         break;
                     default:// "update"
-                        target = entities.Events.Single(e => e.id == (changedEvent.id - 1));
-                        DHXEventsHelper.Update(target, changedEvent, new List<string> { "id" });
-                        break;  
+                        target = entities.Events.Single(e => e.id == (changedEvent.id));
+                        DHXEventsHelper.Update(target, _Event, new List<string> { "id" });
+                        break;
                 }
 
                 entities.SaveChanges();
