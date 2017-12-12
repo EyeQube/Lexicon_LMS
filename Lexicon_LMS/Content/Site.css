@@ -193,3 +193,10 @@ h3, h2 {
 .btn-side{
     margin-left:30px;
 }
+
+.module-link, .module-link:hover{
+    font-size: 18px;
+    border-width: 0px 0px;
+    margin: 0px 0px;
+    color: darkred;
+}

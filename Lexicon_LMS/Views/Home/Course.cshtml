@@ -31,9 +31,9 @@
     <a href="#" class="btn btn-default btn-sm" data-toggle="collapse" data-target=".Description">Course info</a>
 
 
-    <hr />
-    <div class="col-lg-12">
-        <div id="UpdateContentDiv1">
+<hr />
+<div class="col-sm-12">
+    <div id="UpdateContentDiv1">
 
 
         </div>
@@ -97,76 +97,44 @@
 
 
 
-    <div class="col-lg-3 ">
-        <div class="row">
-            <h3 style="color:darkred;"><b>Course modules</b></h3>
+<div class="col-sm-3">
+    <div class="row">
+        <h3 style="color:darkred;"><b>Course modules</b></h3>
 
             @if (User.IsInRole(Role.Teacher))
             {
-                @Html.ActionLink("Add new module", "CreateModule", "Home", routeValues: new { courseId = Model.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
-            }
+            @Html.ActionLink("Add new module", "CreateModule", "Home", routeValues: new { courseId = Model.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
+            <hr />
+        }
 
-            @foreach (var module in Model.Modules.OrderBy(x => x.StartDate))
-            {
-                <div class="user-module">
-                    <h5>
-                        <strong>
-                            @Ajax.ActionLink(module.Name, "ListActivity", "Home", new { id = module.Id }, new AjaxOptions
-                   {
-                       UpdateTargetId = "UpdateContentDiv", // <-- DOM element ID to update
-                       InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
-                       HttpMethod = "GET", // <-- HTTP method
+        @foreach (var module in Model.Modules.OrderBy(x => x.StartDate))
+        {
+            <div class="user-module">
+                <p>
+                @Ajax.ActionLink(module.Name, "ListActivity", "Home", new { id = module.Id }, new AjaxOptions {UpdateTargetId = "UpdateContentDiv", InsertionMode = InsertionMode.Replace, HttpMethod = "GET"}, new { @class = "btn btn-link module-link" } )
 
+                @if (User.IsInRole(Role.Teacher))
+                {
+                    <span class="pull-right">
+                        @Ajax.ActionLink(" ", "EditModule", "Home", new { id = module.Id }, new AjaxOptions {UpdateTargetId = "UpdateContentDiv", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "glyphicon glyphicon-edit btn-gly", title = "Edit" } )
+                        | 
+                        <a href="#" class="js-delete-entity glyphicon glyphicon-trash btn-gly-trash" title = "Delete" data-user-api="/HomeApi/DeleteModule/" data-user-id="@module.Id" data-user-remove=".user-module" data-user-message="Delete module @Html.DisplayFor(m => module.Name)"></a>
+                    </span>
+                }
+                    
+                </p>
+                <p><i> @Html.DisplayFor(m => module.StartDate) &ndash; @Html.DisplayFor(m => module.EndDate)</i></p>
+                <p><b>@module.Description</b></p>
+            </div>
+        }
+        @if (!Model.Modules.Any())
+        {
+            <p>No modules registered</p>
+        }
 
-                   },
-                            new { @class = "btn btn-link" } //-- Class
-                        )
-
-
-                        </strong>
-                        @if (User.IsInRole(Role.Teacher))
-                        {
-                            <div>
-                                (@Html.DisplayFor(m => module.StartDate) - @Html.DisplayFor(m => module.EndDate) )@Ajax.ActionLink(" ", "EditModule", "Home", new { id = module.Id }, new AjaxOptions
-                                                                                                         {
-                                                                                                             UpdateTargetId = "UpdateContentDiv", // <-- DOM element ID to update
-                                                                                                             InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
-                                                                                                             HttpMethod = "GET", // <-- HTTP method
-
-
-                                                                                                         },
-                                                                                                                    new { @class = "glyphicon glyphicon-edit btn-gly", title = "Edit" }
-                                                                                                                    )
-                                |<a href="#" class="js-delete-entity glyphicon glyphicon-trash btn-gly-trash" title="Delete" data-user-api="/HomeApi/DeleteModule/" data-user-id="@module.Id" data-user-remove=".user-module" data-user-message="Delete module @Html.DisplayFor(m => module.Name)"></a>
-
-                            </div>
-
-                        }
-                        @if (User.IsInRole(Role.Student))
-                        {
-                            <div>
-                                (@Html.DisplayFor(m => module.StartDate) - @Html.DisplayFor(m => module.EndDate) )
-                            </div>
-
-                        }
-
-
-                    </h5>
-                    <p>@module.Description</p>
-
-
-
-                </div>
-            }
-            @if (!Model.Modules.Any())
-            {
-                <p>Inga moduler registrerade för denna kurs</p>
-            }
-
-
-        </div>
     </div>
-    <div class="col-lg-8 col-lg-offset-1">
+</div>
+<div class="col-sm-9">
 
         <div id="UpdateContentDiv">
             @*Render module data here*@
