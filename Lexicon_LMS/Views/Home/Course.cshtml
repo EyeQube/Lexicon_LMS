@@ -17,9 +17,9 @@
     {
         @Html.ActionLink("Edit Course", "EditCourse", "Home", routeValues: new { role = Role.Teacher, id = Model.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
         <a href="#" class="js-delete-entity btn btn-default btn-sm" title="Delete" data-user-api="/HomeApi/DeleteCourse/" data-user-id="@Model.Id" data-user-remove=".user-course" data-user-message="Delete course @Html.DisplayFor(m => m.Name)">Delete course</a>
-        @Ajax.ActionLink("Add document", "AddFileToSystem", "Document", new { courseId = Model.Id, }, new AjaxOptions
+        @Ajax.ActionLink("Add document", "AddFileToSystem", "Document", new { courseId = Model.Id, ispartial = true }, new AjaxOptions
                                 {
-                                    UpdateTargetId = "UpdateContentDiv1", // <-- DOM element ID to update
+                                    UpdateTargetId = "UpdateContentDiv", // <-- DOM element ID to update
                                     InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
                                     HttpMethod = "GET", // <-- HTTP method
 
