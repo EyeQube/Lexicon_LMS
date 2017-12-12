@@ -10,6 +10,7 @@ namespace Lexicon_LMS.Models
         public DbSet<Activity> Activities { get; set; }
         public DbSet<ActivityType> ActivityTypes { get; set; }
         public DbSet<StudentDocument> StudentDocuments { get; set; }
+        public DbSet<Document> Documents { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
@@ -21,6 +22,6 @@ namespace Lexicon_LMS.Models
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<Lexicon_LMS.Models.Document> Documents { get; set; }
+
     }
 }

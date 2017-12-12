@@ -7,16 +7,16 @@
     ViewBag.Title = "Course";
 
     ViewBag.CourseId = Model.Id;
-}
+    }
+    <div class="user-course">
 
+    <h2><b>@Model.Name</b></h2>
 
-<h2><b>@Model.Name</b></h2>
-
-@if (User.IsInRole(Role.Teacher))
-{
-    @Html.ActionLink("Edit Course", "EditCourse", "Home", routeValues: new { role = Role.Teacher, id = Model.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
-    @Html.ActionLink("Delete Course", "DeleteCourse", "Home", routeValues: new { Role = Role.Teacher, id = Model.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm", onclick = "return confirm('Are you sure you want to delete this course?');" })
-    @Ajax.ActionLink("Add document", "AddFileToSystem", "Document", new { courseId = Model.Id, isPartial = true }, new AjaxOptions
+    @if (User.IsInRole(Role.Teacher))
+    {
+        @Html.ActionLink("Edit Course", "EditCourse", "Home", routeValues: new { role = Role.Teacher, id = Model.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
+        <a href="#" class="js-delete-entity btn btn-default btn-sm" title="Delete" data-user-api="/HomeApi/DeleteCourse/" data-user-id="@Model.Id" data-user-remove=".user-course" data-user-message="Delete course @Html.DisplayFor(m => m.Name)">Delete course</a>
+        @Ajax.ActionLink("Add document", "AddFileToSystem", "Document", new { courseId = Model.Id, }, new AjaxOptions
 {
     UpdateTargetId = "UpdateContentDiv1", // <-- DOM element ID to update
     InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
@@ -27,51 +27,51 @@
                             new { @class = "btn btn-default btn-sm" } //-- Class
                         )
 
-}
-<a href="#" class="btn btn-default btn-sm" data-toggle="collapse" data-target=".Description">Course info</a>
+    }
+    <a href="#" class="btn btn-default btn-sm" data-toggle="collapse" data-target=".Description">Course info</a>
 
 
 <hr />
-<div class="col-lg-12">
+<div class="col-sm-12">
     <div id="UpdateContentDiv1">
 
 
-    </div>
-    <div class="Description collapse out">
-        @*<h4>@Html.DisplayFor(model => model.Name)</h4>*@
+        </div>
+        <div class="Description collapse out">
+            @*<h4>@Html.DisplayFor(model => model.Name)</h4>*@
 
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Name)
-            </dt>
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
 
-            <dd style="color:darkred;">
-                <b>@Html.DisplayFor(model => model.Name)</b>
-            </dd>
+                <dd style="color:darkred;">
+                    <b>@Html.DisplayFor(model => model.Name)</b>
+                </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Description)
-            </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.Description)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.StartDate)
-            </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.StartDate)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.StartDate)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.StartDate)
+                </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.EndDate)
-            </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.EndDate)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.EndDate)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.EndDate)
+                </dd>
 
             @*@if (Model.Documents.Count > 0)
             {
@@ -110,120 +110,88 @@
 
         </dl>
 
-        <hr />
+            <hr />
 
+        </div>
     </div>
-</div>
 
 
 
-<div class="col-lg-3 ">
+<div class="col-sm-3">
     <div class="row">
         <h3 style="color:darkred;"><b>Course modules</b></h3>
 
-        @if (User.IsInRole(Role.Teacher))
+            @if (User.IsInRole(Role.Teacher))
             {
             @Html.ActionLink("Add new module", "CreateModule", "Home", routeValues: new { courseId = Model.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
+            <hr />
         }
 
         @foreach (var module in Model.Modules.OrderBy(x => x.StartDate))
-            {
+        {
             <div class="user-module">
-                <h5>
-                    <strong>
-                        @Ajax.ActionLink(module.Name, "ListActivity", "Home", new { id = module.Id }, new AjaxOptions
-                   {
-                       UpdateTargetId = "UpdateContentDiv", // <-- DOM element ID to update
-                       InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
-                       HttpMethod = "GET", // <-- HTTP method
+                <p>
+                @Ajax.ActionLink(module.Name, "ListActivity", "Home", new { id = module.Id }, new AjaxOptions {UpdateTargetId = "UpdateContentDiv", InsertionMode = InsertionMode.Replace, HttpMethod = "GET"}, new { @class = "btn btn-link module-link" } )
 
-
-                   },
-                            new { @class = "btn btn-link" } //-- Class
-                        )
-
-
-                    </strong>
-                    @if (User.IsInRole(Role.Teacher))
-                    {
-                        <div>
-                            (@Html.DisplayFor(m => module.StartDate) - @Html.DisplayFor(m => module.EndDate) )@Ajax.ActionLink(" ", "EditModule", "Home", new { id = module.Id }, new AjaxOptions
-                                                                                                         {
-                                                                                                             UpdateTargetId = "UpdateContentDiv", // <-- DOM element ID to update
-                                                                                                             InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
-                                                                                                             HttpMethod = "GET", // <-- HTTP method
-
-
-                                                                                                         },
-                                                                                                                    new { @class = "glyphicon glyphicon-edit btn-gly", title = "Edit" }
-                                                                                                                    )
-                            |<a href="#" class="js-delete-entity glyphicon glyphicon-trash btn-gly-trash" title="Delete" data-user-api="/HomeApi/DeleteModule/" data-user-id="@module.Id" data-user-remove=".user-module" data-user-message="Delete module @Html.DisplayFor(m => module.Name)"></a>
-
-                        </div>
-
-                    }
-                    @if (User.IsInRole(Role.Student))
-                    {
-                        <div>
-                            (@Html.DisplayFor(m => module.StartDate) - @Html.DisplayFor(m => module.EndDate) )<a href="#" class="glyphicon glyphicon-list-alt btn-gly-trash" data-toggle="popover" data-placement="bottom" title="Module document" data-content="Test.txt"></a>
-                        </div>
-
-                    }
-
-
-                </h5>
-                <p>@module.Description</p>
-
-
-
+                @if (User.IsInRole(Role.Teacher))
+                {
+                    <span class="pull-right">
+                        @Ajax.ActionLink(" ", "EditModule", "Home", new { id = module.Id }, new AjaxOptions {UpdateTargetId = "UpdateContentDiv", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "glyphicon glyphicon-edit btn-gly", title = "Edit" } )
+                        | 
+                        <a href="#" class="js-delete-entity glyphicon glyphicon-trash btn-gly-trash" title = "Delete" data-user-api="/HomeApi/DeleteModule/" data-user-id="@module.Id" data-user-remove=".user-module" data-user-message="Delete module @Html.DisplayFor(m => module.Name)"></a>
+                    </span>
+                }
+                    
+                </p>
+                <p><i> @Html.DisplayFor(m => module.StartDate) &ndash; @Html.DisplayFor(m => module.EndDate)</i></p>
+                <p><b>@module.Description</b></p>
             </div>
         }
         @if (!Model.Modules.Any())
-            {
-            <p>Inga moduler registrerade för denna kurs</p>
-        }
-
-
-    </div>
-</div>
-<div class="col-lg-8 col-lg-offset-1">
-
-    <div id="UpdateContentDiv">
-        @*Render module data here*@
-        @if (ViewBag.ModuleId != null)
         {
-            Html.RenderAction("ListActivity", routeValues: new { id = ViewBag.ModuleId });
+            <p>No modules registered</p>
         }
+
     </div>
 </div>
+<div class="col-sm-9">
 
-<hr />
-
-<div class="col-md-12">
-    <div class="row">
-        <hr />
-        <strong><a href="#" class="btn btn-link headling-users" data-toggle="collapse" data-target=".users">Course students</a></strong>
-
-        <div class="users collapse out">
-            @foreach (var student in Model.Users.ToList())
+        <div id="UpdateContentDiv">
+            @*Render module data here*@
+            @if (ViewBag.ModuleId != null)
             {
-                <div class="col-sm-4 col-md-4">
-                    <p><strong>@student.FullName</strong> <a href="mailto:@student.Email">@student.Email</a></p>
-                </div>
+                Html.RenderAction("ListActivity", routeValues: new { id = ViewBag.ModuleId });
             }
         </div>
     </div>
-</div>
 
+    <hr />
 
-<div class="col-md-12">
-    <div class="row">
-        @if (User.IsInRole(Role.Teacher))
-        {
+    <div class="col-md-12">
+        <div class="row">
             <hr />
-            @Html.ActionLink("Add new student", "Register", "Account", routeValues: new { role = Role.Student, courseid = Model.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
-        }
-        <hr />
+            <strong><a href="#" class="btn btn-link headling-users" data-toggle="collapse" data-target=".users">Course students</a></strong>
+            @if (User.IsInRole(Role.Teacher))
+            {
+                @Html.ActionLink("Add new student", "Register", "Account", routeValues: new { role = Role.Student, courseid = Model.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm btn-side" })
+            }
+            <div class="users collapse in">
+                @foreach (var student in Model.Users.ToList())
+            {
+                    <div class="col-sm-4 col-md-4">
+                        <p><strong>@student.FullName</strong> <a href="mailto:@student.Email">@student.Email</a></p>
+                    </div>
+                }
+            </div>
+        </div>
     </div>
 
+
+    <div class="col-md-12">
+        <div class="row">
+           
+            <hr />
+        </div>
+
+    </div>
 </div>

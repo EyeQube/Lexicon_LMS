@@ -3,11 +3,8 @@
 
 @model Lexicon_LMS.Models.Module
 
-@{
-    ViewBag.Title = "ListActivity";
-}
 
-<h2></h2>
+<h3>Module: @Model.Name</h3>
 <div class="activity-table">
     @if (User.IsInRole(Role.Teacher))
     {
@@ -43,61 +40,55 @@
 
         </tr>
 
-        @foreach (var item in Model.Activity)
+@foreach (var item in Model.Activity) {
+  
+    <tr class="user-tr">
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            <p>
+            @Html.DisplayFor(modelItem => item.Description)
+            @if (User.IsInRole(Role.Teacher))
+            {
+                <span class="right">@Html.ActionLink(" ", "AddFileToSystem", "Document", routeValues: new { activityId = item.Id }, htmlAttributes: new { @class = "glyphicon glyphicon-paperclip", title = "Add documents" })</span>
+            }
+            </p>
+            <p>
+            @foreach (var file in item.Documents)
+            {
+                <span class="space"><a href="@Url.Action("GetFile","Document", new { id = file.Id })" download="@file.FileName" title="created @file.CreateTime.ToString() by @file.Author.FullName">@file.FileName</a></span>
+            }
+            </p>
+
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate) -
+            @Html.DisplayFor(modelItem => item.EndDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ActivityType.Name)
+            @if (User.IsInRole(Role.Teacher) && item.ActivityType.AllowStudentDocuments)
+            {
+                <span class="right">
+                    @Html.ActionLink(" ", "ListStudentDocuments", "Document", routeValues: new { activityId = item.Id }, htmlAttributes: new { @class = "glyphicon glyphicon-list-alt btn-gly", title = "view assignments" })
+                </span>
+            }
+        </td>
+        @if (User.IsInRole(Role.Student))
         {
-
-            <tr class="user-tr">
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    <p>
-                        @Html.DisplayFor(modelItem => item.Description)
-                        @if (User.IsInRole(Role.Teacher))
-                        {
-                            <span class="right">@Html.ActionLink(" ", "AddFileToSystem", "Document", routeValues: new { activityId = item.Id }, htmlAttributes: new { @class = "glyphicon glyphicon-paperclip", title = "Add documents" })</span>
-                        }
-                    </p>
-                    <p>
-                        @foreach (var file in item.Documents)
-                        {
-                            <span class="space"><a href="@Url.Action("GetFile","Document", new { id = file.Id })" download="@file.FileName" title="created @file.CreateTime.ToString() by @file.Author.FullName">@file.FileName</a></span>
-                        }
-                    </p>
-
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StartDate) -
-                    @Html.DisplayFor(modelItem => item.EndDate)
-                </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.EndDate)
-                    </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.ActivityType.Name)
-                    @if (User.IsInRole(Role.Teacher) && item.ActivityType.AllowStudentDocuments)
-                    {
-                        <span class="right">
-                            @Html.ActionLink(" ", "ListStudentDocuments", "Document", routeValues: new { activityId = item.Id }, htmlAttributes: new { @class = "glyphicon glyphicon-list-alt btn-gly", title = "view assignments" })
-                        </span>
-                    }
-
-                </td>
-                @if (User.IsInRole(Role.Student))
+        <td>
+            @if (item.ActivityType.AllowStudentDocuments && User.IsInRole(Role.Student))
+            {
+                var document = item.Documents.FirstOrDefault(x => x.Author.Id == User.Identity.GetUserId());
+                if (document == null)
                 {
-                    <td>
-                        @if (item.ActivityType.AllowStudentDocuments && User.IsInRole(Role.Student))
-                        {
-                            var document = item.Documents.FirstOrDefault(x => x.Author.Id == User.Identity.GetUserId());
-                            if (document == null)
-                            {
-                                <p>@Html.ActionLink("upload assignment", "AddFileToSystem", "Document", routeValues: new { activityId = item.Id }, htmlAttributes: new { @class = "btn btn-default btn-xs" })</p>
-                            }
-                            else
-                            {
-                                <p>submitted: <a href="@Url.Action("GetFile", "Document", new { id = document.Id })" download="@document.FileName"><span class="glyphicon glyphicon-file"></span>@document.FileName</a></p>
-                            }
+                <p>@Html.ActionLink("upload assignment", "AddFileToSystem", "Document", routeValues: new { activityId = item.Id }, htmlAttributes: new { @class = "btn btn-default btn-xs" })</p>
+                }
+                else
+                {
+                    <p>submitted: <a href="@Url.Action("GetFile", "Document", new { id = document.Id })" download="@document.FileName"><span class="glyphicon glyphicon-file"></span>@document.FileName</a></p>
+                }
 
                         }
                     </td>
@@ -108,20 +99,20 @@
                 {
                     <td>
 
-                        <a href="#" class="js-delete-entity glyphicon glyphicon-trash btn-gly-trash-act" title="Delete" data-user-api="/HomeApi/DeleteActivity/" data-user-id="@item.Id" data-user-remove=".user-tr" data-user-message="Delete activity @Html.DisplayFor(modelItem => item.Name)"></a>
-                        @Ajax.ActionLink(" ", "EditActivity", "Home", new { id = item.Id }, new AjaxOptions
-                   {
-                       UpdateTargetId = "UpdateContentDiv",
-                       InsertionMode = InsertionMode.Replace,
-                       HttpMethod = "GET",
-                   },
+        @Ajax.ActionLink(" ", "EditActivity", "Home", new { id = item.Id }, new AjaxOptions
+   {
+       UpdateTargetId = "UpdateContentDiv",
+       InsertionMode = InsertionMode.Replace,
+       HttpMethod = "GET",
+   },
                                     new
                                     {
                                         @class = "glyphicon glyphicon-edit btn-gly",
                                         title = "Edit"
-                                    })
-                    </td>
-                }
+                                    })|
+        <a href="#" class="js-delete-entity glyphicon glyphicon-trash btn-gly-trash-act" title="Delete" data-user-api="/HomeApi/DeleteActivity/" data-user-id="@item.Id" data-user-remove=".user-tr" data-user-message="Delete activity @Html.DisplayFor(modelItem => item.Name)"></a>
+    </td>
+}
 
             </tr>
         }

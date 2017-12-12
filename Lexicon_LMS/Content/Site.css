@@ -35,11 +35,6 @@ textarea {
     max-width: 280px;
 }
 
-.btn-primary {
-    color: #ffffff;
-    background-color: #DC143C;
-    border-color: #800000 !important;
-}
 
 /*.btn {
     color: #ffffff;
@@ -193,4 +188,15 @@ h3, h2 {
 
 .space{
     margin-right:5px;
+}
+
+.btn-side{
+    margin-left:30px;
+}
+
+.module-link, .module-link:hover{
+    font-size: 18px;
+    border-width: 0px 0px;
+    margin: 0px 0px;
+    color: darkred;
 }
