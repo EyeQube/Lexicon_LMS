@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lexicon_LMS.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,22 +16,27 @@ namespace Lexicon_LMS.Models
         public DateTime start_date { get; set; }
         public DateTime end_date { get; set; }
 
-
-        //[Display(Name = "Parent course")]
-
-
-        /* public int CourseId { get; set; }
-
-         [ForeignKey("id")]
-         public virtual Course Course { get; set; }*/
-
-        //[Required]
-
         
-       
-       // public int CourseId { get; set; }
-       // [ForeignKey("CourseId")]
-       // public virtual Course Course { get; set; }
+        public int CourseId { get; set; }
+        [ForeignKey("CourseId")]
+        public virtual Course Course { get; set; }
+
+
+        public Event()
+        {
+
+        }
+
+
+         public Event(int id)
+        {
+          //  text = course.Description;
+          //  start_date = course.StartDate;
+          //  end_date = course.EndDate;
+            CourseId = id;
+
+        } 
+
 
     }   
 }
