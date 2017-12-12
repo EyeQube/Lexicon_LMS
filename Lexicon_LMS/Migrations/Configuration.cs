@@ -19,7 +19,7 @@ namespace Lexicon_LMS.Migrations
             // Create courses
             Course[] courses = new[]
             {
-                new Course{ Name = "DNMVC17", StartDate = new DateTime(2017,11,27), EndDate = new DateTime(2017,12,15) ,Description = "Fusce mattis maximus maximus. Ut eu facilisis ipsum. Phasellus tincidunt ut diam non malesuada. Vestibulum facilisis pharetra purus. Cras viverra posuere mattis. Vestibulum dui purus, rhoncus ut consectetur non, rhoncus at justo. Quisque id maximus est, et ornare risus. Donec nec justo sed ex euismod commodo. Quisque tempus, est laoreet commodo dictum, ipsum nulla egestas lorem, id tempor elit nisl non nisl. Donec vel urna vitae felis consectetur laoreet." },
+                new Course{ Name = "DNMVC17", StartDate = new DateTime(2017,11,27), EndDate = new DateTime(2017,12,15) ,Description = "Välkommen till kursportalen för klass ND17.\nHär hittar ni under utbildningens gång scheman, material och uppgiftningsbeskrivningar." },
                 new Course{ Name = "DJANGO17", StartDate = new DateTime(2017,11,27), EndDate = new DateTime(2017,12,29) ,Description = "Maecenas non convallis est. Quisque varius interdum tempor. Phasellus at erat ornare, sagittis ligula eu, cursus nibh. Mauris ac quam ut est interdum facilisis. Aliquam eget fermentum diam. Nam orci augue, fringilla quis maximus at, eleifend at urna. Aliquam erat volutpat. Nam quis mauris et nisi ornare consectetur. Duis ac urna vitae odio gravida venenatis. Aenean sed elit luctus, dictum turpis sit amet, tristique enim. Nunc ac augue accumsan, mollis orci at, molestie dui. Praesent dapibus dictum velit, id mattis diam tempor nec." },
             };
             context.Courses.AddOrUpdate(x => x.Name, courses);
@@ -29,9 +29,12 @@ namespace Lexicon_LMS.Migrations
             var dnCourseId = context.Courses.First(x => x.Name == "DNMVC17").Id;
             Module[] dnModules = new[]
             {
-                new Module{ CourseId = dnCourseId, Name = "C# grundkurs", StartDate = new DateTime(2017,11,27), EndDate = new DateTime(2017,12,5), Description = "Grunderna i C#"},
-                new Module{ CourseId = dnCourseId, Name = "C# OO", StartDate = new DateTime(2017,12,6), EndDate = new DateTime(2017,12,10), Description = "Objekt orienterad mjukvaruutveckling i teori och praktik"},
-                new Module{ CourseId = dnCourseId, Name = "C# LINQ", StartDate = new DateTime(2017,12,10), EndDate = new DateTime(2017,12,15), Description = "Introduktion till biblioteket LINQ"},
+                new Module{ CourseId = dnCourseId, Name = "C#", StartDate = new DateTime(2017,08,28), EndDate = new DateTime(2017,09,26), Description = "Grundutbildning C#, objektorienterad design och LINQ-biblioteket"},
+                new Module{ CourseId = dnCourseId, Name = "Webb", StartDate = new DateTime(2017,09,27), EndDate = new DateTime(2017,10,18), Description = "Grundutbildningi HTML5, CSS och Bootstrap samt Git"},
+                new Module{ CourseId = dnCourseId, Name = "MVC", StartDate = new DateTime(2017,10,11), EndDate = new DateTime(2017,10,26), Description = "Microsofts MVC-ramverk"},
+                new Module{ CourseId = dnCourseId, Name = "Databas", StartDate = new DateTime(2017,10,27), EndDate = new DateTime(2017,11,06), Description = "Relationsdatabaser och EntityFramework"},
+                new Module{ CourseId = dnCourseId, Name = "App.Utv.", StartDate = new DateTime(2017,11,07), EndDate = new DateTime(2017,11,15), Description = "Applikationsutveckling med jQuery, AJAX och UX-design"},
+                new Module{ CourseId = dnCourseId, Name = "MVC fördjupning", StartDate = new DateTime(2017,11,14), EndDate = new DateTime(2017,12,15), Description = "Grupparbete enligt scrum-metodiken"},
             };
             context.Modules.AddOrUpdate(x => x.Name, dnModules);
             context.SaveChanges();
@@ -41,18 +44,23 @@ namespace Lexicon_LMS.Migrations
             {
                 new ActivityType{ Name = "Föreläsning", AllowStudentDocuments = false},
                 new ActivityType{ Name = "E-learning" , AllowStudentDocuments = false},
-                new ActivityType{ Name = "Övningstillfälle" , AllowStudentDocuments = true}
+                new ActivityType{ Name = "Övning" , AllowStudentDocuments = true}
             };
             context.ActivityTypes.AddOrUpdate(x => x.Name, activityTypes);
             context.SaveChanges();
 
             //Create Activity
-            var dnModuleId = context.Modules.First(x => x.Name == "C# grundkurs").Id;
+            var mod1Id = context.Modules.First(x => x.Name == "C#").Id;
+            var mod2Id = context.Modules.First(x => x.Name == "Webb").Id;
+            var mod3Id = context.Modules.First(x => x.Name == "MVC").Id;
+            var mod4Id = context.Modules.First(x => x.Name == "Databas").Id;
+            var mod5Id = context.Modules.First(x => x.Name == "App.Utv").Id;
+            var mod6Id = context.Modules.First(x => x.Name == "MVC fördjupning").Id;
             Activity[] dnActivity = new[]
             {
-                new Activity { ModuleId = dnModuleId, Name= "El-1.1 to 1.9", StartDate = new DateTime(2017,11,27,08,00,00), EndDate = new DateTime(2017,11,27,12,00,00), Description = "Scott Allan Basic C#", ActivityTypeId = 2 },
-                new Activity { ModuleId = dnModuleId, Name= "Övning 1", StartDate = new DateTime(2017,11,27,13,00,00), EndDate = new DateTime(2017,11,27,17,00,00), Description = "Göra en for loop", ActivityTypeId = 3 },
-                new Activity { ModuleId = dnModuleId, Name= "Frl C# Grund", StartDate = new DateTime(2017,11,28,08,00,00), EndDate = new DateTime(2017,11,28,17,00,00), Description = "Gå igenom grunderna i C#", ActivityTypeId = 1 }
+                new Activity { ModuleId = mod1Id, Name= "El-1.1 to 1.9", StartDate = new DateTime(2017,11,27,08,00,00), EndDate = new DateTime(2017,11,27,12,00,00), Description = "Scott Allan Basic C#", ActivityTypeId = 2 },
+                new Activity { ModuleId = mod1Id, Name= "Övning 1", StartDate = new DateTime(2017,11,27,13,00,00), EndDate = new DateTime(2017,11,27,17,00,00), Description = "Göra en for loop", ActivityTypeId = 3 },
+                new Activity { ModuleId = mod1Id, Name= "Frl C# Grund", StartDate = new DateTime(2017,11,28,08,00,00), EndDate = new DateTime(2017,11,28,17,00,00), Description = "Gå igenom grunderna i C#", ActivityTypeId = 1 }
             };
             context.Activities.AddOrUpdate(x => x.Name, dnActivity);
             context.SaveChanges();
