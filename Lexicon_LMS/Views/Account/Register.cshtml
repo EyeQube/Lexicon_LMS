@@ -52,7 +52,7 @@
     {
         <div class="form-group">
             @Html.LabelFor(m => m.CourseId)
-            @Html.DropDownListFor(m => m.CourseId, new SelectList(Model.Courses, "Id", "Name"), "none", new { @class = "form-control" })
+            @Html.DropDownListFor(m => m.CourseId, new SelectList(Model.Courses, "Id", "Name"), "-- Select a course --", new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.CourseId, "", new { @class = "text-danger" })
         </div>
     }
