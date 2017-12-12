@@ -214,13 +214,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201712111412528_InitialOne.cs" />
-    <Compile Include="Migrations\201712111412528_InitialOne.Designer.cs">
-      <DependentUpon>201712111412528_InitialOne.cs</DependentUpon>
+    <Compile Include="Migrations\201712111937350_InitialOne.cs" />
+    <Compile Include="Migrations\201712111937350_InitialOne.Designer.cs">
+      <DependentUpon>201712111937350_InitialOne.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201712111413289_InitialTwo.cs" />
-    <Compile Include="Migrations\201712111413289_InitialTwo.Designer.cs">
-      <DependentUpon>201712111413289_InitialTwo.cs</DependentUpon>
+    <Compile Include="Migrations\201712111940043_InitialTwo.cs" />
+    <Compile Include="Migrations\201712111940043_InitialTwo.Designer.cs">
+      <DependentUpon>201712111940043_InitialTwo.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201712111421178_AddKeyToEvent.cs" />
     <Compile Include="Migrations\201712111421178_AddKeyToEvent.Designer.cs">
@@ -635,11 +635,11 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201712111412528_InitialOne.resx">
-      <DependentUpon>201712111412528_InitialOne.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201712111937350_InitialOne.resx">
+      <DependentUpon>201712111937350_InitialOne.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712111413289_InitialTwo.resx">
-      <DependentUpon>201712111413289_InitialTwo.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201712111940043_InitialTwo.resx">
+      <DependentUpon>201712111940043_InitialTwo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712111421178_AddKeyToEvent.resx">
       <DependentUpon>201712111421178_AddKeyToEvent.cs</DependentUpon>
