@@ -1,4 +1,5 @@
 ﻿using Lexicon_LMS.Models;
+using System.Linq;
 using System.Net;
 using System.Web.Http;
 
@@ -11,6 +12,43 @@ namespace Lexicon_LMS.Controllers.Api
         public HomeApiController()
         {
             db = new ApplicationDbContext();
+        }
+
+        [Route("HomeApi/DeleteCourse/{id}")]
+        [HttpDelete]
+        [Authorize(Roles = Role.Teacher)]
+        public IHttpActionResult DeleteCourse(int? id)
+        {
+
+            if (id == null)
+                return Content(HttpStatusCode.NotFound, "Missing id in API call");
+
+            Course course = db.Courses.Find(id);
+
+            if (course == null)
+                return Content(HttpStatusCode.NotFound, "Item not found in database");
+
+            // Some kind of validation logic
+            var validatedOk = true;
+            if (!validatedOk)
+                return Content(HttpStatusCode.BadRequest, "Delete request failed due to validation: <placeholder>");
+
+            var user = course.Users.FirstOrDefault();
+
+            if (user == null)
+            {
+                db.Courses.Remove(course);
+                db.SaveChanges();
+
+            }
+            else
+            {
+                db.Users.Remove(user);
+                db.Courses.Remove(course);
+                db.SaveChanges();
+            }
+
+            return Ok();
         }
 
         //TODO improve routing
