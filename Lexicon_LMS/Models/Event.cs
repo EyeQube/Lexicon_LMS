@@ -34,22 +34,19 @@ namespace Lexicon_LMS.Models
 
         }
 
-        public Event(Event _event)
+        public void EventHandle(Event _event)
         {
             id = _event.id;
-
             text = _event.text;
             start_date = _event.start_date;
             end_date = _event.end_date;
-
-            CourseId = _event.CourseId;
         }
+
 
         public Event(int i)
         {
             CourseId = i;
-            start_date = DateTime.Now;
-            end_date = DateTime.Now;
+            
         }
 
 
