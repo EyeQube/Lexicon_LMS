@@ -214,13 +214,45 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201712121430212_InitOne.cs" />
-    <Compile Include="Migrations\201712121430212_InitOne.Designer.cs">
-      <DependentUpon>201712121430212_InitOne.cs</DependentUpon>
+    <Compile Include="Migrations\201712131504070_init.cs" />
+    <Compile Include="Migrations\201712131504070_init.Designer.cs">
+      <DependentUpon>201712131504070_init.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201712121430510_InitTwo.cs" />
-    <Compile Include="Migrations\201712121430510_InitTwo.Designer.cs">
-      <DependentUpon>201712121430510_InitTwo.cs</DependentUpon>
+    <Compile Include="Migrations\201712131505009_initTwo.cs" />
+    <Compile Include="Migrations\201712131505009_initTwo.Designer.cs">
+      <DependentUpon>201712131505009_initTwo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712131507578_changeInEvent.cs" />
+    <Compile Include="Migrations\201712131507578_changeInEvent.Designer.cs">
+      <DependentUpon>201712131507578_changeInEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712131508558_changeInEventTwo.cs" />
+    <Compile Include="Migrations\201712131508558_changeInEventTwo.Designer.cs">
+      <DependentUpon>201712131508558_changeInEventTwo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712131525509_startWorking.cs" />
+    <Compile Include="Migrations\201712131525509_startWorking.Designer.cs">
+      <DependentUpon>201712131525509_startWorking.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712131526327_startWorkingTwo.cs" />
+    <Compile Include="Migrations\201712131526327_startWorkingTwo.Designer.cs">
+      <DependentUpon>201712131526327_startWorkingTwo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712131530196_startWorking1.cs" />
+    <Compile Include="Migrations\201712131530196_startWorking1.Designer.cs">
+      <DependentUpon>201712131530196_startWorking1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712131530458_startWorkingTwo1.cs" />
+    <Compile Include="Migrations\201712131530458_startWorkingTwo1.Designer.cs">
+      <DependentUpon>201712131530458_startWorkingTwo1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712131544037_start.cs" />
+    <Compile Include="Migrations\201712131544037_start.Designer.cs">
+      <DependentUpon>201712131544037_start.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712131544360_startTwo.cs" />
+    <Compile Include="Migrations\201712131544360_startTwo.Designer.cs">
+      <DependentUpon>201712131544360_startTwo.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migration\ConfigurationTwo.cs" />
@@ -595,11 +627,35 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201712121430212_InitOne.resx">
-      <DependentUpon>201712121430212_InitOne.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201712131504070_init.resx">
+      <DependentUpon>201712131504070_init.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712121430510_InitTwo.resx">
-      <DependentUpon>201712121430510_InitTwo.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201712131505009_initTwo.resx">
+      <DependentUpon>201712131505009_initTwo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712131507578_changeInEvent.resx">
+      <DependentUpon>201712131507578_changeInEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712131508558_changeInEventTwo.resx">
+      <DependentUpon>201712131508558_changeInEventTwo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712131525509_startWorking.resx">
+      <DependentUpon>201712131525509_startWorking.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712131526327_startWorkingTwo.resx">
+      <DependentUpon>201712131526327_startWorkingTwo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712131530196_startWorking1.resx">
+      <DependentUpon>201712131530196_startWorking1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712131530458_startWorkingTwo1.resx">
+      <DependentUpon>201712131530458_startWorkingTwo1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712131544037_start.resx">
+      <DependentUpon>201712131544037_start.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712131544360_startTwo.resx">
+      <DependentUpon>201712131544360_startTwo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

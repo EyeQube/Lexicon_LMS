@@ -12,8 +12,8 @@ namespace Lexicon_LMS.Models
         public int id { get; set; }
             
         public string text { get; set; }
-        public DateTime? start_date { get; set; }
-        public DateTime? end_date { get; set; }
+        public DateTime start_date { get; set; }
+        public DateTime end_date { get; set; }
 
 
         [Display(Name = "Parent course")]
@@ -34,23 +34,24 @@ namespace Lexicon_LMS.Models
 
         }
 
-        public Event(Event _event)
+         public Event(int i)
         {
-            id = _event.id;
+            CourseId = i;
+        } 
 
+         public void EventHandle(Event _event)
+        {
+            
             text = _event.text;
             start_date = _event.start_date;
             end_date = _event.end_date;
-
-            CourseId = _event.CourseId;
-        }
-
-        public Event(int i)
-        {
+           
+        }  
+            
+       /*  public void _Event(int i)
+        {   
             CourseId = i;
-            start_date = DateTime.Now;
-            end_date = DateTime.Now;
-        }
+        } */ 
 
 
         //[Display(Name = "Parent course")]

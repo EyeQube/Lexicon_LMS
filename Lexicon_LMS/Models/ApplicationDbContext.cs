@@ -11,7 +11,7 @@ namespace Lexicon_LMS.Models
         public DbSet<Module> Modules { get; set; }
         public DbSet<Activity> Activities { get; set; }
         public DbSet<ActivityType> ActivityTypes { get; set; }
-        //public virtual DbSet<Event> Events { get; set; }
+        public DbSet<Event> Events { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

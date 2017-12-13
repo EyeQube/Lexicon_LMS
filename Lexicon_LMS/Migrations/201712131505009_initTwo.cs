@@ -1,12 +1,14 @@
-namespace Lexicon_LMS.Migrations
+namespace Lexicon_LMS.Migration
 {
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitOne : DbMigration
+    public partial class initTwo : DbMigration
     {
         public override void Up()
         {
+            return;
+
             CreateTable(
                 "dbo.Activities",
                 c => new
@@ -67,8 +69,8 @@ namespace Lexicon_LMS.Migrations
                     {
                         id = c.Int(nullable: false, identity: true),
                         text = c.String(),
-                        start_date = c.DateTime(),
-                        end_date = c.DateTime(),
+                        start_date = c.DateTime(nullable: false),
+                        end_date = c.DateTime(nullable: false),
                         CourseId = c.Int(),
                     })
                 .PrimaryKey(t => t.id)
