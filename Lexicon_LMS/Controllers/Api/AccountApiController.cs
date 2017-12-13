@@ -1,6 +1,5 @@
 ﻿using Lexicon_LMS.Models;
 using Microsoft.AspNet.Identity;
-using System.Linq;
 using System.Net;
 using System.Web.Http;
 
@@ -8,11 +7,11 @@ namespace Lexicon_LMS.Controllers.Api
 {
     public class AccountApiController : ApiController
     {
-        private ApplicationDbContext _context;
+        private ApplicationDbContext db;
 
         public AccountApiController()
         {
-            _context = new ApplicationDbContext();
+            db = new ApplicationDbContext();
         }
 
         [HttpDelete]
@@ -26,13 +25,13 @@ namespace Lexicon_LMS.Controllers.Api
             if (id == User.Identity.GetUserId())
                 return Content(HttpStatusCode.BadRequest, "You can not remove yourself !");
 
-            var user = _context.Users.Single(a => a.Id == id);
+            var user = db.Users.Find(id);
 
             if (user == null)
                 return Content(HttpStatusCode.BadRequest, "Item not found in database");
 
-            _context.Users.Remove(user);
-            _context.SaveChanges();
+            db.Users.Remove(user);
+            db.SaveChanges();
 
             return Ok();
         }

@@ -19,7 +19,6 @@ namespace Lexicon_LMS.Controllers.Api
         [Authorize(Roles = Role.Teacher)]
         public IHttpActionResult DeleteCourse(int? id)
         {
-
             if (id == null)
                 return Content(HttpStatusCode.BadRequest, "Missing id in API call");
 
@@ -28,18 +27,12 @@ namespace Lexicon_LMS.Controllers.Api
             if (course == null)
                 return Content(HttpStatusCode.BadRequest, "Item not found in database");
 
-            // Some kind of validation logic
-            var validatedOk = true;
-            if (!validatedOk)
-                return Content(HttpStatusCode.BadRequest, "Delete request failed due to validation: <placeholder>");
-
             var user = course.Users.FirstOrDefault();
 
             if (user == null)
             {
                 db.Courses.Remove(course);
                 db.SaveChanges();
-
             }
             else
             {
@@ -51,7 +44,6 @@ namespace Lexicon_LMS.Controllers.Api
             return Ok();
         }
 
-        //TODO improve routing
         [Route("HomeApi/DeleteModule/{id}")]
         [HttpDelete]
         [Authorize(Roles = Role.Teacher)]
@@ -65,11 +57,6 @@ namespace Lexicon_LMS.Controllers.Api
             if (module == null)
                 return Content(HttpStatusCode.BadRequest, "Item not found in database");
 
-            // Some kind of validation logic
-            var validatedOk = true;
-            if (!validatedOk)
-                return Content(HttpStatusCode.BadRequest, "Delete request failed due to validation: <placeholder>");
-
             db.Documents.RemoveRange(module.Documents);
             db.Modules.Remove(module);
             db.SaveChanges();
@@ -77,7 +64,6 @@ namespace Lexicon_LMS.Controllers.Api
             return Ok();
         }
 
-        //TODO improve routing
         [Route("HomeApi/DeleteActivity/{id}")]
         [HttpDelete]
         [Authorize(Roles = Role.Teacher)]
@@ -91,18 +77,12 @@ namespace Lexicon_LMS.Controllers.Api
             if (activity == null)
                 return Content(HttpStatusCode.BadRequest, "Item not found in database");
 
-            // Some kind of validation logic
-            var validatedOk = true;
-            if (!validatedOk)
-                return Content(HttpStatusCode.BadRequest, "Delete request failed due to validation: <placeholder>");
-
             db.Documents.RemoveRange(activity.Documents);
             db.Activities.Remove(activity);
             db.SaveChanges();
 
             return Ok();
         }
-
 
     }
 }
