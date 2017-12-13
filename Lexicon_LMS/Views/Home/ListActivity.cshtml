@@ -55,7 +55,7 @@
             }
             </p>
             <p>
-            @foreach (var file in item.Documents)
+            @foreach (var file in item.Documents.Where(x => x.StudentDocumentId == null))
             {
                 <span class="space"><a href="@Url.Action("GetFile","Document", new { id = file.Id })" download="@file.FileName" title="created @file.CreateTime.ToString() by @file.Author.FullName">@file.FileName</a></span>
             }
