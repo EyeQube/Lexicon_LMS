@@ -208,6 +208,8 @@ namespace Lexicon_LMS.Controllers
         [Authorize(Roles = Role.Teacher)]
         public ActionResult SaveCourse(Course course)
         {
+            course.EndDate = new System.DateTime(course.EndDate.Year, course.EndDate.Month, course.EndDate.Day, 23, 59, 59);
+
             if (course.Id == 0)
             {
                 db.Courses.Add(course);
@@ -221,6 +223,10 @@ namespace Lexicon_LMS.Controllers
                 courseInDb.Description = course.Description;
                 courseInDb.StartDate = course.StartDate;
                 courseInDb.EndDate = course.EndDate;
+
+                db.Entry(courseInDb).State = EntityState.Modified;
+                db.SaveChanges();
+
                 return RedirectToLocal(TempData["ReturnUrl"]?.ToString());
             }
         }
@@ -300,6 +306,8 @@ namespace Lexicon_LMS.Controllers
 
             if (ModelState.IsValid)
             {
+                module.EndDate = new System.DateTime(module.EndDate.Year, module.EndDate.Month, module.EndDate.Day, 23, 59, 59);
+
                 db.Modules.Add(module);
                 db.SaveChanges();
                 return RedirectToAction("Course", routeValues: new { id = course.Id, moduleId = module.Id });
@@ -330,6 +338,9 @@ namespace Lexicon_LMS.Controllers
         {
             if (ModelState.IsValid)
             {
+                //var e = module.EndDate;
+                module.EndDate = new System.DateTime(module.EndDate.Year, module.EndDate.Month, module.EndDate.Day, 23, 59, 59);
+                //module.EndDate = new System.DateTime(e.Year, e.Month, e.Day, 23, 59, 59);
                 db.Entry(module).State = EntityState.Modified;
                 db.SaveChanges();
 

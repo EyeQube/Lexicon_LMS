@@ -19,8 +19,8 @@ namespace Lexicon_LMS.Migrations
             // Create courses
             Course[] courses = new[]
             {
-                new Course{ Name = "DNMVC17", StartDate = new DateTime(2017,11,27), EndDate = new DateTime(2017,12,15) ,Description = "Fusce mattis maximus maximus. Ut eu facilisis ipsum. Phasellus tincidunt ut diam non malesuada. Vestibulum facilisis pharetra purus. Cras viverra posuere mattis. Vestibulum dui purus, rhoncus ut consectetur non, rhoncus at justo. Quisque id maximus est, et ornare risus. Donec nec justo sed ex euismod commodo. Quisque tempus, est laoreet commodo dictum, ipsum nulla egestas lorem, id tempor elit nisl non nisl. Donec vel urna vitae felis consectetur laoreet." },
-                new Course{ Name = "DJANGO17", StartDate = new DateTime(2017,11,27), EndDate = new DateTime(2017,12,29) ,Description = "Maecenas non convallis est. Quisque varius interdum tempor. Phasellus at erat ornare, sagittis ligula eu, cursus nibh. Mauris ac quam ut est interdum facilisis. Aliquam eget fermentum diam. Nam orci augue, fringilla quis maximus at, eleifend at urna. Aliquam erat volutpat. Nam quis mauris et nisi ornare consectetur. Duis ac urna vitae odio gravida venenatis. Aenean sed elit luctus, dictum turpis sit amet, tristique enim. Nunc ac augue accumsan, mollis orci at, molestie dui. Praesent dapibus dictum velit, id mattis diam tempor nec." },
+                new Course{ Name = "DNMVC17", StartDate = new DateTime(2017,11,27), EndDate = new DateTime(2017,12,15,23,59,59) ,Description = "Fusce mattis maximus maximus. Ut eu facilisis ipsum. Phasellus tincidunt ut diam non malesuada. Vestibulum facilisis pharetra purus. Cras viverra posuere mattis. Vestibulum dui purus, rhoncus ut consectetur non, rhoncus at justo. Quisque id maximus est, et ornare risus. Donec nec justo sed ex euismod commodo. Quisque tempus, est laoreet commodo dictum, ipsum nulla egestas lorem, id tempor elit nisl non nisl. Donec vel urna vitae felis consectetur laoreet." },
+                new Course{ Name = "DJANGO17", StartDate = new DateTime(2017,11,27), EndDate = new DateTime(2017,12,29,23,59,59) ,Description = "Maecenas non convallis est. Quisque varius interdum tempor. Phasellus at erat ornare, sagittis ligula eu, cursus nibh. Mauris ac quam ut est interdum facilisis. Aliquam eget fermentum diam. Nam orci augue, fringilla quis maximus at, eleifend at urna. Aliquam erat volutpat. Nam quis mauris et nisi ornare consectetur. Duis ac urna vitae odio gravida venenatis. Aenean sed elit luctus, dictum turpis sit amet, tristique enim. Nunc ac augue accumsan, mollis orci at, molestie dui. Praesent dapibus dictum velit, id mattis diam tempor nec." },
             };
             context.Courses.AddOrUpdate(x => x.Name, courses);
             context.SaveChanges();
@@ -29,9 +29,9 @@ namespace Lexicon_LMS.Migrations
             var dnCourseId = context.Courses.First(x => x.Name == "DNMVC17").Id;
             Module[] dnModules = new[]
             {
-                new Module{ CourseId = dnCourseId, Name = "C# grundkurs", StartDate = new DateTime(2017,11,27), EndDate = new DateTime(2017,12,5), Description = "Grunderna i C#"},
-                new Module{ CourseId = dnCourseId, Name = "C# OO", StartDate = new DateTime(2017,12,6), EndDate = new DateTime(2017,12,10), Description = "Objekt orienterad mjukvaruutveckling i teori och praktik"},
-                new Module{ CourseId = dnCourseId, Name = "C# LINQ", StartDate = new DateTime(2017,12,10), EndDate = new DateTime(2017,12,15), Description = "Introduktion till biblioteket LINQ"},
+                new Module{ CourseId = dnCourseId, Name = "C# grundkurs", StartDate = new DateTime(2017,11,27), EndDate = new DateTime(2017,12,5,23,59,59), Description = "Grunderna i C#"},
+                new Module{ CourseId = dnCourseId, Name = "C# OO", StartDate = new DateTime(2017,12,6), EndDate = new DateTime(2017,12,10,23,59,59), Description = "Objekt orienterad mjukvaruutveckling i teori och praktik"},
+                new Module{ CourseId = dnCourseId, Name = "C# LINQ", StartDate = new DateTime(2017,12,10), EndDate = new DateTime(2017,12,15,23,59,59), Description = "Introduktion till biblioteket LINQ"},
             };
             context.Modules.AddOrUpdate(x => x.Name, dnModules);
             context.SaveChanges();
