@@ -18,13 +18,13 @@
         @Html.ActionLink("Edit Course", "EditCourse", "Home", routeValues: new { role = Role.Teacher, id = Model.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
         <a href="#" class="js-delete-entity btn btn-default btn-sm" title="Delete" data-user-api="/HomeApi/DeleteCourse/" data-user-id="@Model.Id" data-user-remove=".user-course" data-user-message="Delete course @Html.DisplayFor(m => m.Name)">Delete course</a>
         @Ajax.ActionLink("Add document", "AddFileToSystem", "Document", new { courseId = Model.Id, ispartial = true }, new AjaxOptions
-                                {
-                                    UpdateTargetId = "UpdateContentDiv", // <-- DOM element ID to update
-                                    InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
-                                    HttpMethod = "GET", // <-- HTTP method
+   {
+       UpdateTargetId = "UpdateContentDiv", // <-- DOM element ID to update
+       InsertionMode = InsertionMode.Replace, // <-- Replace the content of DOM element
+       HttpMethod = "GET", // <-- HTTP method
 
 
-                                },
+   },
                                                             new { @class = "btn btn-default btn-sm" } //-- Class
                                                         )
 
@@ -32,13 +32,13 @@
     <a href="#" class="btn btn-default btn-sm" data-toggle="collapse" data-target=".Description">Course info</a>
 
 
-<hr />
-<div class="col-sm-12">
-    <div id="UpdateContentDiv1">
+    <hr />
+    <div class="col-sm-12">
+        <div id="UpdateContentDiv1">
 
 
         </div>
-        <div class="Description collapse out">
+        <div class="Description collapse in">
             @*<h4>@Html.DisplayFor(model => model.Name)</h4>*@
 
             <dl class="dl-horizontal">
@@ -74,42 +74,42 @@
                     @Html.DisplayFor(model => model.EndDate)
                 </dd>
 
-            @*@if (Model.Documents.Count > 0)
-            {
+                @*@if (Model.Documents.Count > 0)
+                    {
+                        <dt>
+                            Documents
+                        </dt>
+                    }*@
+
                 <dt>
-                    Documents 
+                    Documents
                 </dt>
-            }*@
 
-            <dt>
-                Documents
-            </dt>
-
-            <dd>
-                @foreach (var file in Model.Documents)
-            {
-                    <span class="space">
-                        <a href="@Url.Action("GetFile", "Document", new { id = file.Id })" download="@file.FileName"
-                           title="created @file.CreateTime.ToString() by @file.Author.FullName">@file.FileName</a>
-                    </span>
-                }
-            </dd>
-
-            @*<h4>Documents: </h4>
-                <div class="row">
+                <dd>
                     @foreach (var file in Model.Documents)
-                {
-                        <div class="col-sm-3">
-                            <a href="@Url.Action("GetFile","Document", new { moduleId = file.Id })" download="@file.FileName"><span class="glyphicon glyphicon-file"></span>@file.FileName</a>
-                        </div>
+            {
+                        <span class="space">
+                            <a href="@Url.Action("GetFile", "Document", new { id = file.Id })" download="@file.FileName"
+                               title="created @file.CreateTime.ToString() by @file.Author.FullName">@file.FileName</a>
+                        </span>
                     }
-                </div>*@
+                </dd>
+
+                @*<h4>Documents: </h4>
+                    <div class="row">
+                        @foreach (var file in Model.Documents)
+                    {
+                            <div class="col-sm-3">
+                                <a href="@Url.Action("GetFile","Document", new { moduleId = file.Id })" download="@file.FileName"><span class="glyphicon glyphicon-file"></span>@file.FileName</a>
+                            </div>
+                        }
+                    </div>*@
 
 
 
 
 
-        </dl>
+            </dl>
 
             <hr />
 
@@ -118,44 +118,44 @@
 
 
 
-<div class="col-sm-3">
-    <div class="row">
-        <h3 style="color:darkred;"><b>Course modules</b></h3>
+    <div class="col-sm-3">
+        <div class="row">
+            <h3 style="color:darkred;"><b>Course modules</b></h3>
 
             @if (User.IsInRole(Role.Teacher))
             {
-            @Html.ActionLink("Add new module", "CreateModule", "Home", routeValues: new { courseId = Model.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
-            <hr />
-        }
+                @Html.ActionLink("Add new module", "CreateModule", "Home", routeValues: new { courseId = Model.Id, returnUrl = Request.RawUrl }, htmlAttributes: new { @class = "btn btn-default btn-sm" })
+                <hr />
+            }
 
-        @foreach (var module in Model.Modules.OrderBy(x => x.StartDate))
-        {
-            <div class="user-module">
-                <p>
-                @Ajax.ActionLink(module.Name, "ListActivity", "Home", new { id = module.Id }, new AjaxOptions {UpdateTargetId = "UpdateContentDiv", InsertionMode = InsertionMode.Replace, HttpMethod = "GET"}, new { @class = "btn btn-link module-link" } )
+            @foreach (var module in Model.Modules.OrderBy(x => x.StartDate))
+            {
+                <div class="user-module">
+                    <p>
+                        @Ajax.ActionLink(module.Name, "ListActivity", "Home", new { id = module.Id }, new AjaxOptions { UpdateTargetId = "UpdateContentDiv", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-link module-link" })
 
-                @if (User.IsInRole(Role.Teacher))
+                        @if (User.IsInRole(Role.Teacher))
                 {
-                    <span class="pull-right">
-                        @Ajax.ActionLink(" ", "EditModule", "Home", new { id = module.Id }, new AjaxOptions {UpdateTargetId = "UpdateContentDiv", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "glyphicon glyphicon-edit btn-gly1", title = "Edit" } )
-                        | 
-                        <a href="#" class="js-delete-entity glyphicon glyphicon-trash btn-gly1" title = "Delete" data-user-api="/HomeApi/DeleteModule/" data-user-id="@module.Id" data-user-remove=".user-module" data-user-message="Delete module @Html.DisplayFor(m => module.Name)"></a>
-                    </span>
-                }
-                    
-                </p>
-                <p><i> @Html.DisplayFor(m => module.StartDate) &ndash; @Html.DisplayFor(m => module.EndDate)</i></p>
-                <p><b>@module.Description</b></p>
-            </div>
-        }
-        @if (!Model.Modules.Any())
-        {
-            <p>No modules registered</p>
-        }
+                            <span class="pull-right">
+                                @Ajax.ActionLink(" ", "EditModule", "Home", new { id = module.Id }, new AjaxOptions { UpdateTargetId = "UpdateContentDiv", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "glyphicon glyphicon-edit btn-gly1", title = "Edit" })
+                                |
+                                <a href="#" class="js-delete-entity glyphicon glyphicon-trash btn-gly1" title="Delete" data-user-api="/HomeApi/DeleteModule/" data-user-id="@module.Id" data-user-remove=".user-module" data-user-message="Delete module @Html.DisplayFor(m => module.Name)"></a>
+                            </span>
+                        }
 
+                    </p>
+                    <p><i> @Html.DisplayFor(m => module.StartDate) &ndash; @Html.DisplayFor(m => module.EndDate)</i></p>
+                    <p><b>@module.Description</b></p>
+                </div>
+            }
+            @if (!Model.Modules.Any())
+            {
+                <p>No modules registered</p>
+            }
+
+        </div>
     </div>
-</div>
-<div class="col-sm-9">
+    <div class="col-sm-9">
 
         <div id="UpdateContentDiv">
             @*Render module data here*@
@@ -178,7 +178,7 @@
             }
             <div class="users collapse in">
                 @foreach (var student in Model.Users.ToList())
-            {
+                {
                     <div class="col-sm-4 col-md-4">
                         <p><strong>@student.FullName</strong> <a href="mailto:@student.Email">@student.Email</a></p>
                     </div>
@@ -186,5 +186,6 @@
             </div>
         </div>
     </div>
-
 </div>
+
+
