@@ -222,31 +222,29 @@ namespace Lexicon_LMS.Controllers
             return View();
         }
 
+        [Authorize(Roles = Role.Teacher)]
+        public ActionResult CreateModule(int? courseId)
+        {
+            if (courseId == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-        // GET: 
-        //[Authorize(Roles = Role.Teacher)]
-        //public ActionResult CreateModule(int? courseId)
-        //{
-        //    if (courseId == null)
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            // get latest end-date from module list OR the course start-date
+            var startDate = db.Courses.FirstOrDefault(c => c.Id == courseId)
+                .Modules.Select(m => m.EndDate)
+                .Concat(
+                    db.Courses.Where(c => c.Id == courseId)
+                    .Select(c => c.StartDate))
+                .Max().AddDays(1);
 
-        //    // get latest end-date from module list OR the course start-date
-        //    var startDate = db.Courses.FirstOrDefault(c => c.Id == courseId)
-        //        .Modules.Select(m => m.EndDate)
-        //        .Concat(
-        //            db.Courses.Where(c => c.Id == courseId)
-        //            .Select(c => c.StartDate))
-        //        .Max().AddDays(1);
+            var module = new Module
+            {
+                CourseId = (int)courseId,
+                StartDate = startDate,
+                EndDate = startDate
+            };
 
-        //    var module = new Module
-        //    {
-        //        CourseId = (int)courseId,
-        //        StartDate = startDate,
-        //        EndDate = startDate
-        //    };
-
-        //    return View(module);
-        //}
+            return View(module);
+        }
 
 
         [Authorize(Roles = Role.Teacher)]
