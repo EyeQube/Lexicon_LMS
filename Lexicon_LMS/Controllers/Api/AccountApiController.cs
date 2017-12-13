@@ -21,7 +21,7 @@ namespace Lexicon_LMS.Controllers.Api
         public IHttpActionResult DeleteUser(string id)
         {
             if (id == null)
-                return Content(HttpStatusCode.NotFound, "Missing id in API call");
+                return Content(HttpStatusCode.BadRequest, "Missing id in API call");
 
             if (id == User.Identity.GetUserId())
                 return Content(HttpStatusCode.BadRequest, "You can not remove yourself !");
@@ -29,7 +29,7 @@ namespace Lexicon_LMS.Controllers.Api
             var user = _context.Users.Single(a => a.Id == id);
 
             if (user == null)
-                return Content(HttpStatusCode.NotFound, "Item not found in database");
+                return Content(HttpStatusCode.BadRequest, "Item not found in database");
 
             _context.Users.Remove(user);
             _context.SaveChanges();

@@ -21,12 +21,12 @@ namespace Lexicon_LMS.Controllers.Api
         {
 
             if (id == null)
-                return Content(HttpStatusCode.NotFound, "Missing id in API call");
+                return Content(HttpStatusCode.BadRequest, "Missing id in API call");
 
             Course course = db.Courses.Find(id);
 
             if (course == null)
-                return Content(HttpStatusCode.NotFound, "Item not found in database");
+                return Content(HttpStatusCode.BadRequest, "Item not found in database");
 
             // Some kind of validation logic
             var validatedOk = true;
@@ -58,12 +58,12 @@ namespace Lexicon_LMS.Controllers.Api
         public IHttpActionResult DeleteModule(int? id)
         {
             if (id == null)
-                return Content(HttpStatusCode.NotFound, "Missing id in API call");
+                return Content(HttpStatusCode.BadRequest, "Missing id in API call");
 
             Module module = db.Modules.Find(id);
 
             if (module == null)
-                return Content(HttpStatusCode.NotFound, "Item not found in database");
+                return Content(HttpStatusCode.BadRequest, "Item not found in database");
 
             // Some kind of validation logic
             var validatedOk = true;
@@ -84,12 +84,12 @@ namespace Lexicon_LMS.Controllers.Api
         public IHttpActionResult DeleteActivity(int? id)
         {
             if (id == null)
-                return Content(HttpStatusCode.NotFound, "Missing id in API call");
+                return Content(HttpStatusCode.BadRequest, "Missing id in API call");
 
             Activity activity = db.Activities.Find(id);
 
             if (activity == null)
-                return Content(HttpStatusCode.NotFound, "Item not found in database");
+                return Content(HttpStatusCode.BadRequest, "Item not found in database");
 
             // Some kind of validation logic
             var validatedOk = true;
