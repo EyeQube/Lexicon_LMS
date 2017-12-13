@@ -43,7 +43,6 @@ namespace Lexicon_LMS.Controllers.Api
             }
             else
             {
-                db.Users.Remove(user);
                 db.Courses.Remove(course);
                 db.SaveChanges();
             }
