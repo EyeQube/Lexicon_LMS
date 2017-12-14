@@ -34,7 +34,14 @@ namespace Lexicon_LMS.Models
             
         }
 
-         public Event(Event _event, int i)
+        public Event(int i)
+        {
+            CourseId = i;
+            //text = 
+        }
+
+
+        public Event(Event _event, int i)
         {
             id = _event.id;
             text = _event.text;

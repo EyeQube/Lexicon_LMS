@@ -13,7 +13,7 @@ namespace Lexicon_LMS.Controllers
 {
     public class BasicSchedulerController : Controller
     {
-        //public Event B_Event;      
+        public Event B_Event { get; set; }      
 
         public int _CourseID;
 
@@ -24,6 +24,8 @@ namespace Lexicon_LMS.Controllers
         public BasicSchedulerController()
         {
             db = new ApplicationDbContext();
+
+
 
             _dbDH = new SchedulerContext();
         }
@@ -52,11 +54,17 @@ namespace Lexicon_LMS.Controllers
 
             _CourseID = course.Id;
 
-           /* B_Event._Event(course.Id);
+            //B_Event._Event(course.Id);
+
             var entities = new SchedulerContext();
 
+            //var target = entities.Events.Last(e => e.CourseId == id);
+
+            B_Event = new Event(course.Id);
+
             entities.Events.Add(B_Event);
-            entities.SaveChanges();*/
+
+            entities.SaveChanges();
 
             return View(ViewModel);
         }
