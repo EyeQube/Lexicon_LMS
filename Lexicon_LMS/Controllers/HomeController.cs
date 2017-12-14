@@ -167,13 +167,10 @@ namespace Lexicon_LMS.Controllers
         [Authorize]
         public ActionResult Course(int id, int? moduleId)
         {
-            TempData["ReturnUrl"] = Request.Url.PathAndQuery;
-            ViewBag.ModuleId = moduleId;
-            /*if(id == 0)
-            {
-                //Course _course = new Course();
-                return View();
-            }*/
+            TempData["ReturnUrl"] = Url.Action("Course", routeValues: new { id = id, moduleId = moduleId });
+
+            if (moduleId != null && db.Modules.Find(moduleId) != null)
+                ViewBag.ModuleId = moduleId;
 
             var course = db.Courses.FirstOrDefault(x => x.Id == id);
 
