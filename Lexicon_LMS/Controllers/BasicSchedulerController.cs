@@ -68,7 +68,7 @@ namespace Lexicon_LMS.Controllers
         {
             return (new SchedulerAjaxData(
                 new SchedulerContext().Events
-                .Select(e => new { e.id, e.text, e.start_date, e.end_date })
+                .Select(e => new { e.id, e.text, e.start_date, e.end_date, e.CourseId })
                 )
                 ); 
 
@@ -89,6 +89,7 @@ namespace Lexicon_LMS.Controllers
             var entities = new SchedulerContext();
 
             var w = changedEvent.id;
+            var n = changedEvent.CourseId;
 
             try
             {
@@ -103,6 +104,7 @@ namespace Lexicon_LMS.Controllers
                         target.text = changedEvent.text;
                         target.start_date = changedEvent.start_date;
                         target.end_date = changedEvent.end_date;
+                        target.CourseId = n;  //***********  
 
                         entities.SaveChanges();
 
@@ -162,7 +164,17 @@ namespace Lexicon_LMS.Controllers
                 }
 
 
-              action.TargetId = changedEvent.id;
+                /*_CourseID = course.Id;
+
+                B_Event._Event(course.Id);
+                var entities = new SchedulerContext();
+
+                entities.Events.Add(B_Event);
+                entities.SaveChanges(); */
+
+
+
+                action.TargetId = w; //changedEvent.id;
 
             }
             catch (Exception a)
