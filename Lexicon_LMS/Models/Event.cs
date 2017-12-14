@@ -17,7 +17,7 @@ namespace Lexicon_LMS.Models
 
 
         [Display(Name = "Parent course")]
-        public int? CourseId { get; set; }
+        public int? CourseId { get; set; } 
         [ForeignKey("CourseId")]
         public virtual Course Course { get; set; }
 
@@ -31,27 +31,33 @@ namespace Lexicon_LMS.Models
 
         public Event()
         {
-
+            
         }
 
-         public Event(int i)
+         public Event(Event _event, int i)
         {
+            id = _event.id;
+            text = _event.text;
+            start_date = _event.start_date;
+            end_date = _event.end_date;
+
             CourseId = i;
         } 
 
          public void EventHandle(Event _event)
         {
-            
+
+            id = _event.id;
             text = _event.text;
             start_date = _event.start_date;
             end_date = _event.end_date;
            
         }  
             
-       /*  public void _Event(int i)
+         public void _Event(int i)
         {   
             CourseId = i;
-        } */ 
+        } 
 
 
         //[Display(Name = "Parent course")]

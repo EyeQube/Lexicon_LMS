@@ -13,7 +13,7 @@ namespace Lexicon_LMS.Controllers
 {
     public class BasicSchedulerController : Controller
     {
-        public Event B_Event;      
+        //public Event B_Event;      
 
         public int _CourseID;
 
@@ -52,10 +52,11 @@ namespace Lexicon_LMS.Controllers
 
             _CourseID = course.Id;
 
-            B_Event = new Event(course.Id);
+           /* B_Event._Event(course.Id);
             var entities = new SchedulerContext();
 
             entities.Events.Add(B_Event);
+            entities.SaveChanges();*/
 
             return View(ViewModel);
         }
@@ -75,43 +76,51 @@ namespace Lexicon_LMS.Controllers
         [Authorize(Roles = Role.Teacher)]
         public ContentResult Save(int? id, FormCollection actionValues)
         {
-            
+
             var action = new DataAction(actionValues);
             var changedEvent = DHXEventsHelper.Bind<Event>(actionValues);
-                    
-
-            B_Event.EventHandle(changedEvent);
-
-
             var entities = new SchedulerContext();
-
             try
             {
                 switch (action.Type)
                 {
                     case DataActionTypes.Insert:
                         entities.Events.Add(changedEvent);
-                        var target = entities.Events.Single(e => e.id == (B_Event.id - 2));
-                        DHXEventsHelper.Update(target, B_Event, new List<string> { "id" });
-                        //entities.Events.Add(changedEvent);
                         break;
                     case DataActionTypes.Delete:
-                        B_Event = entities.Events.FirstOrDefault(ev => ev.id == action.SourceId);
-                        entities.Events.Remove(B_Event);
+                        changedEvent = entities.Events.FirstOrDefault(ev => ev.id == action.SourceId);
+                        entities.Events.Remove(changedEvent);
                         break;
                     default:// "update"
-                        var target_ = entities.Events.Single(e => e.id == (B_Event.id - 1));
-                        DHXEventsHelper.Update(target_, B_Event, new List<string> { "id" });
+                        var target = entities.Events.Single(e => e.id == changedEvent.id);
+                        DHXEventsHelper.Update(target, changedEvent, new List<string> { "id" });
                         break;
                 }
 
+
                 entities.SaveChanges();
-                action.TargetId = B_Event.id;
+
+
+                //var target = entities.Events.Single(e => e.id == changedEvent.id);
+                //DHXEventsHelper.Update(target, changedEvent, new List<string> { "id" });
+
+
+                //var ent = entities.Events.Single(e => e.id == id);
+
+
+              /*Event Event_ = new Event(entities.Events.Single(e => e.id == id), _CourseID); //Event(entities.Events.Single(e => e.id == id), _CourseID);
+
+              entities.Events.Add(Event_);
+
+              entities.SaveChanges();*/ 
+
+              action.TargetId = changedEvent.id;
             }
             catch (Exception a)
             {
                 action.Type = DataActionTypes.Error;
             }
+
 
             return (new AjaxSaveResponse(action));
         }
