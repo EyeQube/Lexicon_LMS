@@ -260,3 +260,5 @@ paket-files/
 __pycache__/
 *.pyc
 /Lexicon_LMS/App_Docs
+/Lexicon_LMS/App_Data/Docs
+

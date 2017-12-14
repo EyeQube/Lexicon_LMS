@@ -1,4 +1,5 @@
 ﻿using Lexicon_LMS.Models;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
@@ -33,19 +34,20 @@ namespace Lexicon_LMS.Controllers.Api
             if (!validatedOk)
                 return Content(HttpStatusCode.BadRequest, "Delete request failed due to validation: <placeholder>");
 
-            var user = course.Users.FirstOrDefault();
+            // TODO remove from filesystem
+            db.Documents.RemoveRange(db.Documents.Where(x => x.Activity.Module.CourseId == course.Id));
+            db.Documents.RemoveRange(db.Documents.Where(x => x.Module.CourseId == course.Id));
+            db.Documents.RemoveRange(db.Documents.Where(x => x.CourseId == course.Id));
+            db.SaveChanges();
 
-            if (user == null)
+            foreach (var user in course.Users.ToList())
             {
-                db.Courses.Remove(course);
-                db.SaveChanges();
+                user.CourseId = null;
+                db.Entry(user).State = EntityState.Modified;
+            }
 
-            }
-            else
-            {
-                db.Courses.Remove(course);
-                db.SaveChanges();
-            }
+            db.Courses.Remove(course);
+            db.SaveChanges();
 
             return Ok();
         }
@@ -69,6 +71,9 @@ namespace Lexicon_LMS.Controllers.Api
             if (!validatedOk)
                 return Content(HttpStatusCode.BadRequest, "Delete request failed due to validation: <placeholder>");
 
+            // remove documents
+            // TODO remove from filesystem
+            db.Documents.RemoveRange(db.Documents.Where(x => x.Activity.ModuleId == module.Id));
             db.Documents.RemoveRange(module.Documents);
             db.Modules.Remove(module);
             db.SaveChanges();

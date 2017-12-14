@@ -81,9 +81,9 @@ namespace Lexicon_LMS.Controllers
                 db.SaveChanges();
 
                 // Write file to disc
-                var rootPath = AppDomain.CurrentDomain.BaseDirectory;
+                var rootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "App_Data", "Docs");
                 var fileName = Path.GetFileName(file.FileName);
-                var fullPath = Path.Combine(rootPath, "App_Docs", document.Id.ToString(), fileName);
+                var fullPath = Path.Combine(rootPath, document.Id.ToString(), fileName);
                 Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
                 file.SaveAs(fullPath);
 
@@ -101,10 +101,9 @@ namespace Lexicon_LMS.Controllers
         public FileResult GetFile(int id)
         {
             var document = db.Documents.Find(id);
-            var rootPath = AppDomain.CurrentDomain.BaseDirectory;
-            var path = Path.Combine(rootPath, "App_Docs", id.ToString());
+            var rootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "App_Data", "Docs");
             var fileName = document.FileName;
-            var fullPath = Path.Combine(path, fileName);
+            var fullPath = Path.Combine(rootPath, document.Id.ToString(), fileName);
 
             return File(fullPath, "application/octet-stream", document.FileName);
         }
