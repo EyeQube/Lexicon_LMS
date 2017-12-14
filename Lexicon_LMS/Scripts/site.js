@@ -46,8 +46,12 @@ $(document).ready(function () {
                             method: "DELETE"
                         })
                             .done(function () {
-                                link.closest( link.attr("data-user-remove") ).fadeOut(function () {
+                                link.closest(link.attr("data-user-remove")).fadeOut(function () {
                                     $(this).remove();
+                                });
+                                $(link.attr("data-user-removeAjax")).children().fadeOut(function () {
+                                    $(this).remove();
+                                
                                 });
                             })
                             .fail(function (xhr) {

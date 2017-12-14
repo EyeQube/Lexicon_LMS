@@ -139,7 +139,7 @@
                             <span class="pull-right">
                                 @Ajax.ActionLink(" ", "EditModule", "Home", new { id = module.Id }, new AjaxOptions { UpdateTargetId = "UpdateContentDiv", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "glyphicon glyphicon-edit btn-gly1", title = "Edit" })
                                 |
-                                <a href="#" class="js-delete-entity glyphicon glyphicon-trash btn-gly1" title="Delete" data-user-api="/HomeApi/DeleteModule/" data-user-id="@module.Id" data-user-remove=".user-module" data-user-message="Delete module @Html.DisplayFor(m => module.Name)"></a>
+                                <a href="#" class="js-delete-entity glyphicon glyphicon-trash btn-gly1" title="Delete" data-user-api="/HomeApi/DeleteModule/" data-user-id="@module.Id" data-user-removeAjax="#UpdateContentDiv" data-user-remove=".user-module" data-user-message="Delete module @Html.DisplayFor(m => module.Name)"></a>
                             </span>
                         }
 
