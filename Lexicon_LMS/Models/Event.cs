@@ -34,12 +34,12 @@ namespace Lexicon_LMS.Models
             
         }
 
-        public Event(int i)
-        {
+        public Event(int i, DateTime start, DateTime end)
+        {   
             CourseId = i;
-            //text = 
+            start_date = start;
+            end_date = end;
         }
-
 
         public Event(Event _event, int i)
         {
@@ -65,6 +65,8 @@ namespace Lexicon_LMS.Models
         {   
             CourseId = i;
         } 
+
+
 
 
         //[Display(Name = "Parent course")]
