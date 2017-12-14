@@ -13,9 +13,9 @@ namespace Lexicon_LMS.Controllers
 {
     public class BasicSchedulerController : Controller
     {
-        //public Event changedEvent;
+        public Event B_Event;      
 
-        public int _CourseID { get; set; }
+        public int _CourseID;
 
         private ApplicationDbContext db;
 
@@ -26,17 +26,13 @@ namespace Lexicon_LMS.Controllers
             db = new ApplicationDbContext();
 
             _dbDH = new SchedulerContext();
-
         }
-
 
 
         // GET: BasicScheduler
         public ActionResult Index(int? id)
         {
             var course = db.Courses.FirstOrDefault(c => c.Id == id);
-
-            //var events = _dbDH.Events.FirstOrDefault(c => c.CourseId == id);
 
 
             var sched = new DHXScheduler(this);
@@ -56,16 +52,10 @@ namespace Lexicon_LMS.Controllers
 
             _CourseID = course.Id;
 
-            Event _event = new Event(course.Id);
-
-            //changedEvent = new Event(course.Id);
-
+            B_Event = new Event(course.Id);
             var entities = new SchedulerContext();
 
-            entities.Events.Add(_event);
-            //entities.Events.Add(changedEvent);
-
-            entities.SaveChanges(); 
+            entities.Events.Add(B_Event);
 
             return View(ViewModel);
         }
@@ -73,8 +63,9 @@ namespace Lexicon_LMS.Controllers
 
         public ContentResult Data()
         {
+
             return (new SchedulerAjaxData(
-                new SchedulerContext().Events
+                new SchedulerContext().Courses.Single(e => e.Id == _CourseID).Events
                 .Select(e => new { e.id, e.text, e.start_date, e.end_date, e.CourseId})
                 )
                 );
@@ -84,62 +75,38 @@ namespace Lexicon_LMS.Controllers
         [Authorize(Roles = Role.Teacher)]
         public ContentResult Save(int? id, FormCollection actionValues)
         {
-
+            
             var action = new DataAction(actionValues);
-            
-            var entities = new SchedulerContext();
-
-            //Event Event_ = DHXEventsHelper.Bind<Event>(actionValues);
-
             var changedEvent = DHXEventsHelper.Bind<Event>(actionValues);
-            
-            
-            //changedEvent.CourseId = _CourseID;
+                    
 
-            //changedEvent.CourseId = B_Event.CourseId;
+            B_Event.EventHandle(changedEvent);
 
-            //var efrf = entities.Events.Single(e => e.)
-            //_event = entities.Events.FirstOrDefault(n => n.id == id);
-            //var target = entities.Events.Single(e => e.id == B_Event.id);
-            //DHXEventsHelper.Update(target, changedEvent, new List<string> { "CourseId" });
 
-            //var _event = entities.Events.FirstOrDefault(ev => ev.id == id);   
-            // entities.Events.Remove(_event);
-            // entities.SaveChanges();
+            var entities = new SchedulerContext();
 
             try
             {
                 switch (action.Type)
                 {
                     case DataActionTypes.Insert:
+                        entities.Events.Add(changedEvent);
+                        var target = entities.Events.Single(e => e.id == (B_Event.id - 2));
+                        DHXEventsHelper.Update(target, B_Event, new List<string> { "id" });
                         //entities.Events.Add(changedEvent);
-                        var target = entities.Events.FirstOrDefault(ev => ev.id == action.SourceId);
-                        //DHXEventsHelper.Update(target, changedEvent);//, new List<string> { "id" });
-                        target.start_date = changedEvent.start_date;
-                        target.end_date = changedEvent.end_date;
-                        target.text = changedEvent.text;
-                        target.CourseId = changedEvent.CourseId;
-                        entities.Events.Add(target);
-                        //entities.Events.Remove(target);
                         break;
                     case DataActionTypes.Delete:
-                        changedEvent = entities.Events.FirstOrDefault(ev => ev.id == action.SourceId);
-                        entities.Events.Remove(changedEvent);
+                        B_Event = entities.Events.FirstOrDefault(ev => ev.id == action.SourceId);
+                        entities.Events.Remove(B_Event);
                         break;
                     default:// "update"
-                        target = entities.Events.Single(e => e.id == id);
-                        //DHXEventsHelper.Update(target, changedEvent); //, new List<string> { "id" });
-                        target.start_date = changedEvent.start_date;
-                        target.end_date = changedEvent.end_date;
-                        target.text = changedEvent.text;
-                        //target.CourseId = changedEvent.CourseId;
+                        var target_ = entities.Events.Single(e => e.id == (B_Event.id - 1));
+                        DHXEventsHelper.Update(target_, B_Event, new List<string> { "id" });
                         break;
                 }
 
                 entities.SaveChanges();
-                action.TargetId = changedEvent.id;
-
-                
+                action.TargetId = B_Event.id;
             }
             catch (Exception a)
             {
