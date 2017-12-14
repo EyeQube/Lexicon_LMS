@@ -1,10 +1,13 @@
 ﻿function site_init() {
-    $('.datepickerDate').datepicker({ format: 'yyyy-mm-dd', autoclose: true });
-    $('[data-toggle="popover"]').popover();
+    $('.datepickerDate').datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true
+    });
 
     $('.datetimepicker').datetimepicker({
         sideBySide: true,
         format: 'YYYY-MM-DD HH:mm'
+        
     });
 }
 
@@ -22,7 +25,6 @@ $(document).ready(function () {
     //    data-user-remove: DOM element to remove on success (ie. a css class descriptor)
     //    data-user-message:Text to show in confirmation box
     //
-    //$('.js-delete-entity').click(function (e) {
     $(document).on('click', '.js-delete-entity', function (e) {
         var link = $(e.target);
 
@@ -51,13 +53,11 @@ $(document).ready(function () {
                                 });
                                 $(link.attr("data-user-removeAjax")).children().fadeOut(function () {
                                     $(this).remove();
-                                
                                 });
                             })
                             .fail(function (xhr) {
                                 bootbox.alert(xhr.responseText);
                             });
-
                     }
                 }
             }

@@ -110,6 +110,11 @@ HelloSpace{
     text-decoration: none !important;
 }
 
+.newActivityBtn2 {
+    margin-bottom: 20px;
+    margin-left:3px;
+}
+
 .newActivityBtn {
     margin-bottom: 20px;
 }

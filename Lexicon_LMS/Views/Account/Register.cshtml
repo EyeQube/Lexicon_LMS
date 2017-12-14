@@ -58,7 +58,7 @@
     }
     <div class="form-group">
             <button class="btn btn-default" name="button" value="SaveNew">Register</button>
-            @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-default" })
+            <a href="@TempData["ReturnUrl"]" class="btn btn-default">Cancel</a>
     </div>
 }
 

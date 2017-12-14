@@ -9,7 +9,7 @@
     @if (User.IsInRole(Role.Teacher))
     {
         @Html.ActionLink("Add new activity", "CreateActivity", "Home", new { id = Model.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm newActivityBtn" })
-        @Html.ActionLink("Add document", "AddFileToSystem", "Document", new { moduleId = Model.Id, }, htmlAttributes: new { @class = "btn btn-default btn-sm newActivityBtn" })
+        @Html.ActionLink("Add document", "AddFileToSystem", "Document", new { moduleId = Model.Id, }, htmlAttributes: new { @class = "btn btn-default btn-sm newActivityBtn2" })
     }
 
     <table class="table table-responsive dl-horizontal table-striped table-bordered">
