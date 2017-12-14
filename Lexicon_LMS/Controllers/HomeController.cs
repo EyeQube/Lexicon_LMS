@@ -21,7 +21,6 @@ namespace Lexicon_LMS.Controllers
         public ActionResult Module(int id)
         {
 
-            // get latest end-date from module list OR the course start-date
 
             var dbCourse = db.Courses.Single(c => c.Id == id);
 
@@ -33,14 +32,10 @@ namespace Lexicon_LMS.Controllers
                 module.StartDate = dbCourse.StartDate;
                 module.EndDate = dbCourse.EndDate;
 
-                /*var _startDate = db.Courses.FirstOrDefault(c => c.Id == id);
-                startDate = _startDate.StartDate; */
-
                 return View(module);
-
-                //return RedirectToAction("Index", "Home");
             }
 
+            // get latest end-date from module list OR the course start-date
             var startDate = db.Courses.FirstOrDefault(c => c.Id == id)
                 .Modules.Select(m => m.EndDate)
                 .Concat(
@@ -48,13 +43,11 @@ namespace Lexicon_LMS.Controllers
                     .Select(c => c.EndDate))
                 .Max().AddDays(1);
 
-
             if (startDate == null)
             {
                 var _startDate = db.Courses.FirstOrDefault(c => c.Id == id);
                 startDate = _startDate.StartDate;
             }
-
 
             var endDate = db.Courses.FirstOrDefault(c => c.Id == id);
 
@@ -90,7 +83,6 @@ namespace Lexicon_LMS.Controllers
             if (course.Users.Count() > 0 && course.Modules.Count() == 0)
                 ViewBag.ErrorMessage = $"{course.Name} has {course.Users.Count()} students enrolled. You must remove all students from the course, before you can delete the actual course.";
 
-
             return View("Error");
         }
 
@@ -101,66 +93,6 @@ namespace Lexicon_LMS.Controllers
             var course = db.Courses.Single(c => c.Id == id);
 
             return View("EditCourse", course);
-        }
-
-
-        [Authorize(Roles = Role.Teacher)]
-        public ActionResult DeleteModuleOld(int? id)
-        {
-            if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
-            Module module = db.Modules.Find(id);
-
-            if (module == null)
-                return HttpNotFound();
-
-            db.Modules.Remove(module);
-            db.SaveChanges();
-
-            return RedirectToAction("Index", "Home");
-        }
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = Role.Teacher)]
-        public ActionResult SaveModule(Module module)
-        {
-            bool bol = false;
-            //var moduleInDb = db.Modules.FirstOrDefault(m => m.Id == module.Id);
-
-            foreach (var modules in db.Modules)
-            {
-                if (modules.Name == module.Name)
-                {
-                    bol = true;
-                    break;
-                }
-            }
-
-            if (bol == false)
-            {
-                db.Modules.Add(module);
-
-                //var mods = db.Modules.Single(m => m.CourseId == 0);
-
-                db.SaveChanges();
-
-                return RedirectToAction("Course", "Home");
-            }
-            else
-            {
-                var moduleInDb = db.Modules.FirstOrDefault(m => m.Name == module.Name);
-                moduleInDb.Name = module.Name;
-                moduleInDb.Description = module.Description;
-                moduleInDb.StartDate = module.StartDate;
-                moduleInDb.EndDate = module.EndDate;
-                moduleInDb.CourseId = module.CourseId;
-                db.SaveChanges();
-            }
-
-            return RedirectToAction("Course", "Home");
         }
 
 
@@ -198,8 +130,7 @@ namespace Lexicon_LMS.Controllers
             return View("RegisterCourse", Course);
         }
 
-        //
-        // POST: /Home/SaveCourse
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Role.Teacher)]
@@ -236,6 +167,7 @@ namespace Lexicon_LMS.Controllers
             return View(Courses);
         }
 
+
         [Authorize]
         public ActionResult Index()
         {
@@ -256,7 +188,6 @@ namespace Lexicon_LMS.Controllers
         }
 
 
-        // GET: 
         [Authorize(Roles = Role.Teacher)]
         public ActionResult CreateModule(int? courseId)
         {
@@ -335,9 +266,7 @@ namespace Lexicon_LMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var e = module.EndDate;
                 module.EndDate = new System.DateTime(module.EndDate.Year, module.EndDate.Month, module.EndDate.Day, 23, 59, 59);
-                //module.EndDate = new System.DateTime(e.Year, e.Month, e.Day, 23, 59, 59);
                 db.Entry(module).State = EntityState.Modified;
                 db.SaveChanges();
 
@@ -370,7 +299,6 @@ namespace Lexicon_LMS.Controllers
         {
             TempData["ModuleId"] = id;
 
-
             var activity = db.Activities.Where(m => m.ModuleId == id).ToList();
 
             var module = db.Modules.Find(id);
@@ -381,7 +309,6 @@ namespace Lexicon_LMS.Controllers
         }
 
 
-        // GET: 
         [Authorize(Roles = Role.Teacher)]
         public ActionResult CreateActivity(int? id)
         {
@@ -439,6 +366,7 @@ namespace Lexicon_LMS.Controllers
             return View(activity);
         }
 
+
         [Authorize(Roles = Role.Teacher)]
         public ActionResult EditActivity(int? id)
         {
@@ -454,6 +382,7 @@ namespace Lexicon_LMS.Controllers
             TempData.Keep("ReturnUrl");
             return PartialView(activity);
         }
+
 
         [Authorize(Roles = Role.Teacher)]
         [HttpPost]
@@ -473,7 +402,7 @@ namespace Lexicon_LMS.Controllers
             return View(activity);
         }
 
-        //TODO copy from accountcontroller ... move to common utility class
+        //TODO Refactor this method? Copy exists in other controller...
         private ActionResult RedirectToLocal(string returnUrl)
         {
             if (returnUrl != null && Url.IsLocalUrl(returnUrl))
@@ -482,7 +411,6 @@ namespace Lexicon_LMS.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
-
 
 
     }

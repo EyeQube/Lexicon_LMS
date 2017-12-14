@@ -29,11 +29,6 @@ namespace Lexicon_LMS.Controllers.Api
             if (course == null)
                 return Content(HttpStatusCode.NotFound, "Item not found in database");
 
-            // Some kind of validation logic
-            var validatedOk = true;
-            if (!validatedOk)
-                return Content(HttpStatusCode.BadRequest, "Delete request failed due to validation: <placeholder>");
-
             // TODO remove from filesystem
             db.Documents.RemoveRange(db.Documents.Where(x => x.Activity.Module.CourseId == course.Id));
             db.Documents.RemoveRange(db.Documents.Where(x => x.Module.CourseId == course.Id));
@@ -66,11 +61,6 @@ namespace Lexicon_LMS.Controllers.Api
             if (module == null)
                 return Content(HttpStatusCode.NotFound, "Item not found in database");
 
-            // Some kind of validation logic
-            var validatedOk = true;
-            if (!validatedOk)
-                return Content(HttpStatusCode.BadRequest, "Delete request failed due to validation: <placeholder>");
-
             // remove documents
             // TODO remove from filesystem
             db.Documents.RemoveRange(db.Documents.Where(x => x.Activity.ModuleId == module.Id));
@@ -94,11 +84,6 @@ namespace Lexicon_LMS.Controllers.Api
 
             if (activity == null)
                 return Content(HttpStatusCode.NotFound, "Item not found in database");
-
-            // Some kind of validation logic
-            var validatedOk = true;
-            if (!validatedOk)
-                return Content(HttpStatusCode.BadRequest, "Delete request failed due to validation: <placeholder>");
 
             db.Documents.RemoveRange(activity.Documents);
             db.Activities.Remove(activity);
