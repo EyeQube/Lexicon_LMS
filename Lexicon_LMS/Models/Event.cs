@@ -34,7 +34,14 @@ namespace Lexicon_LMS.Models
             
         }
 
-         public Event(Event _event, int i)
+        public Event(int i, DateTime start, DateTime end)
+        {   
+            CourseId = i;
+            start_date = start;
+            end_date = end;
+        }
+
+        public Event(Event _event, int i)
         {
             id = _event.id;
             text = _event.text;
@@ -58,6 +65,8 @@ namespace Lexicon_LMS.Models
         {   
             CourseId = i;
         } 
+
+
 
 
         //[Display(Name = "Parent course")]

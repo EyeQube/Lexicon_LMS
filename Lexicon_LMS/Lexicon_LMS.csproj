@@ -214,21 +214,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201712132301429_init.cs" />
-    <Compile Include="Migrations\201712132301429_init.Designer.cs">
-      <DependentUpon>201712132301429_init.cs</DependentUpon>
+    <Compile Include="Migrations\201712141253200_Init.cs" />
+    <Compile Include="Migrations\201712141253200_Init.Designer.cs">
+      <DependentUpon>201712141253200_Init.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201712132304390_InitialTwo.cs" />
-    <Compile Include="Migrations\201712132304390_InitialTwo.Designer.cs">
-      <DependentUpon>201712132304390_InitialTwo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712140026578_DonePl.cs" />
-    <Compile Include="Migrations\201712140026578_DonePl.Designer.cs">
-      <DependentUpon>201712140026578_DonePl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712140027369_DonePl.cs" />
-    <Compile Include="Migrations\201712140027369_DonePl.Designer.cs">
-      <DependentUpon>201712140027369_DonePl.cs</DependentUpon>
+    <Compile Include="Migrations\201712141253448_InitTwo.cs" />
+    <Compile Include="Migrations\201712141253448_InitTwo.Designer.cs">
+      <DependentUpon>201712141253448_InitTwo.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migration\ConfigurationTwo.cs" />
@@ -603,17 +595,11 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201712132301429_init.resx">
-      <DependentUpon>201712132301429_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201712141253200_Init.resx">
+      <DependentUpon>201712141253200_Init.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712132304390_InitialTwo.resx">
-      <DependentUpon>201712132304390_InitialTwo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712140026578_DonePl.resx">
-      <DependentUpon>201712140026578_DonePl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712140027369_DonePl.resx">
-      <DependentUpon>201712140027369_DonePl.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201712141253448_InitTwo.resx">
+      <DependentUpon>201712141253448_InitTwo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
