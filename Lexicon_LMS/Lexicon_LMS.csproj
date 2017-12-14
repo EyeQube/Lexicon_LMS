@@ -214,13 +214,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201712141253200_Init.cs" />
-    <Compile Include="Migrations\201712141253200_Init.Designer.cs">
-      <DependentUpon>201712141253200_Init.cs</DependentUpon>
+    <Compile Include="Migrations\201712141459286_Init.cs" />
+    <Compile Include="Migrations\201712141459286_Init.Designer.cs">
+      <DependentUpon>201712141459286_Init.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201712141253448_InitTwo.cs" />
-    <Compile Include="Migrations\201712141253448_InitTwo.Designer.cs">
-      <DependentUpon>201712141253448_InitTwo.cs</DependentUpon>
+    <Compile Include="Migrations\201712141500108_InitTwo.cs" />
+    <Compile Include="Migrations\201712141500108_InitTwo.Designer.cs">
+      <DependentUpon>201712141500108_InitTwo.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migration\ConfigurationTwo.cs" />
@@ -595,11 +595,11 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201712141253200_Init.resx">
-      <DependentUpon>201712141253200_Init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201712141459286_Init.resx">
+      <DependentUpon>201712141459286_Init.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712141253448_InitTwo.resx">
-      <DependentUpon>201712141253448_InitTwo.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201712141500108_InitTwo.resx">
+      <DependentUpon>201712141500108_InitTwo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

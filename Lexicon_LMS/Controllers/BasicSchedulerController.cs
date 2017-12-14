@@ -87,6 +87,9 @@ namespace Lexicon_LMS.Controllers
             var action = new DataAction(actionValues);
             var changedEvent = DHXEventsHelper.Bind<Event>(actionValues);
             var entities = new SchedulerContext();
+
+            var w = changedEvent.id;
+
             try
             {
                 switch (action.Type)
@@ -117,26 +120,41 @@ namespace Lexicon_LMS.Controllers
                         break;
                     default:// "update"
 
-                        entities.Events.Add(changedEvent);
+                        //entities.Events.Add(changedEvent);
 
-                        entities.SaveChanges();
+                        //entities.SaveChanges();
 
-                        var target_ = entities.Events.Single(e => e.id == (changedEvent.id - 1));
-                        target_.text = changedEvent.text;
-                        target_.start_date = changedEvent.start_date;
-                        target_.end_date = changedEvent.end_date;
+                       /* var _target = entities.Events.Single(e => e.id == action.SourceId);
+                        _target.text = changedEvent.text;
+                        
+                        entities.SaveChanges();*/
 
-                        entities.SaveChanges();
-
-                        changedEvent = entities.Events.FirstOrDefault(ev => ev.id == changedEvent.id);
-                        entities.Events.Remove(changedEvent);
+                        //changedEvent = entities.Events.FirstOrDefault(ev => ev.id == changedEvent.id);
+                        //entities.Events.Remove(changedEvent);
 
                         //DHXEventsHelper.Update(target, changedEvent); //, new List<string> { "id" });
-                        entities.SaveChanges(); ///**
- 
+                        //entities.SaveChanges(); //*****
 
-                        var _target_ = entities.Events.Single(e => e.id == changedEvent.id - 3);
-                        DHXEventsHelper.Update(_target_, changedEvent, new List<string> { "id", "CourseId" });
+                        //entities.Events.Add(changedEvent);
+
+                        /*var target_ = entities.Events.Single(e => e.id == (changedEvent.id - 1));
+                        target_.text = changedEvent.text;
+                        target_.start_date = changedEvent.start_date;
+                        target_.end_date = changedEvent.end_date;*/
+
+                        /*   entities.SaveChanges();
+
+                           changedEvent = entities.Events.FirstOrDefault(ev => ev.id == changedEvent.id);
+                           entities.Events.Remove(changedEvent);
+
+                           //DHXEventsHelper.Update(target, changedEvent); //, new List<string> { "id" });
+                           entities.SaveChanges(); ///**  */
+
+
+                         var _target_ = entities.Events.Single(e => e.id == w);
+                         _target_.text = changedEvent.text;
+
+                        //DHXEventsHelper.Update(_target_ , changedEvent, new List<string> { "id", "CourseId" });
 
                         entities.SaveChanges(); 
 
@@ -145,6 +163,7 @@ namespace Lexicon_LMS.Controllers
 
 
               action.TargetId = changedEvent.id;
+
             }
             catch (Exception a)
             {

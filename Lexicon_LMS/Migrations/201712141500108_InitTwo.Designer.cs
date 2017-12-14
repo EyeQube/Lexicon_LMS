@@ -13,7 +13,7 @@ namespace Lexicon_LMS.Migration
         
         string IMigrationMetadata.Id
         {
-            get { return "201712141253448_InitTwo"; }
+            get { return "201712141500108_InitTwo"; }
         }
         
         string IMigrationMetadata.Source
