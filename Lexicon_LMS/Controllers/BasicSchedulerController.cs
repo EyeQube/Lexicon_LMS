@@ -153,7 +153,7 @@ namespace Lexicon_LMS.Controllers
 
 
                         var _target_ = entities.Events.Single(e => e.id == w);
-                       // _target_.text = changedEvent.text;
+                        _target_.text = changedEvent.text;
 
                         //DHXEventsHelper.Update(_target_ , changedEvent, new List<string> { "id", "CourseId" });
 
