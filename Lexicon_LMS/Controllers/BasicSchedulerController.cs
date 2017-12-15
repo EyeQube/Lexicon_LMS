@@ -13,7 +13,7 @@ namespace Lexicon_LMS.Controllers
 {
     public class BasicSchedulerController : Controller
     {
-        public Event B_Event;
+        public Event B_Event { get; set; }
 
         public int _CourseID;
 
@@ -104,7 +104,7 @@ namespace Lexicon_LMS.Controllers
                         target.text = changedEvent.text;
                         target.start_date = changedEvent.start_date;
                         target.end_date = changedEvent.end_date;
-                        target.CourseId = n;  //***********  
+                        //target.CourseId = n;  //***********  
 
                         entities.SaveChanges();
 
@@ -128,7 +128,6 @@ namespace Lexicon_LMS.Controllers
 
                         /* var _target = entities.Events.Single(e => e.id == action.SourceId);
                          _target.text = changedEvent.text;
-
                          entities.SaveChanges();*/
 
                         //changedEvent = entities.Events.FirstOrDefault(ev => ev.id == changedEvent.id);
@@ -151,8 +150,10 @@ namespace Lexicon_LMS.Controllers
                            entities.SaveChanges(); ///**  */
 
 
+
+
                         var _target_ = entities.Events.Single(e => e.id == w);
-                        _target_.text = changedEvent.text;
+                       // _target_.text = changedEvent.text;
 
                         //DHXEventsHelper.Update(_target_ , changedEvent, new List<string> { "id", "CourseId" });
 
@@ -161,14 +162,11 @@ namespace Lexicon_LMS.Controllers
                         break;
                 }
 
-
                 /*_CourseID = course.Id;
                 B_Event._Event(course.Id);
                 var entities = new SchedulerContext();
                 entities.Events.Add(B_Event);
                 entities.SaveChanges(); */
-
-
 
                 action.TargetId = w; //changedEvent.id;
 
