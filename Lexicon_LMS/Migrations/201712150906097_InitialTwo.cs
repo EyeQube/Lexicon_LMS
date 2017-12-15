@@ -3,10 +3,11 @@ namespace Lexicon_LMS.Migration
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitTwo : DbMigration
+    public partial class InitialTwo : DbMigration
     {
         public override void Up()
         {
+
             return;
 
             CreateTable(

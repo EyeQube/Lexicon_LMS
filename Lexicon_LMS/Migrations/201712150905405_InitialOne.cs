@@ -3,7 +3,7 @@ namespace Lexicon_LMS.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Init : DbMigration
+    public partial class InitialOne : DbMigration
     {
         public override void Up()
         {
