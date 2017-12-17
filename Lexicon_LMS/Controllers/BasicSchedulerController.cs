@@ -66,17 +66,21 @@ namespace Lexicon_LMS.Controllers
 
         public ContentResult Data()
         {
+
             return (new SchedulerAjaxData(
                 new SchedulerContext().Events
                 .Select(e => new { e.id, e.text, e.start_date, e.end_date, e.CourseId })
                 )
-                ); 
+                );
+
+           
+
 
             /*return (new SchedulerAjaxData(
                 new SchedulerContext().Courses.Single(e => e.Id == _CourseID).Events
-                .Select(e => new { e.id, e.text, e.start_date, e.end_date})
+                .Select(e => new { e.id, e.text, e.start_date, e.end_date, e.CourseId})
                 )
-                );*/ 
+                );*/
         }
 
 
@@ -158,19 +162,21 @@ namespace Lexicon_LMS.Controllers
 
                         //DHXEventsHelper.Update(_target_ , changedEvent, new List<string> { "id", "CourseId" });
 
-                        entities.SaveChanges(); 
+                        entities.SaveChanges();
+
+                        // //////////////////////////////////////////
+                        /* B_Event._Event(_CourseID);
+                        entities = new SchedulerContext();
+
+                        entities.Events.Add(B_Event);
+                        entities.SaveChanges(); */
+
 
                         break;
                 }
 
 
-                /*_CourseID = course.Id;
-
-                B_Event._Event(course.Id);
-                var entities = new SchedulerContext();
-
-                entities.Events.Add(B_Event);
-                entities.SaveChanges(); */
+                
 
 
 
@@ -182,8 +188,18 @@ namespace Lexicon_LMS.Controllers
                 action.Type = DataActionTypes.Error;
             }
 
+              // _CourseID = course.Id;
 
             return (new AjaxSaveResponse(action));
+
+
+            
+
+
         }
+
+        
+
+
     }
 }
