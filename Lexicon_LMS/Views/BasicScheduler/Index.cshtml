@@ -6,6 +6,17 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<div class="container">
+    <div class="col-md-13">
+        <div class="row">
+            <div>
+                @Html.ActionLink("Back to Startpage", "Course", "Home", new { id = Model.Course.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm", onclick = "return confirm('Are you sure you want the recent changes to take place?');" })
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,14 +28,13 @@
         }
     </style>
 </head>
-<body>
-    <div>
-        @Html.ActionLink("Back to Startpage", "Course", "Home", new { id = Model.Course.Id }, htmlAttributes: new { @class = "btn btn-default btn-sm", onclick = "return confirm('Are you sure you want the recent changes to take place?');" })
-    </div>
-    
-    <div style="height:700px;width:900px;margin:0 auto">
-        @Html.Raw(Model.DHX.Render())
-    </div>
 
+    
+<body>
+            <hr />
+
+            <div style="height:700px;width:900px;margin:0 auto">
+                @Html.Raw(Model.DHX.Render())
+            </div>
 </body>
 </html>
