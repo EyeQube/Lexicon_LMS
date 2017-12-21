@@ -93,25 +93,30 @@ namespace Lexicon_LMS.Controllers
             return View(ViewModel);
         }
 
-
+        
         public ContentResult Data()
         {
 
+            /* return (new SchedulerAjaxData(
+                 new SchedulerContext().Events
+                 .Select(e => new { e.id, e.text, e.start_date, e.end_date, e.CourseId})
+                 )
+                 );     */
+
+
+            var der = db.CurrentCourseID.FirstOrDefault(s => s.Compare == 1);
+            var ter = der.CurrentCourse_ID;
+            db.SaveChanges();
+
             return (new SchedulerAjaxData(
-                new SchedulerContext().Events
+                new SchedulerContext().Courses.Single(e => e.Id == ter).Events
                 .Select(e => new { e.id, e.text, e.start_date, e.end_date, e.CourseId})
                 )
-                );           
-
-            /*return (new SchedulerAjaxData(
-                new SchedulerContext().Courses.Single(e => e.Id == _CourseID).Events
-                .Select(e => new { e.id, e.text, e.start_date, e.end_date})
-                )
-                );*/
+                );
         }
 
 
-
+        [Authorize(Roles = Role.Teacher)]
         public ContentResult Save(int? id, FormCollection actionValues)
         {
             var db = new ApplicationDbContext();
