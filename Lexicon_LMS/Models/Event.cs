@@ -60,8 +60,20 @@ namespace Lexicon_LMS.Models
             end_date = _event.end_date;
            
         }  
-            
-         public void _Event(int i)
+
+        public void Eventer(Event _event, int i)
+        {
+            id = _event.id;
+            text = _event.text;
+            start_date = _event.start_date;
+            end_date = _event.end_date;
+
+            CourseId = i;
+        }
+
+
+
+        public void _Event(int i)
         {   
             CourseId = i;
         } 
