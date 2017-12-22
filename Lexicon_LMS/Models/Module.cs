@@ -18,24 +18,24 @@ namespace Lexicon_LMS.Models
         public string Description { get; set; }
 
         [Required]
-        [Display(Name = "Start Date")]
+        [Display(Name = "Start date")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime StartDate { get; set; }
 
         [Required]
-        [Display(Name = "Ending Date")]
+        [Display(Name = "End date")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime EndDate { get; set; }
 
         [Required]
-        [Display(Name = "Parent course")]
+        [Display(Name = "Course")]
         public int CourseId { get; set; }
         [ForeignKey("CourseId")]
         public virtual Course Course { get; set; }
 
         public virtual ICollection<Activity> Activity { get; set; }
-
+        public virtual ICollection<Document> Documents { get; set; }
     }
 }

@@ -25,12 +25,16 @@ namespace Lexicon_LMS
                       "~/Scripts/respond.js",
                       "~/Scripts/site.js",
                       "~/Scripts/bootbox.min.js",
+                      "~/Scripts/bootstrap-sortable.js",
                       "~/Scripts/bootstrap-datepicker.js",
+                      "~/Scripts/bootstrap-datetimepicker.min.js",
                       "~/Scripts/locales/bootstrap-datepicker.*"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap-lumen.css",
                       "~/Content/bootstrap-datepicker.css",
+                      "~/Content/bootstrap-datetimepicker.min.css",
+                      "~/Content/bootstrap-sortable.css",
                       "~/Content/site.css"));
         }
     }

@@ -16,7 +16,7 @@
 
     <div class="form-group">
         @Html.LabelFor(m => m.Name)
-        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder ="enter course name" })
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder ="enter course name", autofocus = "true" })
         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
     </div>
 

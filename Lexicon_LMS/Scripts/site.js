@@ -1,6 +1,23 @@
-﻿$(document).ready(function () {
-    $('.datepickerDate').datepicker({ format: 'yyyy/mm/dd', autoclose: true });
-    
+﻿function site_init() {
+    $('.datepickerDate').datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true
+    });
+
+    $('.datetimepicker').datetimepicker({
+        sideBySide: true,
+        format: 'YYYY-MM-DD HH:mm'
+        
+    });
+}
+
+$(document).ajaxComplete(function () {
+    site_init();
+});
+
+$(document).ready(function () {
+    site_init();
+
     // General function for removing stuff in database and DOM.
     // Uses the following html data attributes:
     //    data-user-api:    Database API for removing something
@@ -8,7 +25,6 @@
     //    data-user-remove: DOM element to remove on success (ie. a css class descriptor)
     //    data-user-message:Text to show in confirmation box
     //
-    //$('.js-delete-entity').click(function (e) {
     $(document).on('click', '.js-delete-entity', function (e) {
         var link = $(e.target);
 
@@ -32,20 +48,21 @@
                             method: "DELETE"
                         })
                             .done(function () {
-                                link.closest( link.attr("data-user-remove") ).fadeOut(function () {
+                                link.closest(link.attr("data-user-remove")).fadeOut(function () {
+                                    $(this).remove();
+                                });
+                                $(link.attr("data-user-removeAjax")).children().fadeOut(function () {
                                     $(this).remove();
                                 });
                             })
                             .fail(function (xhr) {
                                 bootbox.alert(xhr.responseText);
                             });
-
                     }
                 }
             }
         });
 
     });
-
 
 });

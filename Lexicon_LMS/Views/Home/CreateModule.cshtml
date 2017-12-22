@@ -12,14 +12,12 @@
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.CourseId)
 
-<div class="form-horizontal">
-
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
 
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
-            @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", autofocus = "true" })
             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
         </div>
 
@@ -32,7 +30,7 @@
         <div class="form-group">
                 @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label" })
             <div class="input-group" id="datetimepicker">
-                @Html.TextBoxFor(model => model.StartDate, new { @class = "form-control datepickerDate", placeholder = "Välj startdatum" })
+                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { type = "text", @class = "form-control datepickerDate", placeholder = "enter start date" } })
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -44,7 +42,7 @@
         <div class="form-group">
                 @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label" })
             <div class="input-group" id="datetimepicker">
-                @Html.TextBoxFor(model => model.EndDate, new { @class = "form-control datepickerDate", @Value = "", placeholder = "Välj startdatum" })
+                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { type = "text", @class = "form-control datepickerDate", placeholder = "enter end date" } })
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -53,10 +51,9 @@
         </div>
 
         <div class="form-group">
-            <input type="submit" value="Create" class="btn btn-primary" />
-            <a href="@ViewBag.ReturnUrl" class="btn btn-default">Cancel</a>
+            <input type="submit" value="Create" class="btn btn-default" />
+            <a href="@TempData["ReturnUrl"]" class="btn btn-default">Cancel</a>
         </div>
-</div>
 }
 
 
