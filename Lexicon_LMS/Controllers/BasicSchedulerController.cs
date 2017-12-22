@@ -63,7 +63,7 @@ namespace Lexicon_LMS.Controllers
             }
 
             
-            LatestCourseID.C_ID(course.Id);
+            LatestCourseID.InputID(course.Id);
 
             db.CurrentCourseID.Add(LatestCourseID);
 
@@ -75,6 +75,7 @@ namespace Lexicon_LMS.Controllers
         }
 
         
+
         public ContentResult Data()
         {
 
@@ -91,6 +92,7 @@ namespace Lexicon_LMS.Controllers
         }
 
 
+
         [Authorize(Roles = Role.Teacher)]
         public ContentResult Save(int? id, FormCollection actionValues)
         {
@@ -101,10 +103,6 @@ namespace Lexicon_LMS.Controllers
             var entities = new SchedulerContext();
 
             var eventz = entities.Events.Count();
-
-            var CurrentCourseId = db.CurrentCourseID.FirstOrDefault(c => c.Compare == 1);
-            CurrentCourseId.Event_ID = changedEvent.id;    
-            db.SaveChanges();
 
             
                 try

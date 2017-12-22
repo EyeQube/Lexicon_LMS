@@ -148,7 +148,6 @@ namespace Lexicon_LMS.Migration
                         Id = c.Int(nullable: false, identity: true),
                         Compare = c.Int(nullable: false),
                         CurrentCourse_ID = c.Int(nullable: false),
-                        Event_ID = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
