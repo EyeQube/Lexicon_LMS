@@ -16,13 +16,14 @@ namespace Lexicon_LMS.Controllers
 
         private ApplicationDbContext db;
 
-        //private SchedulerContext _dbDH;
+
+        public CourseID LatestCourseID = new CourseID();
+                
 
         public BasicSchedulerController()
         {
-            db = new ApplicationDbContext();
 
-          //  _dbDH = new SchedulerContext();
+            db = new ApplicationDbContext();
 
         }
 
@@ -32,27 +33,13 @@ namespace Lexicon_LMS.Controllers
         {
             var course = db.Courses.FirstOrDefault(c => c.Id == id);
 
-            //var events = _dbDH.Events.FirstOrDefault(c => c.CourseId == id);
-
 
             var sched = new DHXScheduler(this);
             sched.Skin = DHXScheduler.Skins.Terrace;
             sched.LoadData = true;
             sched.EnableDataprocessor = true;
-            sched.InitialDate = course.StartDate; //new DateTime(2016, 5, 5); //course.StartDate;  //new DateTime(2017, 11, 27);
-          
+            sched.InitialDate = course.StartDate; 
 
-            /*public ActionResult Index()
-            {
-                var sched = new DHXScheduler(this);
-                sched.Skin = DHXScheduler.Skins.Terrace;
-                sched.LoadData = true;
-                sched.EnableDataprocessor = true;
-                sched.InitialDate = new DateTime(2016, 5, 5);
-                return View(sched);
-            }*/
-
-            //var events = _dbDH.Events.FirstOrDefault(c => c.CourseId == id);
 
             var ViewModel = new CourseDhxViewModel()
             {
@@ -60,53 +47,130 @@ namespace Lexicon_LMS.Controllers
                 DHX = sched
             };
 
-            // ViewBag.Id = course.Id;
+
+            var nrOfCourseIds = db.CurrentCourseID.Count();
+
+
+            if(nrOfCourseIds > 0)
+            {
+                var CourseIdList = db.CurrentCourseID.Where(c => c.Compare == 1).ToList();
+
+                foreach (var courseId in CourseIdList)
+                {
+                    db.CurrentCourseID.Remove(courseId);
+                    db.SaveChanges();
+                }
+            }
+
+            
+            LatestCourseID.InputID(course.Id);
+
+            db.CurrentCourseID.Add(LatestCourseID);
+
+            db.SaveChanges();
+
+
 
             return View(ViewModel);
         }
 
         
+
         public ContentResult Data()
         {
+
+            var courseId = db.CurrentCourseID.FirstOrDefault(c => c.Compare == 1);
+            var currentCourseID = courseId.CurrentCourse_ID;
+            db.SaveChanges();       
+
+
             return (new SchedulerAjaxData(
-                new SchedulerContext().Events
-                .Select(e => new { e.id, e.text, e.start_date, e.end_date})
+                new SchedulerContext().Courses.Single(e => e.Id == currentCourseID).Events
+                .Select(e => new { e.id, e.text, e.start_date, e.end_date, e.CourseId})
                 )
                 );
         }
 
 
+
         [Authorize(Roles = Role.Teacher)]
         public ContentResult Save(int? id, FormCollection actionValues)
         {
+            var db = new ApplicationDbContext();
+
             var action = new DataAction(actionValues);
             var changedEvent = DHXEventsHelper.Bind<Event>(actionValues);
             var entities = new SchedulerContext();
-            try
-            {
-                switch (action.Type)
-                {
-                    case DataActionTypes.Insert:
-                        entities.Events.Add(changedEvent);
-                        break;
-                    case DataActionTypes.Delete:
-                        changedEvent = entities.Events.FirstOrDefault(ev => ev.id == action.SourceId);
-                        entities.Events.Remove(changedEvent);
-                        break;
-                    default:// "update"
-                        var target = entities.Events.Single(e => e.id == changedEvent.id);
-                        DHXEventsHelper.Update(target, changedEvent, new List<string> { "id" });
-                        break;
-                }
-                entities.SaveChanges();
-                action.TargetId = changedEvent.id;
-            }
-            catch (Exception a)
-            {
-                action.Type = DataActionTypes.Error;
-            }
 
-            return (new AjaxSaveResponse(action));
+            var eventz = entities.Events.Count();
+
+            
+                try
+                {
+                    switch (action.Type)
+                    {
+                        case DataActionTypes.Insert:
+
+                            entities.Events.Add(changedEvent);
+
+                            entities.SaveChanges();
+
+                            var coreId_ = db.CurrentCourseID.FirstOrDefault(c => c.Compare == 1);
+                            var insertCurrentCourseID = coreId_.CurrentCourse_ID;
+                                
+                            var _target = entities.Events.Single(e => e.id == changedEvent.id);
+
+                            _target.Eventz(changedEvent.text, changedEvent.start_date, changedEvent.end_date, insertCurrentCourseID);    
+                        
+
+                            break;
+
+
+                        case DataActionTypes.Delete:
+
+                            changedEvent = entities.Events.FirstOrDefault(ev => ev.id == action.SourceId);
+                            entities.Events.Remove(changedEvent);
+
+                            break;
+
+
+                        default:// "update"
+                            
+                            var courseId_ = db.CurrentCourseID.FirstOrDefault(c => c.Compare == 1);
+                            var updateCurrentCourseID = courseId_.CurrentCourse_ID;
+
+                            var target = entities.Events.Single(e => e.id == changedEvent.id);
+
+                            target.Eventz(changedEvent.text, changedEvent.start_date, changedEvent.end_date, updateCurrentCourseID);
+
+
+                            DHXEventsHelper.Update(target, changedEvent, new List<string> { "id", "text", "start_date", "end_date" });
+                            break;
+                    }
+
+                 
+                    entities.SaveChanges();
+                    action.TargetId = changedEvent.id;
+
+                }
+                catch (Exception a)
+                {
+                    action.Type = DataActionTypes.Error;
+                }
+
+
+                return (new AjaxSaveResponse(action));
+
+               
+            }
         }
     }
-}
+
+
+
+
+
+
+
+  
+          

@@ -13,6 +13,8 @@ namespace Lexicon_LMS.Models
         public DbSet<ActivityType> ActivityTypes { get; set; }
         public DbSet<StudentDocument> StudentDocuments { get; set; }
         public DbSet<Document> Documents { get; set; }
+        public DbSet<CourseID> CurrentCourseID { get; set; }
+        //public DbSet<Event> Events { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

@@ -16,21 +16,20 @@ namespace Lexicon_LMS.Models
         public DateTime end_date { get; set; }
 
 
-        //[Display(Name = "Parent course")]
+        [Display(Name = "Parent course")]
+        public int? CourseId { get; set; } 
+        [ForeignKey("CourseId")]
+        public virtual Course Course { get; set; }
 
 
-        /* public int CourseId { get; set; }
 
-         [ForeignKey("id")]
-         public virtual Course Course { get; set; }*/
-
-        //[Required]
-
-        
-       
-       // public int CourseId { get; set; }
-       // [ForeignKey("CourseId")]
-       // public virtual Course Course { get; set; }
+        public void Eventz(string _text, DateTime _start, DateTime _end, int? _courseId)
+        {
+            text = _text;
+            start_date = _start;
+            end_date = _end;
+            CourseId = _courseId;
+        }
 
     }   
 }
