@@ -14,8 +14,6 @@ namespace Lexicon_LMS.Controllers
     public class BasicSchedulerController : Controller
     {
 
-        public int _CourseID;
-
         private ApplicationDbContext db;
 
 
