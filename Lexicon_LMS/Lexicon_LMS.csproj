@@ -933,10 +933,10 @@
     <Content Include="Views\Document\AddFileToSystem.cshtml" />
     <Content Include="Views\Home\EditActivity.cshtml" />
     <Content Include="Views\Document\ListStudentDocuments.cshtml" />
+    <Content Include="Views\BasicScheduler\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\BasicScheduler\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,8 +1,9 @@
 ﻿html {
     overflow-y: scroll;
-}
+} 
 
 body {
+    
     padding-bottom: 20px;
 }
 
@@ -35,12 +36,14 @@ textarea {
 }
 
 
+
 /*.btn {
     color: #ffffff;
     background-color: #DC143C !important;
     border-color: #800000 !important;
     touch-action: pan-y;
 }*/
+
 
 .navbar-inverse .navbar-brand {
     color: #DC143C;
@@ -67,7 +70,7 @@ textarea {
 }
 
 body {
-    background-color:lightgray;
+    background-image: url(472586846.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-size: 200% 200%;
@@ -220,3 +223,4 @@ h3, h2 {
 #UpdateContentDiv{
     margin-left:50px;
 }
+  
