@@ -1,4 +1,5 @@
 ﻿using DHTMLX.Scheduler;
+using Lexicon_LMS.Controllers;
 using Lexicon_LMS.Models;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace Lexicon_LMS.ViewModel
 
         public Course Course { get; set; }
         public DHXScheduler DHX { get; set; }
-        
+
         public string text { get; set; }
         public DateTime start_date { get; set; }
         public DateTime end_date { get; set; }
@@ -37,4 +38,4 @@ namespace Lexicon_LMS.ViewModel
         }
 
     }
-}   
+}

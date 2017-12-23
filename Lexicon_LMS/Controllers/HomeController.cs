@@ -1,9 +1,12 @@
 ﻿using Lexicon_LMS.Models;
 using Microsoft.AspNet.Identity;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using System.Collections.Generic;
+using Lexicon_LMS.ViewModel;
 
 namespace Lexicon_LMS.Controllers
 {

@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+
+
 
 namespace Lexicon_LMS.Controllers
 {
@@ -18,7 +21,7 @@ namespace Lexicon_LMS.Controllers
 
 
         public CourseID LatestCourseID = new CourseID();
-                
+
 
         public BasicSchedulerController()
         {
@@ -27,7 +30,7 @@ namespace Lexicon_LMS.Controllers
 
         }
 
-
+  
         // GET: BasicScheduler
         public ActionResult Index(int? id)
         {
@@ -38,7 +41,7 @@ namespace Lexicon_LMS.Controllers
             sched.Skin = DHXScheduler.Skins.Terrace;
             sched.LoadData = true;
             sched.EnableDataprocessor = true;
-            sched.InitialDate = course.StartDate; 
+            sched.InitialDate = course.StartDate;
 
 
             var ViewModel = new CourseDhxViewModel()
@@ -51,7 +54,7 @@ namespace Lexicon_LMS.Controllers
             var nrOfCourseIds = db.CurrentCourseID.Count();
 
 
-            if(nrOfCourseIds > 0)
+            if (nrOfCourseIds > 0)
             {
                 var CourseIdList = db.CurrentCourseID.Where(c => c.Compare == 1).ToList();
 
@@ -62,7 +65,7 @@ namespace Lexicon_LMS.Controllers
                 }
             }
 
-            
+
             LatestCourseID.InputID(course.Id);
 
             db.CurrentCourseID.Add(LatestCourseID);
@@ -74,19 +77,19 @@ namespace Lexicon_LMS.Controllers
             return View(ViewModel);
         }
 
-        
+
 
         public ContentResult Data()
         {
 
             var courseId = db.CurrentCourseID.FirstOrDefault(c => c.Compare == 1);
             var currentCourseID = courseId.CurrentCourse_ID;
-            db.SaveChanges();       
+            db.SaveChanges();
 
 
             return (new SchedulerAjaxData(
                 new SchedulerContext().Courses.Single(e => e.Id == currentCourseID).Events
-                .Select(e => new { e.id, e.text, e.start_date, e.end_date, e.CourseId})
+                .Select(e => new { e.id, e.text, e.start_date, e.end_date, e.CourseId })
                 )
                 );
         }
@@ -104,73 +107,64 @@ namespace Lexicon_LMS.Controllers
 
             var eventz = entities.Events.Count();
 
-            
-                try
+
+            try
+            {
+                switch (action.Type)
                 {
-                    switch (action.Type)
-                    {
-                        case DataActionTypes.Insert:
+                    case DataActionTypes.Insert:
 
-                            entities.Events.Add(changedEvent);
+                        entities.Events.Add(changedEvent);
 
-                            entities.SaveChanges();
+                        entities.SaveChanges();
 
-                            var coreId_ = db.CurrentCourseID.FirstOrDefault(c => c.Compare == 1);
-                            var insertCurrentCourseID = coreId_.CurrentCourse_ID;
-                                
-                            var _target = entities.Events.Single(e => e.id == changedEvent.id);
+                        var coreId_ = db.CurrentCourseID.FirstOrDefault(c => c.Compare == 1);
+                        var insertCurrentCourseID = coreId_.CurrentCourse_ID;
 
-                            _target.Eventz(changedEvent.text, changedEvent.start_date, changedEvent.end_date, insertCurrentCourseID);    
-                        
+                        var _target = entities.Events.Single(e => e.id == changedEvent.id);
 
-                            break;
+                        _target.Eventz(changedEvent.text, changedEvent.start_date, changedEvent.end_date, insertCurrentCourseID);
 
 
-                        case DataActionTypes.Delete:
-
-                            changedEvent = entities.Events.FirstOrDefault(ev => ev.id == action.SourceId);
-                            entities.Events.Remove(changedEvent);
-
-                            break;
+                        break;
 
 
-                        default:// "update"
-                            
-                            var courseId_ = db.CurrentCourseID.FirstOrDefault(c => c.Compare == 1);
-                            var updateCurrentCourseID = courseId_.CurrentCourse_ID;
+                    case DataActionTypes.Delete:
 
-                            var target = entities.Events.Single(e => e.id == changedEvent.id);
+                        changedEvent = entities.Events.FirstOrDefault(ev => ev.id == action.SourceId);
+                        entities.Events.Remove(changedEvent);
 
-                            target.Eventz(changedEvent.text, changedEvent.start_date, changedEvent.end_date, updateCurrentCourseID);
+                        break;
 
 
-                            DHXEventsHelper.Update(target, changedEvent, new List<string> { "id", "text", "start_date", "end_date" });
-                            break;
-                    }
+                    default:// "update"
 
-                 
-                    entities.SaveChanges();
-                    action.TargetId = changedEvent.id;
+                        var courseId_ = db.CurrentCourseID.FirstOrDefault(c => c.Compare == 1);
+                        var updateCurrentCourseID = courseId_.CurrentCourse_ID;
 
-                }
-                catch (Exception a)
-                {
-                    action.Type = DataActionTypes.Error;
+                        var target = entities.Events.Single(e => e.id == changedEvent.id);
+
+                        target.Eventz(changedEvent.text, changedEvent.start_date, changedEvent.end_date, updateCurrentCourseID);
+
+
+                        DHXEventsHelper.Update(target, changedEvent, new List<string> { "id", "text", "start_date", "end_date" });
+                        break;
                 }
 
 
-                return (new AjaxSaveResponse(action));
+                entities.SaveChanges();
+                action.TargetId = changedEvent.id;
 
-               
             }
-        }
-    }
+            catch (Exception a)
+            {
+                action.Type = DataActionTypes.Error;
+            }
 
 
+            return (new AjaxSaveResponse(action));
 
 
-
-
-
-  
-          
+        } 
+    }  
+}      

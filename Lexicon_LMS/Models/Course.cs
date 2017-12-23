@@ -35,8 +35,9 @@ namespace Lexicon_LMS.Models
         public virtual ICollection<Module> Modules { get; set; }
 
         public virtual ICollection<Event> Events { get; set; }
-    }   
-        public virtual ICollection<Document> Documents { get; set; }
-    }
 
-}
+        public virtual ICollection<Document> Documents { get; set; }
+    }   
+        
+ }
+
