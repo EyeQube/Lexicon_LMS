@@ -13,7 +13,7 @@
         {
             AutomaticMigrationsEnabled = false;
         }
-            
+
         protected override void Seed(ApplicationDbContext context)
         {
             // Create courses

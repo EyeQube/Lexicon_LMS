@@ -89,7 +89,7 @@ namespace Lexicon_LMS.Controllers
 
             return (new SchedulerAjaxData(
                 new SchedulerContext().Courses.Single(e => e.Id == currentCourseID).Events
-                .Select(e => new { e.id, e.text, e.start_date, e.end_date, e.CourseId })
+                .Select(e => new { e.id, e.text, e.start_date, e.end_date})
                 )
                 );
         }
@@ -147,7 +147,7 @@ namespace Lexicon_LMS.Controllers
                         target.Eventz(changedEvent.text, changedEvent.start_date, changedEvent.end_date, updateCurrentCourseID);
 
 
-                        DHXEventsHelper.Update(target, changedEvent, new List<string> { "id", "text", "start_date", "end_date" });
+                        DHXEventsHelper.Update(target, changedEvent, new List<string> { "id" });
                         break;
                 }
 
