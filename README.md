@@ -42,65 +42,70 @@ Step by step instructions for how you run the application (10 steps)
 
 
 
-3. This project needs two configuration files. Each configuration file is supposed to be in their own Migrations folder. One folder (Migrations) already exists, therefore you create only the second migration folder, name it: "Migration". *Note: Second folder does NOT end with letter "s".
+3. This project needs two configuration files. Each configuration file is supposed to be in their own Migrations folder. One folder (Migrations) already exists, therefore you create only the second migration folder, name it: "Migration". *Note: Second folder does NOT end with letter "s". Hence name Migration, not Migration(s).
    
 
 
 
-4. Now you must start enabling  ScheduleContext.cs first, since SchedulerContext.cs inherits from ApplicationDbContext.cs! For that, go to Nuget Package Manager and type:
-   Enable-Migrations -ContextTypeName Lexicon_LMS.Models.SchedulerContext   (and press enter)   
+4. Now you must start enabling  ScheduleContext.cs first, since SchedulerContext.cs inherits from ApplicationDbContext.cs! 
+   For that, go to Nuget Package Manager and type and run:
+   Enable-Migrations -ContextTypeName Lexicon_LMS.Models.SchedulerContext      
 
 
 
 
 5. Add a new class to second folder (Migrations), name the new class: ConfigurationTwo. 
-   Go to EyeQube on github, then to Lexicon_LMS --> folder Lexicon_LMS --> folder Migration --> open ConfigurationTwo.cs --> copy all written code --> paste all code to your newly created file: ConfigurationTwo.cs
+   Go to: https://github.com/EyeQube/Lexicon_LMS/tree/master/Lexicon_LMS/Migration 
+   Open ConfigurationTwo.cs and copy all written code in that file. 
+   Paste all copied code to your newly locally created ConfigurationTwo.cs file.
 
 
 
 
-6. Go to Package Manager Console and type:
-   add-migration -ConfigurationTypeName Lexicon_LMS.Migrations.Configuration "InitialOne"   (then press ENTER) 
+6. Go to Package Manager Console and type and run:
+   add-migration -ConfigurationTypeName Lexicon_LMS.Migrations.Configuration "InitialOne"    
 
 
 
 
-7. In package manager console, type: 
-   update-database -ConfigurationTypeName Lexicon_LMS.Migrations.Configuration    (then press ENTER)
+7. In package manager console, type and run: 
+   update-database -ConfigurationTypeName Lexicon_LMS.Migrations.Configuration    
 
 
 
 
-8. In package manager console, type: 
-   add-migration -ConfigurationTypeName Lexicon_LMS.Migration.ConfigurationTwo "InitialTwo"    (then press ENTER)
+8. In package manager console, type and run: 
+   add-migration -ConfigurationTypeName Lexicon_LMS.Migration.ConfigurationTwo "InitialTwo"    
 
 
 
 
-9. Open the last migration file you added.. in this case:  InitialTwo.cs,  and code (write):  return;  before the first "CreateTable query" in the code.  
-   (We can't create same tables twice, since we already have created this tables when adding migration "InitialOne")
+9. Open the migration file (InitialTwo.cs) that you just added, and code (write):  return;  
+   before the first "CreateTable query" in the code.  
+   (We can't create same tables twice since we already have created this tables when we added migration "InitialOne")
 
 
 
 
-10. In package manager console, type:
-    update-database -ConfigurationTypeName Lexicon_LMS.Migration.ConfigurationTwo    (then press ENTER)
-
+10. In package manager console, type and run:
+    update-database -ConfigurationTypeName Lexicon_LMS.Migration.ConfigurationTwo    
 
 DONE! 
 
-
-To run this application on your browser, hold down  "Ctrl"  and press "F5".
+To run this application now on your browser, hold down  "Ctrl"  and press "F5".
 Once the application has opened on your browser, you can sign in as a administrator/teacher by using the following username and password:
 *username: foo@bar.com
 *password: foobar
 
-In order to logg in as a student, you must first logg in as a teacher. Once you are logged in as a teacher, you can register a student (name, email adress and password) to a course.
-Then you can sign out, and sign in again, but this time as the student you just created (hopefully you remember the students email and password).
+In order to sign in as a student (assuming you're neither a student yet, nor know/remember any registered students email adress and password), you must first sign in as a teacher. Once you are signed in as a teacher, 
+register a student (name, email adress and password) to a course (make sure you remember the email adress and password)
+Then sign out, and sign in again, but this time as the student you just created
+(hopefully you remember the students email adress and password).
  
 
-*If you encounter problems during any of the "steps" (above), please contact me at: sattar.alvandpour@gmail.com , and I'll do my best to help you out.
- /Sattar Alvandpour
+*If you encounter problems during any of the "steps" (above), please contact me: sattar.alvandpour@gmail.com
+and I'll do my best to help you out.  
+/Sattar Alvandpour
 
 
 
