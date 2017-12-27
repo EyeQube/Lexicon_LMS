@@ -98,9 +98,8 @@ Once the application has opened on your browser, you can sign in as a administra
 *password: foobar
 
 In order to sign in as a student (assuming you're neither a student yet, nor know/remember any registered students email adress and password), you must first sign in as a teacher. Once you are signed in as a teacher, 
-register a student (name, email adress and password) to a course (make sure you remember the email adress and password)
-Then sign out, and sign in again, but this time as the student you just created
-(hopefully you remember the students email adress and password).
+register a student (name, email adress and password) to a course (make sure you remember the email adress and password).
+Then sign out, and sign in as the student you just created (hopefully you remember the email adress and password).
  
 
 *If you encounter problems during any of the "steps" (above), please contact me: sattar.alvandpour@gmail.com
