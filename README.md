@@ -67,21 +67,21 @@ Step by step instructions for how you run the application (10 steps)
 
 
 
-6. Go to Package Manager Console and type and run:
+6. In Package Manager Console and type and run:
 
    add-migration -ConfigurationTypeName Lexicon_LMS.Migrations.Configuration "InitialOne"    
 
 
 
 
-7. In package manager console, type and run: 
+7. In Package Manager Console, type and run: 
 
    update-database -ConfigurationTypeName Lexicon_LMS.Migrations.Configuration    
 
 
 
 
-8. In package manager console, type and run: 
+8. In Package Manager Console, type and run: 
 
    add-migration -ConfigurationTypeName Lexicon_LMS.Migration.ConfigurationTwo "InitialTwo"    
 
@@ -95,7 +95,7 @@ Step by step instructions for how you run the application (10 steps)
 
 
 
-10. In package manager console, type and run:
+10. In Package Manager Console, type and run:
 
     update-database -ConfigurationTypeName Lexicon_LMS.Migration.ConfigurationTwo    
 
