@@ -59,7 +59,7 @@ Step by step instructions for how you run the application (10 steps)
 
 
 5. Now you must start enabling  ScheduleContext.cs first, since SchedulerContext.cs inherits from ApplicationDbContext.cs! 
-   For that, go to Package Manager Console, type and run :
+   For that, go to Package Manager Console, paste and run :
    
    Enable-Migrations -ContextTypeName Lexicon_LMS.Models.SchedulerContext      
 
@@ -74,21 +74,21 @@ Step by step instructions for how you run the application (10 steps)
 
 
 
-7. In Package Manager Console, type and run :
+7. In Package Manager Console, paste and run :
 
    add-migration -ConfigurationTypeName Lexicon_LMS.Migrations.Configuration "InitialOne"    
 
 
 
 
-8. In Package Manager Console, type and run : 
+8. In Package Manager Console, paste and run : 
 
    update-database -ConfigurationTypeName Lexicon_LMS.Migrations.Configuration    
 
 
 
 
-9. In Package Manager Console, type and run : 
+9. In Package Manager Console, paste and run : 
 
    add-migration -ConfigurationTypeName Lexicon_LMS.Migration.ConfigurationTwo "InitialTwo"    
 
@@ -102,7 +102,7 @@ Step by step instructions for how you run the application (10 steps)
 
 
 
-11. In Package Manager Console, type and run :
+11. In Package Manager Console, paste and run :
 
     update-database -ConfigurationTypeName Lexicon_LMS.Migration.ConfigurationTwo    
 
