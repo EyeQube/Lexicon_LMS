@@ -33,7 +33,8 @@ Step by step instructions for how you run the application (10 steps)
 
 
 1. Install DHTMLX Scheduler (*30 day free trial), and Entity Framework.
-   Right click on your project in the Solution Explorer and select Manage NuGet Packages. It will open the Manage NuGet Packages dialog box.
+   Right click on your project in the Solution Explorer and select Manage NuGet Packages. 
+   It will open the Manage NuGet Packages dialog box.
 
 
 
@@ -67,18 +68,21 @@ Step by step instructions for how you run the application (10 steps)
 
 
 6. Go to Package Manager Console and type and run:
+
    add-migration -ConfigurationTypeName Lexicon_LMS.Migrations.Configuration "InitialOne"    
 
 
 
 
 7. In package manager console, type and run: 
+
    update-database -ConfigurationTypeName Lexicon_LMS.Migrations.Configuration    
 
 
 
 
 8. In package manager console, type and run: 
+
    add-migration -ConfigurationTypeName Lexicon_LMS.Migration.ConfigurationTwo "InitialTwo"    
 
 
@@ -92,9 +96,12 @@ Step by step instructions for how you run the application (10 steps)
 
 
 10. In package manager console, type and run:
+
     update-database -ConfigurationTypeName Lexicon_LMS.Migration.ConfigurationTwo    
 
+
 DONE! 
+
 
 To run this application now on your browser, hold down  "Ctrl"  and press "F5".
 Once the application has opened on your browser, you can sign in as a administrator/teacher by using the following username and password:
