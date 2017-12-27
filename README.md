@@ -43,13 +43,16 @@ Step by step instructions for how you run the application (10 steps)
 
 
 
-3. This project needs two configuration files. Each configuration file is supposed to be in their own Migrations folder. One folder (Migrations) already exists, therefore you create only the second migration folder, name it: "Migration". *Note: Second folder does NOT end with letter "s". Hence name Migration, not Migration(s).
+3. This project needs two configuration files. Each configuration file is supposed to be in their own Migrations folder. 
+   One folder (Migrations) already exists, therefore you create only the second migration folder, name it: "Migration". 
+   *Note: Second folder does NOT end with letter "s". Hence name Migration, not Migration(s).
    
 
 
 
 4. Now you must start enabling  ScheduleContext.cs first, since SchedulerContext.cs inherits from ApplicationDbContext.cs! 
    For that, go to Nuget Package Manager and type and run:
+   
    Enable-Migrations -ContextTypeName Lexicon_LMS.Models.SchedulerContext      
 
 
