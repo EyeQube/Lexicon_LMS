@@ -52,7 +52,7 @@ Step by step instructions for how you run the application (10 steps)
 
 
 4. Now you must start enabling  ScheduleContext.cs first, since SchedulerContext.cs inherits from ApplicationDbContext.cs! 
-   For that, go to Nuget Package Manager and type and run:
+   For that, go to Package Manager Console and type and run:
    
    Enable-Migrations -ContextTypeName Lexicon_LMS.Models.SchedulerContext      
 
