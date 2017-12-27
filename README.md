@@ -74,7 +74,7 @@ Step by step instructions for how you run the application (10 steps)
 
 
 
-7. In Package Manager Console and type and run:
+7. In Package Manager Console, type and run:
 
    add-migration -ConfigurationTypeName Lexicon_LMS.Migrations.Configuration "InitialOne"    
 
