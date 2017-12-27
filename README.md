@@ -59,8 +59,8 @@ Step by step instructions for how you run the application (10 steps)
 
 
 
-5. Add a new class to second folder (Migrations), name the new class: ConfigurationTwo.cs 
-Go to: https://github.com/EyeQube/Lexicon_LMS/tree/master/Lexicon_LMS/Migration 
+5. Add a new class to second folder (Migrations), name the new class: ConfigurationTwo. 
+   Go to: https://github.com/EyeQube/Lexicon_LMS/tree/master/Lexicon_LMS/Migration 
    Open ConfigurationTwo.cs and copy all written code in that file. 
    Paste all copied code to your newly locally created ConfigurationTwo.cs file.
 
