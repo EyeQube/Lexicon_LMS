@@ -28,7 +28,7 @@ Administrator/teachers have full access, and permissons for Editing/Adding/Delet
 * Upload and download files
 
 
-Step by step instructions for how you run the application (10 steps)
+Step by step instructions for how you run the application (11 steps)
 --------------------------------------------------------------------
 
 1. Make sure your Migrations folder is empty and that you don't have any database connection in App_Data folder. 
@@ -111,11 +111,13 @@ DONE!
 
 
 To run this application now on your browser, hold down  "Ctrl"  and press "F5".
-Once the application has opened on your browser, you can sign in as a administrator/teacher by using the following username and password:
+Once the application has opened on your browser, you can sign in as a administrator/teacher by using the following username and 
+password:
 *username: foo@bar.com
 *password: foobar
 
-In order to sign in as a student (assuming you're neither a student yet, nor know/remember any registered students email adress and password), you must first sign in as a teacher. Once you are signed in as a teacher, 
+In order to sign in as a student (assuming you're neither a student yet, nor know/remember any registered students email adress and 
+password), you must first sign in as a teacher. Once you are signed in as a teacher, 
 register a student (name, email adress and password) to a course (make sure you remember the email adress and password).
 Then sign out, and sign in with the email adress and password that belongs to the student you just created 
 (hopefully you remember the email adress and password).
