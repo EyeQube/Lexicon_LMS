@@ -7,6 +7,7 @@ namespace Lexicon_LMS.Migration
     {
         public override void Up()
         {
+
             return;
 
             CreateTable(
