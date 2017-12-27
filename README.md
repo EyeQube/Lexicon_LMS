@@ -19,7 +19,8 @@ Students can access information and get the latest updates about the courses the
 
 Administrator/teachers have full access, and permissons for Editing/Adding/Deleting/Updating information: 
 
-* Add/Remove/Edit the schedule with events/activites (each course has their own schedule, and students can only view the schedule, but they can't modify it)
+* Add/Remove/Edit the schedule with events/activites 
+  (each course has their own schedule, and students can only view the schedule, but they can't modify it)
 * Register/Remove/Edit students
 * Register/Remove/Edit courses
 * Add/Remove/Edit modules that belongs to a course
